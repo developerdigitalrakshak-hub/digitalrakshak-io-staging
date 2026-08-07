@@ -1,0 +1,191 @@
+// ==========================================
+// SCSS Module for Animated Compact & Curved Floating Navbar
+// ==========================================
+
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.navbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 1080px;
+  z-index: 1000;
+  border-radius: 999px; // Ultra curved pill shape
+  background: var(--navbar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  padding: 0 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: 
+    top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.scrolled {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    padding: 0 28px;
+    background: var(--navbar-scrolled-bg);
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+
+    @media (max-width: 560px) {
+      padding: 0 14px;
+    }
+  }
+
+  &Inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px; // Compact height
+    gap: 16px;
+  }
+
+  &Logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    flex-shrink: 0;
+    font-weight: 800;
+    font-size: 0.98rem; // Compact logo text
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+
+    .logoBadge {
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, $accent-cyan 0%, $primary-color 50%, $accent-color 100%);
+      border-radius: 7px;
+      @include flex-center();
+      color: #fff;
+      font-weight: 900;
+      font-size: 0.78rem;
+      box-shadow: 0 2px 8px rgba(6, 182, 212, 0.4);
+    }
+
+    .logoHighlight {
+      color: $accent-cyan;
+    }
+  }
+
+  &Links {
+    display: flex;
+    list-style: none;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &Link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13.5px; // Smaller nav links
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 999px; // Curved pill link highlights
+    transition: color 0.2s ease, background 0.2s ease;
+    letter-spacing: -0.01em;
+
+    &:hover {
+      color: var(--text-main);
+      background: rgba(99, 102, 241, 0.1);
+    }
+  }
+
+  &Cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .themeToggleBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px; // Fully curved theme toggle pill
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    cursor: pointer;
+    @include flex-center();
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.08);
+      border-color: $primary-light;
+      box-shadow: 0 4px 12px var(--glow-color);
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+
+  &Btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px; // Compact button padding
+    border-radius: 999px; // Fully curved pill button shape
+    font-size: 13px; // Smaller text
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &Ghost {
+      color: var(--text-main);
+      background: transparent;
+      border: 1px solid var(--card-border);
+
+      &:hover {
+        color: var(--text-main);
+        background: rgba(99, 102, 241, 0.1);
+        border-color: rgba(99, 102, 241, 0.3);
+      }
+    }
+
+    &Primary {
+      color: #ffffff;
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      border: 1px solid transparent;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    width: calc(100% - 20px);
+  }
+}

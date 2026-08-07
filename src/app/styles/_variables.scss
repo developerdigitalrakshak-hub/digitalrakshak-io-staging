@@ -1,0 +1,34 @@
+// ==========================================
+// SCSS Variables & Design Tokens
+// ==========================================
+
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'Fira Code', 'Courier New', monospace;
+
+// Brand Colors
+$primary-color: #6366f1;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$accent-color: #ec4899;
+$accent-cyan: #06b6d4;
+
+// Keyframe Animations
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes floatAnim {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
