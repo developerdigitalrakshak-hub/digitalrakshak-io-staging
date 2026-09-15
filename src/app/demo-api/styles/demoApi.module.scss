@@ -1,0 +1,964 @@
+// Demo API Reference Stylesheet - Pixel-perfect matching docs.risewithprotean.io
+
+.pageContainer {
+  position: relative;
+  min-height: 100vh;
+  background-color: #060709;
+  color: #f8fafc;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  overflow-x: hidden;
+}
+
+.mainLayout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+// ---------------------------------------------
+// Sidebar Styles
+// ---------------------------------------------
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100vh;
+  z-index: 10;
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.homeBadge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.homeIcon {
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+}
+
+.logoutArrow {
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.2s;
+  &:hover {
+    color: #f8fafc;
+  }
+}
+
+.searchWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 38px 10px 14px;
+  background: rgba(22, 27, 38, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  color: #f8fafc;
+  font-size: 13.5px;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: #64748b;
+  }
+
+  &:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
+
+.backButton {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 0;
+  width: fit-content;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #f8fafc;
+  }
+}
+
+.backChevron {
+  font-weight: bold;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.categoryGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.categoryTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 4px;
+}
+
+.greenDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+}
+
+.endpointList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 12px;
+}
+
+.endpointItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.activeEndpoint {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-left: 2px solid #22c55e;
+}
+
+.epName {
+  font-size: 13.5px;
+  color: #e2e8f0;
+}
+
+.methodBadge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.post {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  &.get {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+}
+
+// ---------------------------------------------
+// Content Body Layout (Split Panes)
+// ---------------------------------------------
+.contentArea {
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+.gridSplit {
+  display: grid;
+  grid-template-columns: 1fr 540px;
+  gap: 40px;
+  align-items: start;
+  margin-top: 24px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ---------------------------------------------
+// API Header Styles
+// ---------------------------------------------
+.apiHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.crumbItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crumbSep {
+  color: #475569;
+}
+
+.sandboxButton {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid #16a34a;
+  color: #4ade80;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.15);
+
+  &:hover {
+    background: rgba(34, 197, 94, 0.2);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+    transform: translateY(-1px);
+  }
+}
+
+.sandboxDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.apiTitle {
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.endpointCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(18, 22, 31, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: rgba(34, 197, 94, 0.4);
+  }
+}
+
+.postBadge {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.endpointUrl {
+  color: #38bdf8;
+  font-family: 'Geist Mono', monospace;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.copiedTooltip {
+  position: absolute;
+  right: 16px;
+  top: -30px;
+  background: #22c55e;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  animation: fadeIn 0.2s ease;
+}
+
+// ---------------------------------------------
+// Documentation Left Column & SchemaViewer
+// ---------------------------------------------
+.docLeftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.docSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sectionHeading {
+  font-size: 24px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.subHeading {
+  font-size: 14px;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.headerParamsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.headerParamRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.paramName {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.paramType {
+  color: #94a3b8;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.paramRequired {
+  color: #22c55e;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+// Tree view dot guides matching screenshot dot alignment
+.treeList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.treeRowContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.treeRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 14.5px;
+}
+
+.dotGuide {
+  color: #475569;
+  font-family: monospace;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 40px;
+}
+
+.toggleArrow {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+  transform: rotate(90deg);
+}
+
+.dotSpacer {
+  width: 14px;
+}
+
+.treeChildren {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+// ---------------------------------------------
+// Right Column (Languages & Code Blocks)
+// ---------------------------------------------
+.docRightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.languagesHeading {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.languageTabsBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+}
+
+.langTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 68px;
+  height: 64px;
+  padding: 8px 12px;
+  background: rgba(20, 24, 33, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(30, 36, 50, 0.9);
+    color: #ffffff;
+  }
+}
+
+.activeLangTab {
+  background: rgba(30, 41, 59, 0.9) !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+.curlPrefix {
+  font-size: 11px;
+  font-weight: bold;
+  color: #38bdf8;
+  font-family: monospace;
+}
+
+.dotnetBadge {
+  font-size: 11px;
+  font-weight: bold;
+  color: #c084fc;
+}
+
+.langIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.langLabel {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+// Code Box Cards
+.codeSampleCard {
+  background: rgba(15, 18, 26, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.codeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(20, 24, 34, 0.5);
+}
+
+.codeTitle {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+.copyButton {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #38bdf8;
+  }
+}
+
+.copiedSuccess {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #22c55e;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.codeBody {
+  padding: 20px;
+  overflow-x: auto;
+  max-height: 480px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+  }
+}
+
+.preCode {
+  margin: 0;
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #f1f5f9;
+}
+
+.codeLine {
+  display: flex;
+  white-space: pre;
+}
+
+.cmdKeyword {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.cmdArgs {
+  color: #e2e8f0;
+}
+
+// Response Viewer Dropdown
+.responseContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.statusDropdownWrapper {
+  position: relative;
+  width: fit-content;
+}
+
+.statusSelectButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(20, 25, 36, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.statusCodeText {
+  color: #ffffff;
+}
+
+.dropdownChevron {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.statusDropdownMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #121620;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+  z-index: 50;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.statusOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+}
+
+.activeStatusOption {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+// ---------------------------------------------
+// Interactive Sandbox Modal Drawer
+// ---------------------------------------------
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+
+.modalContent {
+  width: 580px;
+  max-width: 100vw;
+  height: 100vh;
+  background: #0d1017;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+  animation: slideLeft 0.3s ease;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modalTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}
+
+.sandboxDotActive {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+}
+
+.closeModalBtn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.modalBody {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sandboxEndpointBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sandboxUrlText {
+  font-family: monospace;
+  font-size: 13px;
+  color: #38bdf8;
+  word-break: break-all;
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputLabel {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+
+  input {
+    background: rgba(22, 28, 40, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #ffffff;
+    font-size: 13.5px;
+    outline: none;
+
+    &:focus {
+      border-color: #22c55e;
+    }
+  }
+}
+
+.jsonTextarea {
+  background: rgba(22, 28, 40, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 14px;
+  color: #22c55e;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  outline: none;
+  resize: vertical;
+
+  &:focus {
+    border-color: #22c55e;
+  }
+}
+
+.executeButton {
+  background: #22c55e;
+  color: #000000;
+  font-weight: 700;
+  font-size: 14.5px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+
+  &:hover {
+    background: #16a34a;
+    transform: translateY(-1px);
+  }
+}
+
+.spinnerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sandboxResultBox {
+  background: rgba(15, 19, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statusBadge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.latencyText {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.resultPre {
+  margin: 0;
+  font-family: monospace;
+  font-size: 12.5px;
+  color: #f1f5f9;
+  white-space: pre-wrap;
+}

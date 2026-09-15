@@ -6,7 +6,7 @@
 @use './styles/mixins' as *;
 
 .container {
-  min-height: 200vh;
+  min-height: 100vh;
   @include flex-center(column, flex-start, center);
   padding: 110px 1.5rem 4rem 1.5rem; // Reduced top padding for compact header
   position: relative;
@@ -227,11 +227,26 @@
       margin: 0;
     }
 
-    .keyword { color: #f472b6; }
-    .variable { color: #38bdf8; }
-    .property { color: #a78bfa; }
-    .string { color: #34d399; }
-    .comment { color: #64748b; font-style: italic; }
+    .keyword {
+      color: #f472b6;
+    }
+
+    .variable {
+      color: #38bdf8;
+    }
+
+    .property {
+      color: #a78bfa;
+    }
+
+    .string {
+      color: #34d399;
+    }
+
+    .comment {
+      color: #64748b;
+      font-style: italic;
+    }
   }
 }
 

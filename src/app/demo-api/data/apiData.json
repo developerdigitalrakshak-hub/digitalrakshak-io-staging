@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "title": "Geo Fencing_S",
+    "category": "Geo Fencing_S",
+    "breadcrumbs": ["Home", "Geo Fencing_S", "API Reference", "Geo Fencing_S"]
+  },
+  "endpoint": {
+    "method": "POST",
+    "url": "https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores",
+    "description": "Calculates location risk scores and patron verification attributes based on IP, country, and state parameters."
+  },
+  "headerParameters": [
+    {
+      "name": "apikey",
+      "type": "string",
+      "required": true,
+      "description": "Unique secret API Key for patron authentication",
+      "sample": "JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB"
+    },
+    {
+      "name": "Authorization",
+      "type": "string",
+      "required": true,
+      "description": "Bearer token header for session security",
+      "sample": "Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR"
+    }
+  ],
+  "requestBody": [
+    {
+      "name": "essentials",
+      "type": "object",
+      "required": true,
+      "description": "Essential geo-location payload parameters",
+      "children": [
+        {
+          "name": "ip",
+          "type": "string",
+          "required": true,
+          "description": "Client IP address string",
+          "sample": "14.XXXXXXXXX"
+        },
+        {
+          "name": "country",
+          "type": "string",
+          "required": true,
+          "description": "2-letter ISO Country Code",
+          "sample": "IN"
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "required": true,
+          "description": "State code identifier",
+          "sample": "MH"
+        }
+      ]
+    },
+    {
+      "name": "task",
+      "type": "string",
+      "required": true,
+      "description": "Service task type identifier",
+      "sample": "geoFencing"
+    }
+  ],
+  "responseBody": [
+    {
+      "name": "task",
+      "type": "string",
+      "required": false,
+      "description": "Task identifier matched with request"
+    },
+    {
+      "name": "essentials",
+      "type": "object",
+      "required": false,
+      "description": "Echoed input essentials data object",
+      "children": [
+        {
+          "name": "ip",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "country",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "Unique trace transaction ID"
+    },
+    {
+      "name": "patronId",
+      "type": "string",
+      "required": false,
+      "description": "Patron account reference ID"
+    },
+    {
+      "name": "result",
+      "type": "object",
+      "required": false,
+      "description": "Detailed geo fencing evaluation output object",
+      "children": [
+        { "name": "country", "type": "string", "sample": "INDIA" },
+        { "name": "countryCode", "type": "string", "sample": "IN" },
+        { "name": "state", "type": "string", "sample": "MAHARASHTRA" },
+        { "name": "stateCode", "type": "string", "sample": "MH" },
+        { "name": "city", "type": "string", "sample": "PANVEL" },
+        { "name": "zipCode", "type": "string", "sample": "XXXXXX" },
+        { "name": "timezone", "type": "string", "sample": "IST, Asia/Kolkata" },
+        { "name": "latitude", "type": "number", "sample": 18.2341 },
+        { "name": "longitude", "type": "number", "sample": 73.1234 },
+        { "name": "asn", "type": "string", "sample": "4755" },
+        { "name": "riskip", "type": "boolean", "sample": false },
+        { "name": "validUser", "type": "boolean", "sample": true }
+      ]
+    }
+  ],
+  "statusCodes": [
+    {
+      "code": 200,
+      "label": "200 OK",
+      "response": {
+        "country": "INDIA",
+        "countryCode": "IN",
+        "state": "MAHARASHTRA",
+        "stateCode": "MH",
+        "city": "PANVEL",
+        "zipCode": "XXXXXX",
+        "timezone": "IST, Asia/Kolkata",
+        "latitude": "18.XXXX",
+        "longitude": "73.XXXX",
+        "asn": "4755",
+        "riskip": false,
+        "validUser": true
+      }
+    },
+    {
+      "code": 400,
+      "label": "400 Bad Request",
+      "response": {
+        "statusCode": 400,
+        "error": "Bad Request",
+        "message": "Invalid request parameter: 'essentials.ip' missing or malformed"
+      }
+    },
+    {
+      "code": 401,
+      "label": "401 Unauthorized",
+      "response": {
+        "statusCode": 401,
+        "error": "Unauthorized",
+        "message": "Invalid or missing 'apikey' header parameter"
+      }
+    },
+    {
+      "code": 500,
+      "label": "500 Server Error",
+      "response": {
+        "statusCode": 500,
+        "error": "Internal Server Error",
+        "message": "An unexpected error occurred while computing location risk scores"
+      }
+    }
+  ],
+  "codeLanguages": [
+    { "id": "curl", "name": "Curl", "icon": "curl" },
+    { "id": "go", "name": "Go", "icon": "go" },
+    { "id": "python", "name": "Python", "icon": "python" },
+    { "id": "node", "name": "Node", "icon": "node" },
+    { "id": "php", "name": "PHP", "icon": "php" },
+    { "id": "java", "name": "Java", "icon": "java" },
+    { "id": "dotnet", "name": ".NET", "icon": "dotnet" }
+  ],
+  "codeSamples": {
+    "curl": "curl --request POST \\\n  --url https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB' \\\n  --header 'Authorization: Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR' \\\n  --data '{\n    \"task\": \"geoFencing\",\n    \"essentials\": {\n      \"ip\": \"14.XXXXXXXXX\",\n      \"country\": \"IN\",\n      \"state\": \"MH\"\n    }\n  }'",
+    "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io\"\n)\n\nfunc main() {\n\turl := \"https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores\"\n\tpayload := strings.NewReader(`{\n\t\t\"task\": \"geoFencing\",\n\t\t\"essentials\": {\n\t\t\t\"ip\": \"14.XXXXXXXXX\",\n\t\t\t\"country\": \"IN\",\n\t\t\t\"state\": \"MH\"\n\t\t}\n\t}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"content-type\", \"application/json\")\n\treq.Header.Add(\"apikey\", \"JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB\")\n\treq.Header.Add(\"Authorization\", \"Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR\")\n\n\tres, _ := http.DefaultClient.Do(req)\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\n\tfmt.Println(string(body))\n}",
+    "python": "import requests\n\nurl = \"https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores\"\n\npayload = {\n    \"task\": \"geoFencing\",\n    \"essentials\": {\n        \"ip\": \"14.XXXXXXXXX\",\n        \"country\": \"IN\",\n        \"state\": \"MH\"\n    }\n}\nheaders = {\n    \"content-type\": \"application/json\",\n    \"apikey\": \"JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB\",\n    \"Authorization\": \"Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR\"\n}\n\nresponse = requests.request(\"POST\", url, json=payload, headers=headers)\n\nprint(response.text)",
+    "node": "const axios = require('axios');\n\nconst options = {\n  method: 'POST',\n  url: 'https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores',\n  headers: {\n    'content-type': 'application/json',\n    apikey: 'JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB',\n    Authorization: 'Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR'\n  },\n  data: {\n    task: 'geoFencing',\n    essentials: {\n      ip: '14.XXXXXXXXX',\n      country: 'IN',\n      state: 'MH'\n    }\n  }\n};\n\ntry {\n  const response = await axios.request(options);\n  console.log(response.data);\n} catch (error) {\n  console.error(error);\n}",
+    "php": "<?php\n\n$client = new \\GuzzleHttp\\Client();\n\n$response = $client->request('POST', 'https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores', [\n  'body' => '{\"task\":\"geoFencing\",\"essentials\":{\"ip\":\"14.XXXXXXXXX\",\"country\":\"IN\",\"state\":\"MH\"}}',\n  'headers' => [\n    'Authorization' => 'Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR',\n    'apikey' => 'JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB',\n    'content-type' => 'application/json',\n  ],\n]);\n\necho $response->getBody();",
+    "java": "HttpResponse<String> response = Unirest.post(\"https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores\")\n  .header(\"content-type\", \"application/json\")\n  .header(\"apikey\", \"JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB\")\n  .header(\"Authorization\", \"Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR\")\n  .body(\"{\\n  \\\"task\\\": \\\"geoFencing\\\",\\n  \\\"essentials\\\": {\\n    \\\"ip\\\": \\\"14.XXXXXXXXX\\\",\\n    \\\"country\\\": \\\"IN\\\",\\n    \\\"state\\\": \\\"MH\\\"\\n  }\\n}\")\n  .asString();",
+    "dotnet": "var client = new HttpClient();\nvar request = new HttpRequestMessage(HttpMethod.Post, \"https://uat.risewithprotean.io/api/v1/protean/patrons/riskscores\");\nrequest.Headers.Add(\"apikey\", \"JW7tfNm2qLMrnjO8avAIEgAVpfD5fgdfg7T1UMVZ8llWcSB\");\nrequest.Headers.Add(\"Authorization\", \"Bearer aLojjYtDu5dAFwgDoRHTEhYHUUNR\");\n\nvar content = new StringContent(\"{\\n  \\\"task\\\": \\\"geoFencing\\\",\\n  \\\"essentials\\\": {\\n    \\\"ip\\\": \\\"14.XXXXXXXXX\\\",\\n    \\\"country\\\": \\\"IN\\\",\\n    \\\"state\\\": \\\"MH\\\"\\n  }\\n}\", null, \"application/json\");\nrequest.Content = content;\n\nvar response = await client.SendAsync(request);\nresponse.EnsureSuccessStatusCode();\nConsole.WriteLine(await response.Content.ReadAsStringAsync());"
+  }
+}

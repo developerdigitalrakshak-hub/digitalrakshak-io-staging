@@ -1,0 +1,11 @@
+# API Configuration in Public Folder (Accessible via /config/api.config.yml without JS import)
+api:
+  baseUrl: "${NEXT_PUBLIC_API_BASE_URL}"
+  timeout: "${NEXT_PUBLIC_API_TIMEOUT}"
+  appId: "${NEXT_PUBLIC_APP_ID}"
+  clientId: "${NEXT_PUBLIC_CLIENT_ID}"
+  headers:
+    Content-Type: "application/json"
+    Accept: "application/json"
+    X-App-ID: "${NEXT_PUBLIC_APP_ID}"
+    X-Client-ID: "${NEXT_PUBLIC_CLIENT_ID}"

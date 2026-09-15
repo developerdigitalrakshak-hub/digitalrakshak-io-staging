@@ -1,4 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import ReduxProvider from "../redux/provider";
+import Footer from "./components/Footer";
 import "./globals.scss";
 
 const geistSans = Geist({
@@ -12,14 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Next.js + SASS Showcase App",
-  description: "A modern Next.js project configured with SASS/SCSS styling and JavaScript",
+  title: "Next.js + Redux Saga Showcase",
+  description: "A modern Next.js project with Redux Saga & Redux Persist architecture",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <ReduxProvider>
+          {children}
+          {/* <Footer /> */}
+        </ReduxProvider>
+      </body>
     </html>
   );
 }
+
+
