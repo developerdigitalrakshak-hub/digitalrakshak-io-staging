@@ -1,0 +1,1774 @@
+{
+  "activeEndpointId": "oauth-token",
+  "endpoints": {
+    "oauth-token": {
+      "id": "oauth-token",
+      "meta": {
+        "title": "1. Generate Access Token",
+        "category": "Authentication",
+        "breadcrumbs": [
+          "Authentication",
+          "Generate Access Token"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/v1/oauth/token",
+        "description": "Generates OAuth 2.0 access token using client credentials and API secret."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "description": "Bearer token header with API secret",
+          "sample": "Bearer <API_SECRET>"
+        },
+        {
+          "name": "Content-Type",
+          "type": "string",
+          "required": true,
+          "description": "x-www-form-urlencoded media type",
+          "sample": "application/x-www-form-urlencoded"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "grant_type",
+          "type": "string",
+          "required": true,
+          "description": "OAuth 2.0 grant type (fixed: client_credentials)",
+          "sample": "client_credentials"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "access_token",
+          "type": "string",
+          "description": "JWT OAuth 2.0 Bearer Access Token"
+        },
+        {
+          "name": "token_type",
+          "type": "string",
+          "description": "Token scheme (Bearer)"
+        },
+        {
+          "name": "expires_in",
+          "type": "number",
+          "description": "Token validity in seconds (3600)"
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "access_token": "eyJhbGciOiJSUzI1NiIs...",
+            "token_type": "Bearer",
+            "expires_in": 3600
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid Bearer API secret"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/v1/oauth/token \\\n  --header 'Authorization: Bearer <API_SECRET>' \\\n  --header 'Content-Type: application/x-www-form-urlencoded' \\\n  --data 'grant_type=client_credentials'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/v1/oauth/token'\nheaders = {\n    'Authorization': 'Bearer <API_SECRET>',\n    'Content-Type': 'application/x-www-form-urlencoded'\n}\ndata = {'grant_type': 'client_credentials'}\n\nres = requests.post(url, headers=headers, data=data)\nprint(res.json())",
+        "node": "const axios = require('axios');\nconst qs = require('qs');\n\naxios.post('https://uat.digitalrakshak.io/v1/oauth/token', qs.stringify({ grant_type: 'client_credentials' }), {\n  headers: {\n    'Authorization': 'Bearer <API_SECRET>',\n    'Content-Type': 'application/x-www-form-urlencoded'\n  }\n}).then(res => console.log(res.data));"
+      }
+    },
+    "mobile-silent": {
+      "id": "mobile-silent",
+      "meta": {
+        "title": "2. Mobile Silent Verification",
+        "category": "Verification",
+        "breadcrumbs": [
+          "Verification",
+          "Mobile Silent Verification"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent",
+        "description": "Silent background KYC verification of mobile numbers using telco network parameters."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "mobileNumber",
+          "type": "string",
+          "required": true,
+          "description": "10-digit mobile number to verify",
+          "sample": "9876543210"
+        },
+        {
+          "name": "additionalDetails",
+          "type": "string",
+          "required": false,
+          "description": "yes or no. Default: yes",
+          "sample": "yes"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "customerName",
+          "type": "string",
+          "description": "Customer registered name"
+        },
+        {
+          "name": "alternateNumber",
+          "type": "string",
+          "description": "Alternate contact number"
+        },
+        {
+          "name": "isValid",
+          "type": "string",
+          "description": "Boolean flag string"
+        },
+        {
+          "name": "subscriberStatus",
+          "type": "string",
+          "description": "Telco status e.g. CONNECTED"
+        },
+        {
+          "name": "connectionType",
+          "type": "string",
+          "description": "prepaid or postpaid"
+        },
+        {
+          "name": "currentServiceProvider",
+          "type": "string",
+          "description": "Current telco operator"
+        },
+        {
+          "name": "originalServiceProvider",
+          "type": "string",
+          "description": "Original operator"
+        },
+        {
+          "name": "networkRegion",
+          "type": "string",
+          "description": "Telecom circle / region"
+        },
+        {
+          "name": "isPorted",
+          "type": "string",
+          "description": "Mobile number portability status"
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "customerName": "Test Name",
+            "alternateNumber": "",
+            "isValid": "true",
+            "subscriberStatus": "CONNECTED",
+            "connectionType": "prepaid",
+            "currentServiceProvider": "JIO",
+            "originalServiceProvider": "Vodafone",
+            "networkRegion": "Gujarat",
+            "isPorted": "true"
+          }
+        },
+        {
+          "code": 400,
+          "label": "400 Bad Request",
+          "response": {
+            "status": false,
+            "error_code": 400,
+            "error_description": "Invalid value for /mobileNumber"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'mobileNumber': '9876543210', 'additionalDetails': 'yes'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent', {\n  mobileNumber: '9876543210', additionalDetails: 'yes'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "mobile-otp": {
+      "id": "mobile-otp",
+      "meta": {
+        "title": "3. Mobile Verification with OTP — Generate OTP",
+        "category": "Verification",
+        "breadcrumbs": [
+          "Verification",
+          "Generate OTP"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/phone/generateOtp",
+        "description": "Generates OTP for target mobile number verification flow."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "countryCode",
+          "type": "string",
+          "required": true,
+          "description": "Country ISD code e.g. 91",
+          "sample": "91"
+        },
+        {
+          "name": "mobileNumber",
+          "type": "string",
+          "required": true,
+          "description": "10-digit target mobile number",
+          "sample": "9876543210"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "object",
+          "description": "OTP evaluation payload",
+          "children": [
+            {
+              "name": "referenceId",
+              "type": "string",
+              "description": "OTP reference tracking ID"
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": {
+              "referenceId": "telecom_dgda777652"
+            }
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid IP"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/phone/generateOtp \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/phone/generateOtp'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'countryCode': '91', 'mobileNumber': '9876543210'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/phone/generateOtp', {\n  countryCode: '91', mobileNumber: '9876543210'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "geo-fencing": {
+      "id": "geo-fencing",
+      "meta": {
+        "title": "4. Geo Fencing",
+        "category": "Geo Fencing",
+        "breadcrumbs": [
+          "Geo Fencing",
+          "Risk Scores"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/patrons/riskscores",
+        "description": "Calculates location risk scores and patron verification attributes based on IP, country, and state parameters."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": true,
+          "description": "Fixed value: geoFencing",
+          "sample": "geoFencing"
+        },
+        {
+          "name": "essentials",
+          "type": "object",
+          "required": true,
+          "children": [
+            {
+              "name": "ip",
+              "type": "string",
+              "required": true,
+              "sample": "14.139.60.1"
+            },
+            {
+              "name": "country",
+              "type": "string",
+              "required": true,
+              "sample": "IN"
+            },
+            {
+              "name": "state",
+              "type": "string",
+              "required": true,
+              "sample": "MH"
+            }
+          ]
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Task name identifier"
+        },
+        {
+          "name": "essentials",
+          "type": "object",
+          "description": "Echoed essentials object",
+          "children": [
+            {
+              "name": "ip",
+              "type": "string"
+            },
+            {
+              "name": "country",
+              "type": "string"
+            },
+            {
+              "name": "state",
+              "type": "string"
+            },
+            {
+              "name": "patronId",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Unique trace transaction ID"
+        },
+        {
+          "name": "patronId",
+          "type": "string",
+          "description": "Patron account reference ID"
+        },
+        {
+          "name": "result",
+          "type": "object",
+          "description": "Detailed location risk scores object",
+          "children": [
+            {
+              "name": "ip",
+              "type": "string",
+              "sample": "49.36.69.110"
+            },
+            {
+              "name": "country",
+              "type": "string",
+              "sample": "INDIA"
+            },
+            {
+              "name": "countryCode",
+              "type": "string",
+              "sample": "IN"
+            },
+            {
+              "name": "state",
+              "type": "string",
+              "sample": "GUJARAT"
+            },
+            {
+              "name": "stateCode",
+              "type": "string",
+              "sample": "GJ"
+            },
+            {
+              "name": "city",
+              "type": "string",
+              "sample": "AHMEDABAD"
+            },
+            {
+              "name": "zipCode",
+              "type": "string",
+              "sample": "380024"
+            },
+            {
+              "name": "timezone",
+              "type": "string",
+              "sample": "IST, Asia/Kolkata"
+            },
+            {
+              "name": "latitude",
+              "type": "number",
+              "sample": 23.0349861
+            },
+            {
+              "name": "longitude",
+              "type": "number",
+              "sample": 72.6320485
+            },
+            {
+              "name": "asn",
+              "type": "string",
+              "sample": "55836"
+            },
+            {
+              "name": "riskip",
+              "type": "boolean",
+              "sample": false
+            },
+            {
+              "name": "validUser",
+              "type": "boolean",
+              "sample": true
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "task": "geoFencing",
+            "essentials": {
+              "ip": "49.36.69.110",
+              "country": "IN",
+              "state": "GJ",
+              "patronId": "64d49c02980af6002257a42e"
+            },
+            "id": "6a2842fba1845e0023a4f65a",
+            "patronId": "64d49c02980af6002257a42e",
+            "result": {
+              "ip": "49.36.69.110",
+              "country": "INDIA",
+              "countryCode": "IN",
+              "state": "GUJARAT",
+              "stateCode": "GJ",
+              "city": "AHMEDABAD",
+              "zipCode": "380024",
+              "timezone": "IST, Asia/Kolkata",
+              "latitude": 23.0349861,
+              "longitude": 72.6320485,
+              "asn": "55836",
+              "riskip": false,
+              "validUser": true
+            }
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid IP"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/patrons/riskscores \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"task\": \"geoFencing\",\n    \"essentials\": {\n      \"ip\": \"14.139.60.1\",\n      \"country\": \"IN\",\n      \"state\": \"MH\"\n    }\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/patrons/riskscores'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'task': 'geoFencing', 'essentials': {'ip': '14.139.60.1', 'country': 'IN', 'state': 'MH'}}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/patrons/riskscores', {\n  task: 'geoFencing', essentials: { ip: '14.139.60.1', country: 'IN', state: 'MH' }\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "reverse-geocode": {
+      "id": "reverse-geocode",
+      "meta": {
+        "title": "5. Reverse Geocode",
+        "category": "Geo Fencing",
+        "breadcrumbs": [
+          "Geo Fencing",
+          "Reverse Geocode"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode",
+        "description": "Converts geographic latitude and longitude parameters into physical street address."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "latitude",
+          "type": "string",
+          "required": true,
+          "sample": "21.153774"
+        },
+        {
+          "name": "longitude",
+          "type": "string",
+          "required": true,
+          "sample": "79.042549"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Full formatted address string"
+        },
+        {
+          "name": "latitude",
+          "type": "string",
+          "description": "Resolved latitude string"
+        },
+        {
+          "name": "longitude",
+          "type": "string",
+          "description": "Resolved longitude string"
+        },
+        {
+          "name": "confidenceScore",
+          "type": "number",
+          "description": "Location confidence score"
+        },
+        {
+          "name": "city",
+          "type": "string",
+          "description": "City name"
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "description": "State name"
+        },
+        {
+          "name": "stateCode",
+          "type": "string",
+          "description": "2-letter state code e.g. GJ"
+        },
+        {
+          "name": "country",
+          "type": "string",
+          "description": "Country name e.g. INDIA"
+        },
+        {
+          "name": "countryCode",
+          "type": "string",
+          "description": "Country code e.g. IN"
+        },
+        {
+          "name": "zipcode",
+          "type": "string",
+          "description": "Postal pincode"
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "address": "9, SANIDHYA AVENUE, CHANDLODIYA, AHMEDABAD, GUJARAT 382481, INDIA",
+            "latitude": "23.0889759",
+            "longitude": "72.54467819999999",
+            "confidenceScore": 1,
+            "city": "AHMEDABAD",
+            "state": "GUJARAT",
+            "stateCode": "GJ",
+            "country": "INDIA",
+            "countryCode": "IN",
+            "zipcode": "382481"
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid IP"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'latitude': '21.153774', 'longitude': '79.042549'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode', {\n  latitude: '21.153774', longitude: '79.042549'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "kyc-ocr": {
+      "id": "kyc-ocr",
+      "meta": {
+        "title": "6. KYC OCR Plus",
+        "category": "KYC Verification",
+        "breadcrumbs": [
+          "KYC",
+          "OCR Plus"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/utility/single-kyc",
+        "description": "Extracts structured text data from publicly accessible image URLs of identity documents."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "url",
+          "type": "array",
+          "required": true,
+          "description": "List of publicly accessible document image URLs",
+          "sample": "[\"https://example.com/uploads/document_front.jpg\", \"https://example.com/uploads/document_back.jpg\"]"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "object",
+          "description": "Extracted document OCR result payload",
+          "children": [
+            {
+              "name": "action",
+              "type": "string",
+              "sample": "extract"
+            },
+            {
+              "name": "completedAt",
+              "type": "string"
+            },
+            {
+              "name": "createdAt",
+              "type": "string"
+            },
+            {
+              "name": "requestId",
+              "type": "string"
+            },
+            {
+              "name": "aadhaar",
+              "type": "object",
+              "children": [
+                {
+                  "name": "uid",
+                  "type": "string",
+                  "sample": "000000001234"
+                },
+                {
+                  "name": "vid",
+                  "type": "string",
+                  "sample": ""
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "sample": "Rajesh Kumar"
+                },
+                {
+                  "name": "dob",
+                  "type": "string",
+                  "sample": "01/01/1980"
+                },
+                {
+                  "name": "yob",
+                  "type": "string",
+                  "sample": "1980"
+                },
+                {
+                  "name": "pincode",
+                  "type": "string",
+                  "sample": "560001"
+                },
+                {
+                  "name": "address",
+                  "type": "string",
+                  "sample": "MG Road, Bangalore, Karnataka 560001"
+                },
+                {
+                  "name": "gender",
+                  "type": "string",
+                  "sample": ""
+                },
+                {
+                  "name": "splitAddress",
+                  "type": "object",
+                  "children": [
+                    {
+                      "name": "district",
+                      "type": "array"
+                    },
+                    {
+                      "name": "state",
+                      "type": "array"
+                    },
+                    {
+                      "name": "city",
+                      "type": "array"
+                    },
+                    {
+                      "name": "pincode",
+                      "type": "string"
+                    },
+                    {
+                      "name": "country",
+                      "type": "array"
+                    },
+                    {
+                      "name": "addressLine",
+                      "type": "string"
+                    }
+                  ]
+                },
+                {
+                  "name": "uidHash",
+                  "type": "string"
+                },
+                {
+                  "name": "validBackAndFront",
+                  "type": "boolean"
+                }
+              ]
+            },
+            {
+              "name": "passport",
+              "type": "array"
+            },
+            {
+              "name": "drivingLicense",
+              "type": "array"
+            },
+            {
+              "name": "pan",
+              "type": "array"
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "sample": "completed"
+            },
+            {
+              "name": "taskId",
+              "type": "string"
+            },
+            {
+              "name": "docType",
+              "type": "string",
+              "sample": "aadhaar"
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": {
+              "action": "extract",
+              "completedAt": "2026-06-09T22:30:20",
+              "createdAt": "1781024420.4687142",
+              "requestId": "57f4828a-b67f-4241-8f09-56612408addd",
+              "aadhaar": {
+                "uid": "000000001234",
+                "vid": "",
+                "name": "Rajesh Kumar",
+                "dob": "01/01/1980",
+                "yob": "1980",
+                "pincode": "560001",
+                "address": "MG Road, Bangalore, Karnataka 560001",
+                "gender": "",
+                "splitAddress": {
+                  "district": [
+                    "BENGALURU URBAN"
+                  ],
+                  "state": [
+                    [
+                      "KARNATAKA",
+                      "KA"
+                    ]
+                  ],
+                  "city": [
+                    "BANGALORE NORTH"
+                  ],
+                  "pincode": "560001",
+                  "country": [
+                    "IN",
+                    "IND",
+                    "INDIA"
+                  ],
+                  "addressLine": "MG ROAD,BANGALORE"
+                },
+                "uidHash": "ec5dc8ab6b72dccea7b3ed70383f0acfb8e85bec73d86f6ccc35eacb8ca67f01",
+                "validBackAndFront": true
+              },
+              "passport": [],
+              "drivingLicense": [],
+              "pan": [],
+              "status": "completed",
+              "taskId": "",
+              "docType": "aadhaar"
+            }
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid IP"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/utility/single-kyc \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"url\": [\n      \"https://example.com/uploads/document_front.jpg\",\n      \"https://example.com/uploads/document_back.jpg\"\n    ]\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/utility/single-kyc'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'url': ['https://example.com/uploads/document_front.jpg', 'https://example.com/uploads/document_back.jpg']}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/utility/single-kyc', {\n  url: ['https://example.com/uploads/document_front.jpg', 'https://example.com/uploads/document_back.jpg']\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "bank-penny-drop": {
+      "id": "bank-penny-drop",
+      "meta": {
+        "title": "7. Bank Verification — Penny Drop",
+        "category": "Banking",
+        "breadcrumbs": [
+          "Banking",
+          "Penny Drop"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification",
+        "description": "Initiates a dynamic bank account verification penny-drop transaction and returns reference ID."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "beneficiaryAccount",
+          "type": "string",
+          "required": true,
+          "sample": "91802001234567"
+        },
+        {
+          "name": "beneficiaryIFSC",
+          "type": "string",
+          "required": true,
+          "sample": "SBIN0001234"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "object",
+          "children": [
+            {
+              "name": "active",
+              "type": "string",
+              "sample": "yes"
+            },
+            {
+              "name": "reason",
+              "type": "string",
+              "sample": "success"
+            },
+            {
+              "name": "nameMatch",
+              "type": "string",
+              "sample": "not available"
+            },
+            {
+              "name": "mobileMatch",
+              "type": "string",
+              "sample": "not available"
+            },
+            {
+              "name": "auditTrail",
+              "type": "object",
+              "children": [
+                {
+                  "name": "nature",
+                  "type": "string",
+                  "sample": "BANK RRN"
+                },
+                {
+                  "name": "value",
+                  "type": "string",
+                  "sample": "616022001415"
+                },
+                {
+                  "name": "timestamp",
+                  "type": "string",
+                  "sample": "2026-06-09T16:47:11.003Z"
+                }
+              ]
+            },
+            {
+              "name": "nameMatchScore",
+              "type": "string",
+              "sample": "not available"
+            },
+            {
+              "name": "bankTransfer",
+              "type": "object",
+              "children": [
+                {
+                  "name": "response",
+                  "type": "string",
+                  "sample": "Transaction Successful"
+                },
+                {
+                  "name": "bankRRN",
+                  "type": "string",
+                  "sample": "6160223432423415"
+                },
+                {
+                  "name": "beneName",
+                  "type": "string",
+                  "sample": "Test Name"
+                },
+                {
+                  "name": "beneMMID",
+                  "type": "string",
+                  "sample": ""
+                },
+                {
+                  "name": "beneMobile",
+                  "type": "string",
+                  "sample": ""
+                },
+                {
+                  "name": "beneIFSC",
+                  "type": "string",
+                  "sample": "SBIN0060447"
+                }
+              ]
+            },
+            {
+              "name": "referenceid",
+              "type": "string",
+              "description": "Transaction reference ID required for step 8",
+              "sample": "hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9"
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": {
+              "active": "yes",
+              "reason": "success",
+              "nameMatch": "not available",
+              "mobileMatch": "not available",
+              "auditTrail": {
+                "nature": "BANK RRN",
+                "value": "616022001415",
+                "timestamp": "2026-06-09T16:47:11.003Z"
+              },
+              "nameMatchScore": "not available",
+              "bankTransfer": {
+                "response": "Transaction Successful",
+                "bankRRN": "6160223432423415",
+                "beneName": "Test Name",
+                "beneMMID": "",
+                "beneMobile": "",
+                "beneIFSC": "SBIN0060447"
+              },
+              "referenceid": "hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9"
+            }
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid IP"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'beneficiaryAccount': '91802001234567', 'beneficiaryIFSC': 'SBIN0001234'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification', {\n  beneficiaryAccount: '91802001234567', beneficiaryIFSC: 'SBIN0001234'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "bank-verify-amount": {
+      "id": "bank-verify-amount",
+      "meta": {
+        "title": "8. Bank Verification — Verify Amount",
+        "category": "Banking",
+        "breadcrumbs": [
+          "Banking",
+          "Verify Amount"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced",
+        "description": "Verifies the exact credited penny amount using the referenceid returned from the initial penny-drop call."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "amount",
+          "type": "string",
+          "required": true,
+          "sample": "1.05"
+        },
+        {
+          "name": "referenceid",
+          "type": "string",
+          "required": true,
+          "sample": "hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "object",
+          "children": [
+            {
+              "name": "amountMatch",
+              "type": "string",
+              "sample": "true"
+            },
+            {
+              "name": "owerName",
+              "type": "string",
+              "description": "Owner Name (Preserve raw field spelling per provider note)",
+              "sample": "Test Name"
+            },
+            {
+              "name": "mobile",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "mmid",
+              "type": "string",
+              "sample": ""
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": {
+              "amountMatch": "true",
+              "owerName": "Test Name",
+              "mobile": "",
+              "mmid": ""
+            }
+          }
+        },
+        {
+          "code": 401,
+          "label": "401 Unauthorized",
+          "response": {
+            "status": false,
+            "error_code": 401,
+            "error_description": "Invalid IP"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'amount': '1.05', 'referenceid': 'hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced', {\n  amount: '1.05', referenceid: 'hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "shop-establishment": {
+      "id": "shop-establishment",
+      "meta": {
+        "title": "9. Shop & Establishment Verification",
+        "category": "Corporate Verification",
+        "breadcrumbs": [
+          "Corporate",
+          "Shop & Establishment"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/shop-establishment",
+        "description": "Verifies Shop & Establishment registration numbers against state database records."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "registrationNumber",
+          "type": "string",
+          "required": true,
+          "sample": "20190012345"
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "required": true,
+          "sample": "Delhi"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "object",
+          "children": [
+            {
+              "name": "establishmentName",
+              "type": "string",
+              "sample": "PROMAN SECURITECH PVT LTD"
+            },
+            {
+              "name": "registrationNumber",
+              "type": "string",
+              "sample": "2016068267"
+            },
+            {
+              "name": "dateOfCommencement",
+              "type": "string",
+              "sample": "24/04/2009"
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "applicationType",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "actName",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "employerName",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "address",
+              "type": "string",
+              "sample": "305,ASHOK BHAVAN,93,NEHRU PLACE NEAR UCO BANK NEW DELHI, DELHI. PIN-110019"
+            },
+            {
+              "name": "splitAddress",
+              "type": "object",
+              "children": [
+                {
+                  "name": "district",
+                  "type": "array"
+                },
+                {
+                  "name": "state",
+                  "type": "array"
+                },
+                {
+                  "name": "city",
+                  "type": "array"
+                },
+                {
+                  "name": "pincode",
+                  "type": "string"
+                },
+                {
+                  "name": "country",
+                  "type": "array"
+                },
+                {
+                  "name": "addressLine",
+                  "type": "string"
+                }
+              ]
+            },
+            {
+              "name": "mobile",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "emailId",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "validityTo",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "natureOfBusiness",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "acknowledgementNo",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "establishmentId",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "certificateFile",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "category",
+              "type": "string",
+              "sample": "COMMERCIAL ESTABLISHMENT"
+            },
+            {
+              "name": "renewalPosition",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "previousRegistrationCertificate",
+              "type": "string",
+              "sample": ""
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": {
+              "establishmentName": "PROMAN SECURITECH PVT LTD",
+              "registrationNumber": "2016068267",
+              "dateOfCommencement": "24/04/2009",
+              "status": "",
+              "applicationType": "",
+              "actName": "",
+              "employerName": "",
+              "address": "305,ASHOK BHAVAN,93,NEHRU PLACE NEAR UCO BANK NEW DELHI, DELHI. PIN-110019",
+              "splitAddress": {
+                "district": [
+                  "SOUTH EAST"
+                ],
+                "state": [
+                  [
+                    "DELHI",
+                    "DL"
+                  ]
+                ],
+                "city": [
+                  "NEW DELHI"
+                ],
+                "pincode": "110019",
+                "country": [
+                  "IN",
+                  "IND",
+                  "INDIA"
+                ],
+                "addressLine": "305,ASHOK BHAVAN,93,NEHRU PLACE"
+              },
+              "mobile": "",
+              "emailId": "",
+              "validityTo": "",
+              "natureOfBusiness": "",
+              "acknowledgementNo": "",
+              "establishmentId": "",
+              "certificateFile": "",
+              "category": "COMMERCIAL ESTABLISHMENT",
+              "renewalPosition": "",
+              "previousRegistrationCertificate": ""
+            }
+          }
+        },
+        {
+          "code": 400,
+          "label": "400 Bad Request",
+          "response": {
+            "Name": "error",
+            "message": "Invalid State, Please refer Docs.",
+            "Status": 400,
+            "reason": "VALIDATION_ERROR",
+            "type": "Bad Request",
+            "statusCode": 400
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/shop-establishment \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/shop-establishment'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'registrationNumber': '20190012345', 'state': 'Delhi'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/shop-establishment', {\n  registrationNumber: '20190012345', state: 'Delhi'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    },
+    "epf-uan": {
+      "id": "epf-uan",
+      "meta": {
+        "title": "10. EPF UAN Validation",
+        "category": "Corporate Verification",
+        "breadcrumbs": [
+          "Corporate",
+          "EPF UAN Validation"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/fetch-employment-history",
+        "description": "Fetches complete employee service record and employment history using Universal Account Number (UAN)."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "uan",
+          "type": "string",
+          "required": true,
+          "description": "12-digit Universal Account Number",
+          "sample": "101234567890"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "array",
+          "description": "List of employment history records",
+          "children": [
+            {
+              "name": "uan",
+              "type": "string",
+              "sample": "101355435463312"
+            },
+            {
+              "name": "memberId",
+              "type": "string",
+              "sample": "GJRAJ2081543543500010025"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "sample": "**** ******"
+            },
+            {
+              "name": "fatherOrHusbandName",
+              "type": "string",
+              "sample": "***** ******"
+            },
+            {
+              "name": "establishmentId",
+              "type": "string",
+              "sample": "GJRAJ2054354309000"
+            },
+            {
+              "name": "establishmentName",
+              "type": "string",
+              "sample": "****** *******"
+            },
+            {
+              "name": "dateOfJoining",
+              "type": "string",
+              "sample": "15-JAN-2024"
+            },
+            {
+              "name": "dateOfExit",
+              "type": "string",
+              "sample": ""
+            },
+            {
+              "name": "tenureOfEmployment",
+              "type": "number",
+              "sample": 28
+            }
+          ]
+        },
+        {
+          "name": "additionalDetails",
+          "type": "object",
+          "description": "Detailed UAN employee & employer payload",
+          "children": [
+            {
+              "name": "limitedOutput",
+              "type": "boolean",
+              "sample": false
+            },
+            {
+              "name": "uanDataSource",
+              "type": "array"
+            },
+            {
+              "name": "recentEmployerData",
+              "type": "object"
+            },
+            {
+              "name": "uanDetails",
+              "type": "array"
+            }
+          ]
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": [
+              {
+                "uan": "101355435463312",
+                "memberId": "GJRAJ2081543543500010025",
+                "name": "**** ******",
+                "fatherOrHusbandName": "***** ******",
+                "establishmentId": "GJRAJ2054354309000",
+                "establishmentName": "****** *******",
+                "dateOfJoining": "15-JAN-2024",
+                "dateOfExit": "",
+                "tenureOfEmployment": 28
+              }
+            ],
+            "additionalDetails": {
+              "limitedOutput": false,
+              "uanDataSource": [
+                {
+                  "uan": "101355435363312",
+                  "source": "uan"
+                }
+              ],
+              "recentEmployerData": {
+                "establishmentName": "Test Name",
+                "establishmentId": "GJRAJ205435409000",
+                "memberId": "GJRAJ20810000001005435",
+                "dateOfExit": "",
+                "dateOfJoining": "15-JAN-2024",
+                "leaveReason": "",
+                "employerConfidenceScore": null
+              },
+              "uanDetails": [
+                {
+                  "101355963312": {
+                    "basicDetails": {
+                      "gender": "MALE",
+                      "dateOfBirth": "1993-03-22",
+                      "employeeConfidenceScore": null,
+                      "name": "Test Name",
+                      "mobile": "",
+                      "aadhaarVerificationStatus": 1
+                    },
+                    "employmentDetails": {
+                      "establishmentName": "Test Company",
+                      "establishmentId": "GJRAJ2081009000",
+                      "memberId": "GJRAJ2081009000010025",
+                      "dateOfExit": "",
+                      "dateOfJoining": "15-JAN-2024",
+                      "leaveReason": "",
+                      "employerConfidenceScore": null
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "code": 400,
+          "label": "400 Bad Request",
+          "response": {
+            "status": false,
+            "error_code": 400,
+            "error_description": "Invalid value for /mobileNumber"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "Curl",
+          "icon": "curl"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "node",
+          "name": "Node",
+          "icon": "node"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/fetch-employment-history \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"uan\": \"101234567890\"\n  }'",
+        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/fetch-employment-history'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'uan': '101234567890'}, headers=headers)\nprint(res.json())",
+        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/fetch-employment-history', {\n  uan: '101234567890'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+      }
+    }
+  }
+}

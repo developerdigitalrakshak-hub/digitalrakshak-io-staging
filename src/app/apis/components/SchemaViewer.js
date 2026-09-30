@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import styles from '../styles/demoApi.module.scss';
+import styles from '../styles/apiDocs.module.scss';
 
 function TreeRow({ item, level = 0 }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -52,7 +52,7 @@ export default function SchemaViewer({ data }) {
         <h2 className={styles.sectionHeading}>Request</h2>
 
         {/* Header Parameters */}
-        {data.headerParameters && data.headerParameters.length > 0 && (
+        {data?.headerParameters && data.headerParameters.length > 0 && (
           <div className={styles.subSection}>
             <h3 className={styles.subHeading}>Header Parameters</h3>
             <div className={styles.headerParamsList}>
@@ -68,7 +68,7 @@ export default function SchemaViewer({ data }) {
         )}
 
         {/* Body Parameters */}
-        {data.requestBody && data.requestBody.length > 0 && (
+        {data?.requestBody && data.requestBody.length > 0 && (
           <div className={styles.subSection}>
             <h3 className={styles.subHeading}>Body</h3>
             <div className={styles.treeList}>
@@ -83,7 +83,7 @@ export default function SchemaViewer({ data }) {
       {/* Response Section */}
       <section className={styles.docSection}>
         <h2 className={styles.sectionHeading}>Response</h2>
-        {data.responseBody && data.responseBody.length > 0 && (
+        {data?.responseBody && data.responseBody.length > 0 && (
           <div className={styles.treeList}>
             {data.responseBody.map((item, idx) => (
               <TreeRow key={item.name || idx} item={item} level={0} />

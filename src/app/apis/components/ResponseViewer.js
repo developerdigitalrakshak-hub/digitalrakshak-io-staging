@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import styles from '../styles/demoApi.module.scss';
+import styles from '../styles/apiDocs.module.scss';
 
 export default function ResponseViewer({ statusCodes = [] }) {
   const [selectedCode, setSelectedCode] = useState(statusCodes[0]?.code || 200);
@@ -22,6 +22,41 @@ export default function ResponseViewer({ statusCodes = [] }) {
     if (code >= 200 && code < 300) return '#22c55e'; // Green
     if (code >= 400 && code < 500) return '#f59e0b'; // Amber
     return '#ef4444'; // Red
+  };
+
+  const renderJsonLine = (line, idx) => {
+    if (!line) return <div key={idx} className={styles.codeLine}>&nbsp;</div>;
+
+    const match = line.match(/^(\s*)("[\w\d_\-\.\s]+"): (.*)$/);
+    if (match) {
+      const [, indent, key, val] = match;
+      let valElement;
+
+      if (val.startsWith('"')) {
+        valElement = <span style={{ color: '#e2e8f0' }}>{val}</span>;
+      } else if (val.includes('true') || val.includes('false')) {
+        valElement = <span style={{ color: '#818cf8' }}>{val}</span>;
+      } else if (!isNaN(parseFloat(val))) {
+        valElement = <span style={{ color: '#38bdf8' }}>{val}</span>;
+      } else {
+        valElement = <span style={{ color: '#cbd5e1' }}>{val}</span>;
+      }
+
+      return (
+        <div key={idx} className={styles.codeLine}>
+          <span>
+            {indent}
+            <span style={{ color: '#f43f5e', fontWeight: 500 }}>{key}</span>: {valElement}
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <div key={idx} className={styles.codeLine}>
+        <span>{line}</span>
+      </div>
+    );
   };
 
   return (
@@ -78,19 +113,7 @@ export default function ResponseViewer({ statusCodes = [] }) {
         <div className={styles.codeBody}>
           <pre className={styles.preCode}>
             <code>
-              {formattedJson.split('\n').map((line, idx) => (
-                <div key={idx} className={styles.codeLine}>
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: line
-                        .replace(/"([^"]+)":/g, '<span style="color: #f43f5e; font-weight: 500;">"$1"</span>:')
-                        .replace(/:\s*"([^"]*)"/g, ': <span style="color: #e2e8f0;">"$1"</span>')
-                        .replace(/:\s*(true|false)/g, ': <span style="color: #818cf8;">$1</span>')
-                        .replace(/:\s*(\d+\.?\d*)/g, ': <span style="color: #38bdf8;">$1</span>')
-                    }}
-                  />
-                </div>
-              ))}
+              {formattedJson.split('\n').map((line, idx) => renderJsonLine(line, idx))}
             </code>
           </pre>
         </div>

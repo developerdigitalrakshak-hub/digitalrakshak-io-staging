@@ -3,9 +3,12 @@ import { getApiBaseUrl, getApiTimeout, getApiHeaders, getConfig } from './yamlCo
 export const apiConfig = {
   baseUrl: getApiBaseUrl(),
   timeout: getApiTimeout(),
-  appId: getConfig('api.appId', 'rostering_app_v1'),
-  clientId: getConfig('api.clientId', 'rostering_client_987654321'),
+  apiKey: getConfig('api.apiKey', process.env.NEXT_PUBLIC_API_KEY || 'your_uat_api_key'),
+  apiSecret: getConfig('api.apiSecret', process.env.NEXT_PUBLIC_API_SECRET || 'your_uat_api_secret'),
+  appId: getConfig('api.appId', 'digitalrakshak_app'),
+  clientId: getConfig('api.clientId', 'digitalrakshak_client'),
   headers: getApiHeaders(),
 };
 
 export default apiConfig;
+

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Next.js + Redux Saga Showcase",
-  description: "A modern Next.js project with Redux Saga & Redux Persist architecture",
+  title: "DigitalRakshak APIs",
+  description: "",
 };
 
 export default function RootLayout({ children }) {

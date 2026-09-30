@@ -10,12 +10,24 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    const isTokenEndpoint = config.url && config.url.includes('/v1/oauth/token');
+
+    if (isTokenEndpoint) {
+      if (!config.headers.Authorization && apiConfig.apiSecret) {
+        config.headers.Authorization = `Bearer ${apiConfig.apiSecret}`;
+      }
+    } else {
+      if (typeof window !== 'undefined') {
+        const token = localStorage.getItem('token') || localStorage.getItem('access_token');
+        if (token && !config.headers.Authorization) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      }
+      if (!config.headers.apikey && apiConfig.apiKey) {
+        config.headers.apikey = apiConfig.apiKey;
       }
     }
+
     config.headers['X-Request-Timestamp'] = new Date().toISOString();
     return config;
   },
@@ -35,3 +47,4 @@ axiosClient.interceptors.response.use(
 );
 
 export default axiosClient;
+
