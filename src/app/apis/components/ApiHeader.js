@@ -26,10 +26,10 @@ export default function ApiHeader({ data, onOpenSandbox }) {
           ))}
         </div>
 
-        <button className={styles.sandboxButton} onClick={onOpenSandbox}>
+        {/* <button className={styles.sandboxButton} onClick={onOpenSandbox}>
           <span className={styles.sandboxDot}></span>
           Test in Sandbox
-        </button>
+        </button> */}
       </div>
 
       <h1 className={styles.apiTitle}>

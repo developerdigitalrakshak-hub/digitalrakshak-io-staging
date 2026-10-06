@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import ParticleBackground from './components/ParticleBackground';
 import Sidebar from './components/Sidebar';
+import GstNavbar from './components/GstNavbar';
+import Footer from './components/Footer';
 import initialApiData from './data/apiData.json';
 import styles from './styles/apiDocs.module.scss';
 
@@ -44,7 +46,10 @@ export default function ApisLayout({ children }) {
       {/* Ambient Particle Starfield Background */}
       <ParticleBackground />
 
-      {/* Top Mobile & Tablet Navigation Bar with Hamburger */}
+      {/* Global Top Navbar */}
+      <GstNavbar onToggleApiSidebar={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+
+      {/* Top Mobile & Tablet Sub-bar with Hamburger to open API endpoints */}
       <header className={styles.mobileNavbar}>
         <div className={styles.mobileNavbarLeft}>
           <button
@@ -62,9 +67,11 @@ export default function ApisLayout({ children }) {
 
           <div className={styles.mobileBrand}>
             <span className={styles.mobileBrandIcon}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
+              <img
+                src="/assets/logo.png"
+                alt="DigitalRakshak Logo"
+                style={{ height: '20px' }}
+              />
             </span>
             <span className={styles.mobileBrandTitle}>DigitalRakshak</span>
             <span className={styles.mobileBrandBadge}>APIs</span>
@@ -104,6 +111,9 @@ export default function ApisLayout({ children }) {
           {children}
         </main>
       </div>
+
+      {/* Global Brand Footer */}
+      <Footer />
     </div>
   );
 }

@@ -61,9 +61,11 @@ export default function Sidebar({ data, activeEndpoint, onSelectEndpoint, isOpen
           onClick={() => onClose && onClose()}
         >
           <span className={styles.homeIcon}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
+            <img
+              src="/assets/logo.png"
+              alt="DigitalRakshak Logo"
+              style={{ height: '20px' }}
+            />
           </span>
           <span className={styles.homeText}>DigitalRakshak APIs</span>
         </Link>
@@ -150,9 +152,8 @@ export default function Sidebar({ data, activeEndpoint, onSelectEndpoint, isOpen
                       <Link
                         key={ep.id}
                         href={href}
-                        className={`${styles.endpointItem} ${
-                          isActive ? styles.activeEndpoint : ''
-                        }`}
+                        className={`${styles.endpointItem} ${isActive ? styles.activeEndpoint : ''
+                          }`}
                         onClick={() => handleEndpointClick(ep.id)}
                       >
                         <span className={`${styles.methodBadge} ${styles[ep.method.toLowerCase()] || styles.post}`}>

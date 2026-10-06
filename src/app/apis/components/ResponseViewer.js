@@ -6,9 +6,12 @@ import styles from '../styles/apiDocs.module.scss';
 export default function ResponseViewer({ statusCodes = [] }) {
   const [selectedCode, setSelectedCode] = useState(statusCodes[0]?.code || 200);
   const [copied, setCopied] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const currentStatusObj = statusCodes.find((sc) => sc.code === Number(selectedCode)) || statusCodes[0];
+  const activeCode = statusCodes.some((sc) => Number(sc.code) === Number(selectedCode))
+    ? selectedCode
+    : (statusCodes[0]?.code || 200);
+
+  const currentStatusObj = statusCodes.find((sc) => Number(sc.code) === Number(activeCode)) || statusCodes[0];
   const responseData = currentStatusObj?.response || {};
   const formattedJson = JSON.stringify(responseData, null, 2);
 
@@ -61,34 +64,30 @@ export default function ResponseViewer({ statusCodes = [] }) {
 
   return (
     <div className={styles.responseContainer}>
-      <div className={styles.statusDropdownWrapper}>
-        <button
-          className={styles.statusSelectButton}
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        >
-          <span className={styles.statusDot} style={{ backgroundColor: getDotColor(selectedCode) }}></span>
-          <span className={styles.statusCodeText}>{selectedCode}</span>
-          <span className={styles.dropdownChevron}>▼</span>
-        </button>
-
-        {isDropdownOpen && (
-          <div className={styles.statusDropdownMenu}>
-            {statusCodes.map((sc) => (
-              <div
+      {statusCodes && statusCodes.length > 0 && (
+        <div className={styles.statusTabsBar}>
+          {statusCodes.map((sc) => {
+            const isActive = Number(sc.code) === Number(activeCode);
+            return (
+              <button
                 key={sc.code}
-                className={`${styles.statusOption} ${sc.code === selectedCode ? styles.activeStatusOption : ''}`}
-                onClick={() => {
-                  setSelectedCode(sc.code);
-                  setIsDropdownOpen(false);
-                }}
+                type="button"
+                className={`${styles.statusTab} ${isActive ? styles.activeStatusTab : ''}`}
+                onClick={() => setSelectedCode(sc.code)}
               >
-                <span className={styles.statusDot} style={{ backgroundColor: getDotColor(sc.code) }}></span>
-                <span>{sc.label || sc.code}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+                <span
+                  className={styles.statusDot}
+                  style={{
+                    backgroundColor: getDotColor(sc.code),
+                    boxShadow: isActive ? `0 0 8px ${getDotColor(sc.code)}` : 'none',
+                  }}
+                />
+                <span className={styles.statusCodeText}>{sc.label || sc.code}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div className={styles.codeSampleCard}>
         <div className={styles.codeHeader}>
