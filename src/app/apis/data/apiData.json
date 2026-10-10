@@ -81,8 +81,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -90,15 +95,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
         "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/v1/oauth/token \\\n  --header 'Authorization: Bearer <API_SECRET>' \\\n  --header 'Content-Type: application/x-www-form-urlencoded' \\\n  --data 'grant_type=client_credentials'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/v1/oauth/token'\nheaders = {\n    'Authorization': 'Bearer <API_SECRET>',\n    'Content-Type': 'application/x-www-form-urlencoded'\n}\ndata = {'grant_type': 'client_credentials'}\n\nres = requests.post(url, headers=headers, data=data)\nprint(res.json())",
-        "node": "const axios = require('axios');\nconst qs = require('qs');\n\naxios.post('https://uat.digitalrakshak.io/v1/oauth/token', qs.stringify({ grant_type: 'client_credentials' }), {\n  headers: {\n    'Authorization': 'Bearer <API_SECRET>',\n    'Content-Type': 'application/x-www-form-urlencoded'\n  }\n}).then(res => console.log(res.data));"
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/v1/oauth/token?include_translations=true' \\\n  --header 'Authorization: Bearer <API_SECRET>' \\\n  --header 'Content-Type: application/x-www-form-urlencoded' \\\n  --header 'Accept-Language: en,hi' \\\n  --data 'grant_type=client_credentials'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/v1/oauth/token\"\nheaders = {\n    \"Authorization\": \"Bearer <API_SECRET>\",\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n}\ndata = {\n    \"grant_type\": \"client_credentials\"\n}\n\nresponse = requests.post(url, headers=headers, data=data)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <API_SECRET>\",\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n  },\n  body: new URLSearchParams({\n    \"grant_type\": \"client_credentials\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/v1/oauth/token', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <API_SECRET>\",\n    \"Content-Type\": \"application/x-www-form-urlencoded\"\n  },\n  body: new URLSearchParams({\n    \"grant_type\": \"client_credentials\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/v1/oauth/token', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/v1/oauth/token\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => http_build_query([\n  \"grant_type\" => \"client_credentials\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <API_SECRET>\",\n    \"Content-Type: application/x-www-form-urlencoded\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/v1/oauth/token\"\n\tpayload := strings.NewReader(`grant_type=client_credentials`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <API_SECRET>\")\n\treq.Header.Add(\"Content-Type\", \"application/x-www-form-urlencoded\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/v1/oauth/token\"))\n            .header(\"Authorization\", \"Bearer <API_SECRET>\")\n            .header(\"Content-Type\", \"application/x-www-form-urlencoded\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"grant_type=client_credentials\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\n\nurl = URI(\"https://uat.digitalrakshak.io/v1/oauth/token\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <API_SECRET>'\nrequest[\"Content-Type\"] = 'application/x-www-form-urlencoded'\nrequest.body = URI.encode_www_form({\n  \"grant_type\": \"client_credentials\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "mobile-silent": {
@@ -222,8 +253,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -231,15 +267,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'mobileNumber': '9876543210', 'additionalDetails': 'yes'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent', {\n  mobileNumber: '9876543210', additionalDetails: 'yes'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"mobileNumber\": \"9876543210\",\n    \"additionalDetails\": \"yes\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"mobileNumber\" => \"9876543210\",\n  \"additionalDetails\" => \"yes\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent\"\n\tpayload := strings.NewReader(`{\n  \"mobileNumber\": \"9876543210\",\n  \"additionalDetails\": \"yes\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"mobileNumber\\\": \\\"9876543210\\\",\\n  \\\"additionalDetails\\\": \\\"yes\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/phones/phone-kyc-non-consent\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"mobileNumber\": \"9876543210\",\n  \"additionalDetails\": \"yes\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "mobile-otp": {
@@ -324,8 +386,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -333,15 +400,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/phone/generateOtp \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/phone/generateOtp'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'countryCode': '91', 'mobileNumber': '9876543210'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/phone/generateOtp', {\n  countryCode: '91', mobileNumber: '9876543210'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/phone/generateOtp \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/phone/generateOtp?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/phone/generateOtp\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/phone/generateOtp', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"countryCode\": \"91\",\n    \"mobileNumber\": \"9876543210\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/phone/generateOtp', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/phone/generateOtp\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"countryCode\" => \"91\",\n  \"mobileNumber\" => \"9876543210\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/phone/generateOtp\"\n\tpayload := strings.NewReader(`{\n  \"countryCode\": \"91\",\n  \"mobileNumber\": \"9876543210\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/phone/generateOtp\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"countryCode\\\": \\\"91\\\",\\n  \\\"mobileNumber\\\": \\\"9876543210\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/phone/generateOtp\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"countryCode\": \"91\",\n  \"mobileNumber\": \"9876543210\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "geo-fencing": {
@@ -563,8 +656,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -572,15 +670,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/patrons/riskscores \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"task\": \"geoFencing\",\n    \"essentials\": {\n      \"ip\": \"14.139.60.1\",\n      \"country\": \"IN\",\n      \"state\": \"MH\"\n    }\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/patrons/riskscores'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'task': 'geoFencing', 'essentials': {'ip': '14.139.60.1', 'country': 'IN', 'state': 'MH'}}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/patrons/riskscores', {\n  task: 'geoFencing', essentials: { ip: '14.139.60.1', country: 'IN', state: 'MH' }\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/patrons/riskscores \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"task\": \"geoFencing\",\n    \"essentials\": \"sample\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/patrons/riskscores?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"task\": \"geoFencing\",\n    \"essentials\": \"sample\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/patrons/riskscores\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"task\": \"geoFencing\",\n    \"essentials\": \"sample\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"task\": \"geoFencing\",\n    \"essentials\": \"sample\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/patrons/riskscores', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"task\": \"geoFencing\",\n    \"essentials\": \"sample\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/patrons/riskscores', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/patrons/riskscores\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"task\" => \"geoFencing\",\n  \"essentials\" => \"sample\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/patrons/riskscores\"\n\tpayload := strings.NewReader(`{\n  \"task\": \"geoFencing\",\n  \"essentials\": \"sample\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/patrons/riskscores\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"task\\\": \\\"geoFencing\\\",\\n  \\\"essentials\\\": \\\"sample\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/patrons/riskscores\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"task\": \"geoFencing\",\n  \"essentials\": \"sample\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "reverse-geocode": {
@@ -708,8 +832,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -717,15 +846,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'latitude': '21.153774', 'longitude': '79.042549'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode', {\n  latitude: '21.153774', longitude: '79.042549'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"latitude\": \"21.153774\",\n    \"longitude\": \"79.042549\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"latitude\" => \"21.153774\",\n  \"longitude\" => \"79.042549\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode\"\n\tpayload := strings.NewReader(`{\n  \"latitude\": \"21.153774\",\n  \"longitude\": \"79.042549\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"latitude\\\": \\\"21.153774\\\",\\n  \\\"longitude\\\": \\\"79.042549\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/geocoding/reverse-geocode\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"latitude\": \"21.153774\",\n  \"longitude\": \"79.042549\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "kyc-ocr": {
@@ -967,8 +1122,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -976,15 +1136,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/utility/single-kyc \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"url\": [\n      \"https://example.com/uploads/document_front.jpg\",\n      \"https://example.com/uploads/document_back.jpg\"\n    ]\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/utility/single-kyc'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'url': ['https://example.com/uploads/document_front.jpg', 'https://example.com/uploads/document_back.jpg']}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/utility/single-kyc', {\n  url: ['https://example.com/uploads/document_front.jpg', 'https://example.com/uploads/document_back.jpg']\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/utility/single-kyc \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/utility/single-kyc?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/utility/single-kyc\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/utility/single-kyc', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/utility/single-kyc', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/utility/single-kyc\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"url\" => \"[\\\"https =>//example.com/uploads/document_front.jpg\\\", \\\"https =>//example.com/uploads/document_back.jpg\\\"]\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/utility/single-kyc\"\n\tpayload := strings.NewReader(`{\n  \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/utility/single-kyc\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"url\\\": \\\"[\\\\\"https://example.com/uploads/document_front.jpg\\\\\", \\\\\"https://example.com/uploads/document_back.jpg\\\\\"]\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/utility/single-kyc\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"url\": \"[\\\"https://example.com/uploads/document_front.jpg\\\", \\\"https://example.com/uploads/document_back.jpg\\\"]\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "bank-penny-drop": {
@@ -1167,8 +1353,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -1176,15 +1367,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'beneficiaryAccount': '91802001234567', 'beneficiaryIFSC': 'SBIN0001234'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification', {\n  beneficiaryAccount: '91802001234567', beneficiaryIFSC: 'SBIN0001234'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"beneficiaryAccount\": \"91802001234567\",\n    \"beneficiaryIFSC\": \"SBIN0001234\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"beneficiaryAccount\" => \"91802001234567\",\n  \"beneficiaryIFSC\" => \"SBIN0001234\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification\"\n\tpayload := strings.NewReader(`{\n  \"beneficiaryAccount\": \"91802001234567\",\n  \"beneficiaryIFSC\": \"SBIN0001234\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"beneficiaryAccount\\\": \\\"91802001234567\\\",\\n  \\\"beneficiaryIFSC\\\": \\\"SBIN0001234\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverifications/advancedverification\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"beneficiaryAccount\": \"91802001234567\",\n  \"beneficiaryIFSC\": \"SBIN0001234\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "bank-verify-amount": {
@@ -1285,8 +1502,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -1294,15 +1516,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'amount': '1.05', 'referenceid': 'hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced', {\n  amount: '1.05', referenceid: 'hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"amount\": \"1.05\",\n    \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"amount\" => \"1.05\",\n  \"referenceid\" => \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced\"\n\tpayload := strings.NewReader(`{\n  \"amount\": \"1.05\",\n  \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"amount\\\": \\\"1.05\\\",\\n  \\\"referenceid\\\": \\\"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1-variablepennydrop/bankaccountverification/verifytransferadvanced\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"amount\": \"1.05\",\n  \"referenceid\": \"hlLhQCjK69iRfqSEawJwiXfbhOxoGHOsp9XVRhpUTFgn4RDjLc9\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "shop-establishment": {
@@ -1540,8 +1788,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -1549,15 +1802,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/shop-establishment \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/shop-establishment'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'registrationNumber': '20190012345', 'state': 'Delhi'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/shop-establishment', {\n  registrationNumber: '20190012345', state: 'Delhi'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/shop-establishment \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/shop-establishment?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/shop-establishment\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/shop-establishment', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"registrationNumber\": \"20190012345\",\n    \"state\": \"Delhi\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/shop-establishment', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/shop-establishment\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"registrationNumber\" => \"20190012345\",\n  \"state\" => \"Delhi\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/shop-establishment\"\n\tpayload := strings.NewReader(`{\n  \"registrationNumber\": \"20190012345\",\n  \"state\": \"Delhi\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/shop-establishment\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"registrationNumber\\\": \\\"20190012345\\\",\\n  \\\"state\\\": \\\"Delhi\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/shop-establishment\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"registrationNumber\": \"20190012345\",\n  \"state\": \"Delhi\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
     "epf-uan": {
@@ -1750,8 +2029,13 @@
       "codeLanguages": [
         {
           "id": "curl",
-          "name": "Curl",
+          "name": "cURL",
           "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
         },
         {
           "id": "python",
@@ -1759,15 +2043,41 @@
           "icon": "python"
         },
         {
-          "id": "node",
-          "name": "Node",
-          "icon": "node"
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
         }
       ],
       "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/fetch-employment-history \\\n  --header 'content-type: application/json' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --data '{\n    \"uan\": \"101234567890\"\n  }'",
-        "python": "import requests\n\nurl = 'https://uat.digitalrakshak.io/api/v1/fetch-employment-history'\nheaders = {'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>'}\nres = requests.post(url, json={'uan': '101234567890'}, headers=headers)\nprint(res.json())",
-        "node": "const axios = require('axios');\naxios.post('https://uat.digitalrakshak.io/api/v1/fetch-employment-history', {\n  uan: '101234567890'\n}, { headers: { 'content-type': 'application/json', 'apikey': '<API_KEY>', 'Authorization': 'Bearer <access_token>' } }).then(res => console.log(res.data));"
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/fetch-employment-history \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --data '{\n    \"uan\": \"101234567890\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/fetch-employment-history?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --data '{\n    \"uan\": \"101234567890\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/fetch-employment-history\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n}\npayload = {\n    \"uan\": \"101234567890\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"uan\": \"101234567890\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/fetch-employment-history', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\"\n  },\n  body: JSON.stringify({\n    \"uan\": \"101234567890\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/fetch-employment-history', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/fetch-employment-history\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode([\n  \"uan\" => \"101234567890\"\n]),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/fetch-employment-history\"\n\tpayload := strings.NewReader(`{\n  \"uan\": \"101234567890\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/fetch-employment-history\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"uan\\\": \\\"101234567890\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/fetch-employment-history\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest.body = JSON.dump({\n  \"uan\": \"101234567890\"\n})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     }
   }

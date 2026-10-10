@@ -15,6 +15,15 @@ export default function CodeBlock({ title = 'Request Sample', code = '', languag
   const renderLine = (line, lineIdx) => {
     if (!line) return <div key={lineIdx} className={styles.codeLine}>&nbsp;</div>;
 
+    // Comments
+    if (line.trim().startsWith('//') || line.trim().startsWith('#')) {
+      return (
+        <div key={lineIdx} className={styles.codeLine}>
+          <span style={{ color: '#64748b', fontStyle: 'italic' }}>{line}</span>
+        </div>
+      );
+    }
+
     // cURL command lines
     if (
       line.includes('curl') ||

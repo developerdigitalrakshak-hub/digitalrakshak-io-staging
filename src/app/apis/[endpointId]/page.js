@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, use } from 'react';
+import { useRegisterModal } from '@/context/RegisterModalContext';
 import ApiHeader from '../components/ApiHeader';
 import SchemaViewer from '../components/SchemaViewer';
 import LanguageSelector from '../components/LanguageSelector';
@@ -16,6 +17,7 @@ export default function ApiEndpointPage({ params }) {
 
   const [activeLang, setActiveLang] = useState('curl');
   const [isSandboxOpen, setIsSandboxOpen] = useState(false);
+  const { openRegisterModal } = useRegisterModal();
 
   const currentEndpointData =
     initialApiData.endpoints && initialApiData.endpoints[endpointId]
@@ -32,7 +34,7 @@ export default function ApiEndpointPage({ params }) {
       {/* Header with Title, Method Badge, Endpoint URL & Test in Sandbox button */}
       <ApiHeader
         data={currentEndpointData}
-        onOpenSandbox={() => setIsSandboxOpen(true)}
+        onOpenSandbox={openRegisterModal}
       />
 
       {/* Split View: Left = Documentation Schema, Right = Code Samples & Responses */}

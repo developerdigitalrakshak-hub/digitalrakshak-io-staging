@@ -1,16 +1,26 @@
 'use client';
 
 import { useState } from 'react';
+import { useRegisterModal } from '@/context/RegisterModalContext';
 import styles from '../styles/apiDocs.module.scss';
 
 export default function ApiHeader({ data, onOpenSandbox }) {
   const [copiedUrl, setCopiedUrl] = useState(false);
+  const { openRegisterModal } = useRegisterModal();
 
   const handleCopyUrl = () => {
     if (data?.endpoint?.url) {
       navigator.clipboard.writeText(data.endpoint.url);
       setCopiedUrl(true);
       setTimeout(() => setCopiedUrl(false), 2000);
+    }
+  };
+
+  const handleSandboxClick = () => {
+    if (onOpenSandbox) {
+      onOpenSandbox();
+    } else {
+      openRegisterModal();
     }
   };
 
@@ -26,10 +36,14 @@ export default function ApiHeader({ data, onOpenSandbox }) {
           ))}
         </div>
 
-        {/* <button className={styles.sandboxButton} onClick={onOpenSandbox}>
+        <button
+          className={styles.sandboxButton}
+          onClick={handleSandboxClick}
+          aria-label="Test in Sandbox - Get API Key"
+        >
           <span className={styles.sandboxDot}></span>
           Test in Sandbox
-        </button> */}
+        </button>
       </div>
 
       <h1 className={styles.apiTitle}>

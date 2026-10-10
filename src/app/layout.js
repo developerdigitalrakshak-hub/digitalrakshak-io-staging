@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from "../redux/provider";
+import { RegisterModalProvider } from "@/context/RegisterModalContext";
 import Footer from "./components/Footer";
 import "./globals.scss";
 
@@ -23,8 +24,10 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <ReduxProvider>
-          {children}
-          {/* <Footer /> */}
+          <RegisterModalProvider>
+            {children}
+            {/* <Footer /> */}
+          </RegisterModalProvider>
         </ReduxProvider>
       </body>
     </html>

@@ -67,11 +67,9 @@ export default function ApisLayout({ children }) {
 
           <div className={styles.mobileBrand}>
             <span className={styles.mobileBrandIcon}>
-              <img
-                src="/assets/logo.png"
-                alt="DigitalRakshak Logo"
-                style={{ height: '20px' }}
-              />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
             </span>
             <span className={styles.mobileBrandTitle}>DigitalRakshak</span>
             <span className={styles.mobileBrandBadge}>APIs</span>
