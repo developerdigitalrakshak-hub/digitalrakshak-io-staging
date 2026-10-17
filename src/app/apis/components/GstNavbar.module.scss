@@ -212,6 +212,15 @@
   }
 }
 
+.navBtnLink {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  line-height: inherit;
+  outline: none;
+}
+
 .navUnderline {
   position: absolute;
   bottom: 0;
@@ -359,6 +368,17 @@
     color: #ffffff;
     background: rgba(255, 255, 255, 0.1);
   }
+}
+
+.mobileNavBtnLink {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  line-height: inherit;
+  outline: none;
 }
 
 .mobileMenuDivider {

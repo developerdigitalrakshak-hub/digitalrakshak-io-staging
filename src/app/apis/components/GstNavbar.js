@@ -31,11 +31,12 @@ export default function GstNavbar({ onToggleApiSidebar }) {
   }, []);
 
   const navLinks = [
-    { name: 'API Product', href: '/apis/oauth-token' },
-    { name: 'BGV', href: '/bank-account-verification' },
-    { name: 'E-stamping', href: '/e-stamp-and-e-sign' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Resources', href: '/resources' },
+    { name: 'Home', href: '/' },
+    { name: 'API Products', href: '/apis/oauth-token' },
+    // { name: 'BGV', href: '/bank-account-verification' },
+    // { name: 'E-stamping', href: '/e-stamp-and-e-sign' },
+    // { name: 'Pricing', href: '/pricing' },
+    // { name: 'Resources', href: '/resources' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -66,16 +67,29 @@ export default function GstNavbar({ onToggleApiSidebar }) {
               className={`${styles.capsuleNav} ${isScrolled ? styles.scrolled : ''}`}
               aria-label="Main Navigation"
             >
-              {navLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={`${styles.navLink} ${isScrolled ? styles.scrolled : ''}`}
-                >
-                  <span>{item.name}</span>
-                  <span className={styles.navUnderline} aria-hidden="true" />
-                </a>
-              ))}
+              {navLinks.map((item) =>
+                item.name === 'Contact' ? (
+                  <button
+                    key={item.name}
+                    type="button"
+                    onClick={openRegisterModal}
+                    className={`${styles.navLink} ${styles.navBtnLink} ${isScrolled ? styles.scrolled : ''}`}
+                    aria-label="Contact Us - Open Registration"
+                  >
+                    <span>{item.name}</span>
+                    <span className={styles.navUnderline} aria-hidden="true" />
+                  </button>
+                ) : (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={`${styles.navLink} ${isScrolled ? styles.scrolled : ''}`}
+                  >
+                    <span>{item.name}</span>
+                    <span className={styles.navUnderline} aria-hidden="true" />
+                  </a>
+                )
+              )}
             </nav>
 
             {/* Right: "Get API Key" Pill Button */}
@@ -118,16 +132,31 @@ export default function GstNavbar({ onToggleApiSidebar }) {
         {mobileMenuOpen && (
           <div className={styles.mobileMenuDropdown}>
             <div className={styles.mobileMenuCard}>
-              {navLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={styles.mobileNavLink}
-                >
-                  {item.name}
-                </a>
-              ))}
+              {navLinks.map((item) =>
+                item.name === 'Contact' ? (
+                  <button
+                    key={item.name}
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openRegisterModal();
+                    }}
+                    className={`${styles.mobileNavLink} ${styles.mobileNavBtnLink}`}
+                    aria-label="Contact Us - Open Registration"
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={styles.mobileNavLink}
+                  >
+                    {item.name}
+                  </a>
+                )
+              )}
               <div className={styles.mobileMenuDivider} />
               <button
                 type="button"
