@@ -43,7 +43,7 @@ function TwitterIcon() {
 function YouTubeIcon() {
   return (
     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
     </svg>
   );
 }
@@ -66,7 +66,7 @@ const servicesData = [
       { name: 'Employee Verification', href: '#' },
       { name: 'Education Verification', href: '#' },
       { name: 'Employment History', href: '#' },
-      { name: 'Physical Address Check', href: '#' },
+      { name: 'Address Check (Digital & Physical)', href: '#' },
     ],
   },
 ];
@@ -198,7 +198,7 @@ export default function Footer() {
           <h4 className={styles.colHeading}>Policies</h4>
           <div className={styles.linksList}>
             <Link href="/policies" className={styles.colLink}>
-              Policies
+              API use T&C
             </Link>
           </div>
 
@@ -206,12 +206,13 @@ export default function Footer() {
           <div className={styles.trustCard}>
             <span className={styles.trustTitle}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               Enterprise Security
             </span>
             <p className={styles.trustText}>
-              Bank-grade 256-bit encryption. RBI &amp; IT Act 2000 compliant.
+              Bank-grade 256-bit encryption.<br />
+              RBI &amp; IT Act 2000 compliant.
             </p>
           </div>
         </div>

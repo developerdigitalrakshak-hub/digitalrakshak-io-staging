@@ -68,7 +68,7 @@ export default function LanguageSelector({ languages, activeLang, onSelectLang }
 
   return (
     <div className={styles.languageContainer}>
-      <h3 className={styles.languagesHeading}>Languages</h3>
+      <h2 className={styles.sectionHeading}>Language</h2>
       <div className={styles.languageTabsBar}>
         {displayLanguages.map((lang) => {
           const isActive = activeLang === lang.id;

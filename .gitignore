@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # yaml / yml files
-# *.yml
-# *.yaml
+config/*.yml
+config/*.yaml
 

@@ -75,10 +75,12 @@ function FeatureCard({ icon, title, description, delay = 0 }) {
       className={`${styles.featureCard} ${isVisible ? styles.visible : ''}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className={styles.featureIconWrap}>
-        <span className={styles.featureIcon}>{icon}</span>
+      <div className={styles.featureHeader}>
+        <div className={styles.featureIconWrap}>
+          <span className={styles.featureIcon}>{icon}</span>
+        </div>
+        <h3 className={styles.featureTitle}>{title}</h3>
       </div>
-      <h3 className={styles.featureTitle}>{title}</h3>
       <p className={styles.featureDesc}>{description}</p>
       <div className={styles.featureGlow} aria-hidden="true" />
     </div>
@@ -146,7 +148,7 @@ export default function HomePage() {
       <div className={styles.ambientGlowMid} aria-hidden="true" />
 
       {/* Global Top Navbar */}
-      <GstNavbar onToggleApiSidebar={() => {}} />
+      <GstNavbar onToggleApiSidebar={() => { }} />
 
       <main>
         {/* ═══════════════════════════════════════════════
@@ -170,8 +172,8 @@ export default function HomePage() {
 
             {/* Subtitle */}
             <p className={styles.heroSubtitle}>
-              DigitalRakshak.IO is a technology-focused framework designed to help developers 
-              create expansive, high-impact digital experiences. Combine modular APIs like 
+              DigitalRakshak.IO is a technology-focused framework designed to help developers
+              create expansive, high-impact digital experiences. Combine modular APIs like
               LEGO bricks to unleash infinite possibilities.
             </p>
 
@@ -286,7 +288,7 @@ export default function HomePage() {
               Building <span className={styles.gradientText}>Block</span> APIs
             </h2>
             <p className={styles.sectionSubtitle}>
-              Modular, reusable components. Like LEGO bricks, developers can stack, connect, 
+              Modular, reusable components. Like LEGO bricks, developers can stack, connect,
               and configure these foundational tools to build scalable systems in record time.
             </p>
           </div>
@@ -350,7 +352,7 @@ export default function HomePage() {
               Powering <span className={styles.gradientText}>EPIC</span> Journeys
             </h2>
             <p className={styles.sectionSubtitle}>
-              Transform modular code into massive, immersive user journeys. Deliver high-conversion 
+              Transform modular code into massive, immersive user journeys. Deliver high-conversion
               workflows that delight end users and scale seamlessly.
             </p>
           </div>
@@ -399,7 +401,7 @@ export default function HomePage() {
               <div className={styles.stepNumber}>01</div>
               <h4 className={styles.stepTitle}>Get Your API Key</h4>
               <p className={styles.stepDesc}>
-                Sign up and receive your API credentials in minutes. Start building immediately 
+                Sign up and receive your API credentials in minutes. Start building immediately
                 with our full sandbox environment.
               </p>
             </div>
@@ -410,7 +412,7 @@ export default function HomePage() {
               <div className={styles.stepNumber}>02</div>
               <h4 className={styles.stepTitle}>Choose Your Blocks</h4>
               <p className={styles.stepDesc}>
-                Select from our modular API library. Pick identity, banking, compliance, 
+                Select from our modular API library. Pick identity, banking, compliance,
                 or e-sign blocks for your specific use case.
               </p>
             </div>
@@ -421,7 +423,7 @@ export default function HomePage() {
               <div className={styles.stepNumber}>03</div>
               <h4 className={styles.stepTitle}>Build & Launch</h4>
               <p className={styles.stepDesc}>
-                Stack APIs together, test in sandbox, and go live. Scale to millions of 
+                Stack APIs together, test in sandbox, and go live. Scale to millions of
                 requests with zero infrastructure hassle.
               </p>
             </div>
@@ -434,6 +436,7 @@ export default function HomePage() {
         <section
           className={`${styles.ctaSection} ${section5.isVisible ? styles.visible : ''}`}
           ref={section5.ref}
+          style={{ paddingBottom: '1rem' }}
         >
           <div className={styles.ctaCard}>
             <div className={styles.ctaGlow} aria-hidden="true" />
@@ -441,7 +444,7 @@ export default function HomePage() {
               Unleash <span className={styles.gradientText}>Infinite</span> Possibilities
             </h2>
             <p className={styles.ctaSubtitle}>
-              By combining simple, powerful foundational tools, creators face zero limitations on 
+              By combining simple, powerful foundational tools, creators face zero limitations on
               what they can build, scale, or automate. Start your journey today.
             </p>
             <div className={styles.ctaButtons}>

@@ -12,6 +12,7 @@
     opacity: 0;
     transform: translateY(35px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -23,6 +24,7 @@
     opacity: 0;
     transform: scale(0.94);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -30,9 +32,12 @@
 }
 
 @keyframes floatAnim {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -43,6 +48,7 @@
     transform: scale(1);
     opacity: 0.7;
   }
+
   100% {
     transform: scale(1.9);
     opacity: 0;
@@ -53,9 +59,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -121,8 +129,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
-  min-height: calc(100vh - 68px);
-  padding: 120px 6% 70px;
+  min-height: calc(100vh - 170px);
+  padding: 0px 6% 0px;
   max-width: 1500px;
   margin: 0 auto;
   width: 100%;
@@ -406,12 +414,31 @@
   }
 }
 
-.codeKeyword { color: #c084fc; font-weight: 600; }
-.codeVar { color: #38bdf8; }
-.codeFn { color: #34d399; }
-.codeProp { color: #a5b4fc; }
-.codeStr { color: #fbbf24; }
-.codeComment { color: #64748b; font-style: italic; }
+.codeKeyword {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.codeVar {
+  color: #38bdf8;
+}
+
+.codeFn {
+  color: #34d399;
+}
+
+.codeProp {
+  color: #a5b4fc;
+}
+
+.codeStr {
+  color: #fbbf24;
+}
+
+.codeComment {
+  color: #64748b;
+  font-style: italic;
+}
 
 // ════════════════════════════════════════
 // SECTION 2: STATS
@@ -420,7 +447,7 @@
   position: relative;
   z-index: 10;
   padding: 0 6%;
-  margin-bottom: 5rem;
+  // margin-bottom: 5rem;
 }
 
 .statsGrid {
@@ -486,7 +513,7 @@
 .ctaSection {
   position: relative;
   z-index: 10;
-  padding: 5rem 6%;
+  padding: 2rem 6%;
   max-width: 1400px;
   margin: 0 auto;
   opacity: 0;
@@ -693,28 +720,37 @@
   pointer-events: none;
 }
 
+.featureHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 1.25rem;
+}
+
 .featureIconWrap {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 14px;
   background: rgba(99, 102, 241, 0.12);
   border: 1px solid rgba(99, 102, 241, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.4rem;
+  flex-shrink: 0;
   transition: transform 0.25s ease;
 }
 
 .featureIcon {
   font-size: 1.55rem;
+  line-height: 1;
 }
 
 .featureTitle {
   font-size: 1.22rem;
   font-weight: 700;
   color: #f8fafc;
-  margin-bottom: 0.75rem;
+  margin: 0;
+  line-height: 1.35;
 }
 
 .featureDesc {

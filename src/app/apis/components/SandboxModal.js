@@ -130,6 +130,15 @@ export default function SandboxModal({ data, isOpen, onClose }) {
             case 'epf-uan':
               responseData = await digitalRakshakApiService.epfUanValidation(parsedPayload, headersObj);
               break;
+            case 'front-countries':
+              responseData = await digitalRakshakApiService.getCountries(headersObj);
+              break;
+            case 'front-inquiry-options':
+              responseData = await digitalRakshakApiService.getInquiryOptions(headersObj);
+              break;
+            case 'front-inquiries':
+              responseData = await digitalRakshakApiService.createInquiry(parsedPayload, headersObj);
+              break;
             default:
               responseData = data.statusCodes?.[0]?.response;
           }

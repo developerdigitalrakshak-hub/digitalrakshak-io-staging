@@ -72,6 +72,30 @@ export class DigitalRakshakApiService extends BaseApiService {
   async epfUanValidation(data, headers = {}) {
     return await this.post('/api/v1/fetch-employment-history', data, { headers });
   }
+
+  /**
+   * Front API 1. Countries List
+   * GET /api/v1/front/countries
+   */
+  async getCountries(headers = {}) {
+    return await this.get('/api/v1/front/countries', { headers });
+  }
+
+  /**
+   * Front API 2. Inquiry Option List
+   * GET /api/v1/front/inquiry-options
+   */
+  async getInquiryOptions(headers = {}) {
+    return await this.get('/api/v1/front/inquiry-options', { headers });
+  }
+
+  /**
+   * Front API 3. Add Inquiry
+   * POST /api/v1/front/inquiries
+   */
+  async createInquiry(data, headers = {}) {
+    return await this.post('/api/v1/front/inquiries', data, { headers });
+  }
 }
 
 const digitalRakshakApiService = new DigitalRakshakApiService();

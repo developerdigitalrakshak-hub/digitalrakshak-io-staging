@@ -14,7 +14,6 @@ export const policySections = [
     "id": "preamble",
     "title": "Preamble & Acceptance of Terms",
     "paragraphs": [
-      "Display over .io Portal - “ T&C  ”",
       "The user (“User”) is interested in seeking the license from DigitalRakshak InfoTech Private Limited(“DigitalRakshak”) (which expression shall, unless repugnant to the context or meaning thereof, shall be deemed to include its successors and assigns) to DigitalRakshak's APIs (as defined hereinafter) and for this purpose to undertake the Registration (as defined hereinafter) on the Platform (as defined hereinafter) and eventual On-boarding (subject to the sole discretion of DigitalRakshak), and for exploring the possibility of its future",
       "digital integration with DigitalRakshak.",
       "The User hereby undertakes to and agrees with DigitalRakshak and accepts these terms of use as amended from time to time together with any other condition which may be implied by applicable law (collectively, “Terms”) which shall govern the subject-matter covered herein.",
@@ -31,7 +30,6 @@ export const policySections = [
     "id": "sec-1",
     "title": "1. Definitions",
     "paragraphs": [
-      "1. Definition",
       "“Application” means a website and/or software application (regardless of how fully developed) owned by the User and visited or used (or developed with the intent to be visited or used eventually) by the User, common customers of DigitalRakshak and the User or any natural person or company (“End Users”) to access and/or use API Content/Services.",
       "“Documentation” means any online user guides, software development kit(s), and/or help and training materials for the Platform APIs, as updated from time to time by DigitalRakshak, and accessed through the Platform.",
       "“Platform” means the portal or the webpage or any online resource or website, of or under control of DigitalRakshak, which hosts the Registration process, API, Documentation and Available Content and is currently located at www.DigitalRakshak.io and will include any change thereto or replacement thereof by DigitalRakshak.",
@@ -62,7 +60,6 @@ export const policySections = [
     "id": "sec-2",
     "title": "2. Registration",
     "paragraphs": [
-      "REGISTRATION",
       "The User acknowledges that all the details and information including the Registered Contacts and also any personal information or personal data/sensitive data of any person, provided by the User for or upon Registration or at any time thereafter (collectively, “User Information”), are being furnished by the User voluntarily to DigitalRakshak for use and processing thereof by DigitalRakshak, and the User must ensure that all such User Information is correct, genuine, authentic and complete in all material respects, and not misleading in any manner given the context, and wherever any personal data or sensitive information is involved, the User represents and warrants that it has and shall always have the explicit consent as required under the applicable data protection laws or privacy laws for sharing and giving such information to DigitalRakshak and for DigitalRakshak to be able to use and process the same as may be required for the purposes pursuant hereto.",
       "The User must inform DigitalRakshak immediately of any changes to the information that the User may provide when registering by updating details to ensure DigitalRakshak can communicate with the User effectively.",
       "DigitalRakshak may suspend or cancel or terminate the Registration (and any account, access, etc. for the User created pursuant thereto) with immediate effect in the sole discretion of DigitalRakshak, without notice to or consent form the User and DigitalRakshak's decision in this regard shall be final and binding on the User and DigitalRakshak shall not be required to give any reasons therefor.",
@@ -73,7 +70,6 @@ export const policySections = [
     "id": "sec-3",
     "title": "3. Privacy Policy, Use of Information & Covenants",
     "paragraphs": [
-      "PRIVACY POLICY, USE OF INFORMATION AND OTHER COVENANTS",
       "The User hereby agrees that DigitalRakshak may collect and use the User Information from the User as per DigitalRakshak's Privacy Policy available on its website at \"DigitalRakshak's Privacy Policy” and additionally for various purposes covered by the subject-matter of these Terms including assessment, evaluation, verification by DigitalRakshak of the User for On-boarding, for communications with the User, for storage, etc.",
       "The User also agrees that DigitalRakshak may use automated methods or processes to analyze the User Information or any part thereof including User's website or online resources or service or any information furnished by the User including any personal information or personal data of any person.",
       "DigitalRakshak may use, process, profile, as above, the User Information, automate the process therefore, at DigitalRakshak's discretion either on its own and/or through one or more service provider(s) as may be deployed by DigitalRakshak for this purpose.",
@@ -87,7 +83,6 @@ export const policySections = [
     "id": "sec-4",
     "title": "4. Access Credentials & Registered Contacts",
     "paragraphs": [
-      "ACCESS CREDENTIALS AND REGISTERED CONTACTS",
       "In order to access and use the Platform through the Account, the User will need to use the Access Credentials. DigitalRakshak reserves the right to prescribe additional authentication factors for the User like user id and unique passwords and/or one-time passwords, as DigitalRakshak may deem fit from time to time and the User shall be bound to follow the same.",
       "In case of alerts, notifications, reports as well as additional or change in authentication factors including upon User forgetting any of the Access Credentials (including the one-time passwords or one-time auth factors), the same may be sent by or on behalf of DigitalRakshak to the Registered Contacts, and the same shall constitute due and full notice and delivery to the User.",
       "While it will be DigitalRakshak's endeavour to adopt appropriate security measures per the industry standards from time to time, however, the User acknowledges that the technology used including the internet, as well as the use of public/shared facilities is susceptible to a number of risks, such as misuse, phishing attacks, hacking, virus, malicious, destructive or corrupting code, programme or macro which make the medium vulnerable. Therefore, it is User's special and extra duty of care to ensure that the Access Credentials and/or the Registered Contacts are not compromised in any manner and kept protected and in control of only and only of authorized personnel of the User.",
@@ -110,7 +105,6 @@ export const policySections = [
     "id": "sec-5",
     "title": "5. On-boarding",
     "paragraphs": [
-      "ON-BOARDING",
       "User agrees to furnish such documents, information, etc. as may be required by DigitalRakshak for DigitalRakshak to access and evaluate the User, the compatibility, its systems, etc., and to determine whether the User will be On-boarded or not.",
       "The User may be allowed by DigitalRakshak at its discretion limited access to APIs for testing in the sandbox environment, strictly on a need-to-know basis. Notwithstanding anything to the contrary herein or in any other connected documents, until the User is fully On-boarded and signs, delivers and executes necessary documentation as may be required by DigitalRakshak including the API Agreement to the satisfaction of DigitalRakshak, the User or any persons acting for User, do not in any manner get any license or rights to use, access, test or consume any of the APIs in the production environment.",
       "Notwithstanding anything to the contrary contained herein or in any other connected documents:",
@@ -124,7 +118,6 @@ export const policySections = [
     "id": "sec-6",
     "title": "6. Third-Party Websites & Links",
     "paragraphs": [
-      "LINK TO OTHER WEBSITES",
       "The Platform may contain links to other sites. Unless expressly stated, these sites are not under the control of DigitalRakshak or that of DigitalRakshak's Affiliates.",
       "DigitalRakshak assumes no responsibility for the content of such websites and disclaims liability for any and all forms of loss or damage arising out of the use of them.",
       "The inclusion of a link to another site on the Platform does not imply any endorsement of the sites themselves or of those in control of them."
@@ -134,7 +127,6 @@ export const policySections = [
     "id": "sec-7",
     "title": "7. License Scope & Permitted Use",
     "paragraphs": [
-      "RESTRICTIONS",
       "The User agrees that any access of the Platform, use, if granted by DigitalRakshak, of an API and API Content/Services, shall be subject to information security policies and procedures of DigitalRakshak and as per applicable law, including but not limited to authentication procedures, which may not be fully disclosed and may vary from time to time.",
       "The User agrees and undertakes that when accessing or using the platform, the User, and/or the User's applications shall not:",
       "modify, obscure, circumvent, or disable any element of the Platform, API and/or API Content Services, or their access control features;",
@@ -154,7 +146,6 @@ export const policySections = [
     "id": "sec-8",
     "title": "8. Link to Other Websites",
     "paragraphs": [
-      "8. LINK TO OTHER WEBSITES",
       "8.1 The Platform may contain links to other sites. Unless expressly stated, these sites are not under the control of DigitalRakshak or that of DigitalRakshak's Affiliates.",
       "8.2 DigitalRakshak assumes no responsibility for the content of such websites and disclaims liability for any and all forms of loss or damage arising out of the use of them.",
       "8.3 The inclusion of a link to another site on the Platform does not imply any endorsement of the sites themselves or of those in control of them."
@@ -164,7 +155,6 @@ export const policySections = [
     "id": "sec-9",
     "title": "9. Platform & API Restrictions",
     "paragraphs": [
-      "9. RESTRICTIONS",
       "9.1 The User agrees that any access of the Platform, use, if granted by DigitalRakshak, of an API and API Content/Services, shall be subject to information security policies and procedures of DigitalRakshak and as per applicable law, including but not limited to authentication procedures, which may not be fully disclosed and may vary from time to time.",
       "9.2 The User agrees and undertakes that when accessing or using the platform, the User, and/or the User's applications shall not:",
       "9.2.1 modify, obscure, circumvent, or disable any element of the Platform, API and/or API Content Services, or their access control features;",
@@ -184,7 +174,6 @@ export const policySections = [
     "id": "sec-10",
     "title": "10. Intellectual Property Rights",
     "paragraphs": [
-      "10. INTELLECTUAL PROPERTY",
       "It is hereby clarified that DigitalRakshak retains all Intellectual Property Rights in the Platform, all APIs, all API Content/Services, all Documentation and Available Content, the developer environments, and all other procedures, functionalities, software, documentation, trademarks or distinctive signs, images, photographs, patents, utility and industrial models, drawings, graphics, text files, audio and video files and all other content accessible on the Platform or in any of the APIs, and/or any API Content/Services.",
       "The User hereby understands and acknowledges that:",
       "DigitalRakshak is the sole and absolute owner of DigitalRakshak's Intellectual Property (“DigitalRakshak IP”);",
@@ -203,7 +192,6 @@ export const policySections = [
     "id": "sec-11",
     "title": "11. Representations and Warranties",
     "paragraphs": [
-      "11. REPRESENTATIONS AND WARRANTIES",
       "The User hereby represents and warrants:",
       "The User is not concealing or disguising its identity;",
       "The User has a legitimate, lawful purpose for accessing and using the Platform, the API and API Content/Services;",
@@ -217,7 +205,6 @@ export const policySections = [
     "id": "sec-12",
     "title": "12. Indemnity Obligations",
     "paragraphs": [
-      "12. INDEMNITY",
       "The User undertakes to indemnify, protect, defend, save and hold harmless DigitalRakshak and its Affiliates, officers, directors, employees, agents, third parties, attorneys, successors, and assigns (“Indemnified Parties”) from and against:",
       "any government, or other third party claim of loss, liability, penalty, assessment, civil or criminal fine, or damage to or asserted, whether through communication or formal filing, against DigitalRakshak or its Affiliates (including reasonable attorney's fees and expenses) related to, deriving from or associated with User's application;",
       "any misuse of APIs;",
@@ -233,7 +220,6 @@ export const policySections = [
     "id": "sec-13",
     "title": "13. Limitation of DigitalRakshak's Liability",
     "paragraphs": [
-      "13. LIMITATION OF DigitalRakshak'S LIABILITY",
       "DigitalRakshak shall not be liable in any manner and in any way for any damages, liabilities or any losses including without limitation, direct or indirect, special, incidental,",
       "consequential damages, losses or liabilities occasioned to any User, Authorized Person, or third party or person, whether such claim is based on warranty, contract, tort (including gross negligence) or otherwise."
     ]
@@ -242,7 +228,6 @@ export const policySections = [
     "id": "sec-14",
     "title": "14. Confidentiality and Nondisclosure",
     "paragraphs": [
-      "14. CONFIDENTIALITY AND NONDISCLOSURE",
       "The User acknowledges and agrees that the username and password, information about the Platform, the Available Content, Documentation, API(s), API Content/ API Services disclosed to the User or collected by User, DigitalRakshak Information, shall be considered as DigitalRakshak's confidential and proprietary information (collectively, “Confidential Information”) which shall not be disclosed by the User or any person acting for or on behalf of the User, to any person or third party (including, but not limited to, User's Affiliates) without DigitalRakshak's prior written consent.",
       "The User agrees to use commercially reasonable means to maintain the confidentiality of Confidential Information in the User's possession or contained in the Application, but in no ci rcumstances less stringent than those required by law or that the User uses to safeguard the User's own confidential or proprietary information.",
       "Upon termination of these Terms, the User agrees to destroy all copies of Confidential Information in the Users and/or the User's contractors' or the End User's or third party",
@@ -257,7 +242,6 @@ export const policySections = [
     "id": "sec-15",
     "title": "15. Data Protection & Privacy",
     "paragraphs": [
-      "15. DATA PROTECTION",
       "When accessing or using the Platform, the User agrees that the User, the End Users and/or the User's Application shall use commercially reasonable efforts to ensure that cyber security measures are in place to protect DigitalRakshak's data and information which are accessed, processed, stored or transmitted irrespective of whether such place is housed at Pro tean's premises or in the premises of a third party and comply with all applicable law in this respect.",
       "The User shall immediately report to DigitalRakshak any unauthorized access that has compromised the information or data of DigitalRakshak. In such report the User shall identify (i) the nature of the unauthorized use or disclosure; (ii) the information used or disclosed; (iii) who made the unauthorized use or received the unauthorized disclosure; (iv) what the User has done or shall do to mitigate the effects of the unauthorized use or disclosure; and",
       "(v) what corrective action has the User taken or shall take to prevent future similar unauthorized use or disclosure.",
@@ -268,7 +252,6 @@ export const policySections = [
     "id": "sec-16",
     "title": "16. Right to Terminate & Suspension",
     "paragraphs": [
-      "16. RIGHT TO TERMINATE",
       "DigitalRakshak reserves the right to terminate these Terms at its sole discretion and without any notice and without assigning any reason whatsoever to the User. These terms may also be terminated by DigitalRakshak on any information or belief that there has been an unauthorized access by a third party using the username and password of the User, any breach of the User's confidentiality obligations, any breach of applicable rules and regulations, and any other breach of these Terms by the User. DigitalRakshak may also elect to temporarily suspend the User's access till such breach is cured if it is remediable in nature.",
       "In the event of a termination by either party, the User agrees to cease using any information, Confidential Information accessed pursuant to this arrangement, promptly [but under any circumstances in no more than two (2) business days] remove the same from User's application, and delete any such information or data that are possessed or controlled by the User.",
       "DigitalRakshak reserves right to terminate these Terms and access to their Platform, APIs, website and use of the online services at any time, with or without cause or notice."
@@ -278,7 +261,6 @@ export const policySections = [
     "id": "sec-17",
     "title": "17. Force Majeure",
     "paragraphs": [
-      "17. FORCE MAJEURE",
       "Any delay in or failure of performance by DigitalRakshak under these Terms will not be considered a breach of these Terms and DigitalRakshak will not be held liable for any such delay or failure in performance to the extent that such delay or failure is caused by any occurrence beyond its reasonable control, including, but not limited to, acts of God, pandemic, power outages, failures of the Internet, war, terrorism, civil or political disturbance, lock- outs, floods, fire, or any other unforeseeable event."
     ]
   },
@@ -286,7 +268,6 @@ export const policySections = [
     "id": "sec-18",
     "title": "18. Transfer and Assignment",
     "paragraphs": [
-      "18. TRANSFER AND ASSIGNMENT",
       "DigitalRakshak shall at any time, without any consent of or notice to the User(s) be entitled to sell, assign, discount or transfer all or any part of DigitalRakshak's rights, title, interest and/or obligations under these Terms, to any person(s) and in such manner and on such terms as DigitalRakshak may decide. Any such sale, assignment or transfer shall conclusively bind the User and all other concerned persons. The User shall not be entitled to directly or indirectly assign or in any manner transfer, novate, whether in whole or part, any rights, benefits or obligations under or in relation to or pursuant to these Terms or any functionality thereunder."
     ]
   },
@@ -294,7 +275,6 @@ export const policySections = [
     "id": "sec-19",
     "title": "19. Notices & Formal Communications",
     "paragraphs": [
-      "19. NOTICES",
       "All notices, approvals, instructions, demand and other communication given or made under these Terms shall be in writing and may, subject to Clause 17.2 hereof, be given by facsimile, electronic mail, personal delivery or by sending the same by pre-paid registered mail addressed to the relevant party at its address or email set out below [or such other address or email as the addressee has by 5 (Five) calendar days' prior written notice specified to the other party]:",
       "For the User:",
       "Any of the Registered Contacts For DigitalRakshak:",
@@ -316,7 +296,6 @@ export const policySections = [
     "id": "sec-20",
     "title": "20. Governing Law, Jurisdiction & Arbitration",
     "paragraphs": [
-      "20. GOVERNING LAW, JURISDICTION AND ARBITRATION",
       "These Terms shall be governed by and construed in accordance with the laws of India. The parties agree that subject to Clause 18.2 below, if the process of the courts is required to be invoked for enforcement of Clause 18.2 below, including for seeking of any interim relief prior, during or after invocation of this Clause (Governing Law, Jurisdiction and Arbitration) below, the competent courts and tribunals at Mumbai, India shall have exclusive jurisdiction and both the parties hereto submit to the same.",
       "All disputes, differences and/or claims arising out of these presents or as to the construction, meaning or effect hereof or as to the rights and liabilities of the parties shall be settled by arbitration to be held in Mumbai, India or any other place at the discretion of DigitalRakshak in accordance with the provisions of the Arbitration and Conciliation Act, 1996 (or any statutory amendments thereof or any statute enacted for replacement thereof) and",
       "shall be referred to the sole arbitration of a person to be nominated by DigitalRakshak. The language of arbitration shall be English. In the event of death, refusal, neglect, inability or incapability of the person so appointed to act as an arbitrator, DigitalRakshak may appoint a new arbitrator. The award including interim award/s of the arbitrator shall be final and binding on all parties concerned. The arbitrator may lay down from time to time the procedure to be followed by him in conducting arbitration proceedings and shall conduct arbitration proceedings in such manner as the arbitrator considers appropriate.",
@@ -327,7 +306,6 @@ export const policySections = [
     "id": "sec-21",
     "title": "21. Relationship Between the Parties",
     "paragraphs": [
-      "21. RELATIONSHIP BETWEEN THE PARTIES:",
       "These Terms of Use are on a “principal to principal” basis and the Parties are independent of each other, and nothing contained herein is intended to or shall be deemed to create any partnership, joint venture, employment or relationship of principal and agent between DigitalRakshak and the User and if applicable User's representatives and employees or to provide the User with any right, power or authority, whether express or implied to create any such duty or obligation on behalf of DigitalRakshak. The User agrees that it will not represent that it is an agent of DigitalRakshak nor hold itself out as such. The User shall enter into any agreement or arrangement with any third person which will bind, nor shall attempt to bind, DigitalRakshak legally or otherwise and nothing contained in these Terms be deemed to provide the User with the power or authority to create such duty or obligation. The User understands and agrees that DigitalRakshak grants the User no power or authority to make or give any agreement, statement, representation, warranty, or other commitment on behalf of DigitalRakshak to any person, or to enter into any contract or otherwise incur any liability or obligation, express or implied, on behalf of DigitalRakshak, or to transfer, release, or waive any right, title, or interest of DigitalRakshak."
     ]
   },
@@ -335,17 +313,15 @@ export const policySections = [
     "id": "sec-22",
     "title": "22. Warranty Disclaimer",
     "paragraphs": [
-      "22. DISCLAIMER",
       "DigitalRakshak provides the Platform, API(s) and API Content/Services on an “as is” and “as available” basis. The DigitalRakshak hereby disclaims any and all warranties, express, implied or statutory regarding any Platform, API(s) or API Content/Services, including warranties of accuracy, merchantability, fitness for a particular purpose, or non-infringement. Platform, API(s) and API Content/Services provided is as accurate, comprehensive and up-to-date as reasonably practicable, no warranty, expressed or implied, is made regarding accuracy, adequacy, completeness, legality, reliability or usefulness of any information. DigitalRakshak does not warrant the accuracy, adequacy, completeness or timeliness of the information, material, products and services or the error-free use of the Platform, API (s) API Content/Services.",
       "The User is solely and entirely responsible for the Application, including but not limited to the Application's development, operation, maintenance, and compliance with all applicable local,state, central and international laws and regulations, and all materials that appear on or within the Application. DigitalRakshak including its officials, employees, agents shall not be held liable or responsible in respect of any loss, cost or expenses incurred or suffered by the User in any manner whatsoever.",
       "DigitalRakshak hereby disclaims all liability with respect to the same. The User has read, understood and accepted these Terms online."
     ]
   },
   {
-    "id": "schedule-1",
-    "title": "Schedule I: Data Security Standards & Safeguards",
+    "id": "Schedule I: Data Security Standards & Safeguards",
+    "title": "Schedule I: DATA SECURITY",
     "paragraphs": [
-      "SCHEDULE I - DATA SECURITY",
       "DATA SECURITY",
       "User shall (and shall ensure that its employees, agents and subcontractors shall) be required to maintain such administrative, organizational, technical and physical safeguards, and such processes, procedures and checks including, to secure the User Information, DigitalRakshak Information and any data provided or shared by DigitalRakshak as may be required under applicable law and/or industry standards or regulations issued by any Authority, which safeguards must be at least equal to or better than: (a) the safeguards it currently has in place to protect its own data; and (b) generally accepted security standards in the financial services industry.",
       "The administrative, technical and physical safeguards, processes, procedures and checks as above shall be designed by User to:",

@@ -9,8 +9,8 @@ export function handleApiError(error) {
     }
     return {
       status: 0,
-      message: 'Network connection lost. Please check your internet connection.',
-      isNetworkError: true,
+      message: error.message || 'Network connection lost. Please check your internet connection.',
+      isNetworkError: !error.message,
     };
   }
 
@@ -28,8 +28,9 @@ export function handleApiError(error) {
     case 401:
       return {
         status,
-        message: customMessage || 'Unauthorized: Your session has expired. Please log in again.',
+        message: customMessage || 'Unauthenticated: Invalid or missing API token (X-API-TOKEN).',
         requiresAuth: true,
+        data: data || null,
       };
 
     case 403:
@@ -53,8 +54,10 @@ export function handleApiError(error) {
     case 422:
       return {
         status,
-        message: customMessage || 'Validation Error: Please verify input data formatting.',
-        validationErrors: data?.errors || [],
+        message: customMessage || 'Validation Error: Please check required fields.',
+        errors: data?.errors || {},
+        validationErrors: data?.errors || {},
+        data: data || null,
       };
 
     case 429:

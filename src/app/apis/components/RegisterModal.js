@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ArrowRight,
   CheckCircle,
@@ -20,9 +21,53 @@ import {
   FileText,
   Briefcase,
   X,
+  AlertTriangle,
 } from 'lucide-react';
 import Link from 'next/link';
+import frontApiService from '@/api/services/front/frontApiService';
+import {
+  fetchCountriesRequest,
+  fetchInquiryOptionsRequest,
+  submitInquirySuccess,
+  submitInquiryFailure,
+} from '@/redux/modules/auth/submodules/inquiry/actions/inquiryActions';
 import styles from './RegisterModal.module.scss';
+
+// Fallback active countries if network/token is not yet provisioned in environment
+const DEFAULT_COUNTRIES = [
+  { id: 2, name: 'India', iso_code_2: 'IN', phone_code: '91', is_default: 1 },
+  { id: 1, name: 'United States', iso_code_2: 'US', phone_code: '1', is_default: 0 },
+  { id: 4, name: 'United Kingdom', iso_code_2: 'GB', phone_code: '44', is_default: 0 },
+  { id: 5, name: 'Australia', iso_code_2: 'AU', phone_code: '61', is_default: 0 },
+  { id: 6, name: 'United Arab Emirates', iso_code_2: 'AE', phone_code: '971', is_default: 0 },
+  { id: 7, name: 'Singapore', iso_code_2: 'SG', phone_code: '65', is_default: 0 },
+  { id: 8, name: 'Germany', iso_code_2: 'DE', phone_code: '49', is_default: 0 },
+  { id: 9, name: 'Canada', iso_code_2: 'CA', phone_code: '1', is_default: 0 },
+  { id: 3, name: 'Afghanistan', iso_code_2: 'AF', phone_code: '93', is_default: 0 },
+];
+
+// Fallback inquiry options
+const DEFAULT_INQUIRY_OPTIONS = [
+  { id: 1, name: 'Option 1' },
+  { id: 2, name: 'Option 2' },
+  { id: 3, name: 'Option 3' },
+];
+
+/**
+ * Returns flag emoji for any ISO 3166-1 alpha-2 code
+ */
+function getCountryFlag(isoCode) {
+  if (!isoCode || typeof isoCode !== 'string' || isoCode.length !== 2) return '🌐';
+  try {
+    const codePoints = isoCode
+      .toUpperCase()
+      .split('')
+      .map((char) => 127397 + char.charCodeAt(0));
+    return String.fromCodePoint(...codePoints);
+  } catch (e) {
+    return '🌐';
+  }
+}
 
 // Forbidden personal email domains for Business Entity validation
 const forbiddenDomains = [
@@ -54,13 +99,13 @@ const businessSchema = z.object({
       { message: 'Please use your corporate/business email address. Personal email domains are not allowed.' }
     ),
   companyName: z.string().min(1, { message: 'Company name is required' }),
-  countryCode: z.string().min(1, { message: 'Country code is required' }),
+  countryId: z.union([z.string(), z.number()]).optional(),
   phoneNumber: z
     .string()
     .min(1, { message: 'Phone number is required' })
-    .regex(/^\d{8,12}$/, { message: 'Phone number must be between 8 and 12 digits (numbers only)' }),
+    .regex(/^\d{7,15}$/, { message: 'Phone number must be between 7 and 15 digits (numbers only)' }),
   gstNo: z.string().optional(),
-  dropdownValue: z.string().min(1, { message: 'Please select an option' }),
+  dropdownValue: z.string().min(1, { message: 'Please select an inquiry option' }),
   agreeToTerms: z
     .boolean()
     .refine((val) => val === true, { message: 'You must consent to the privacy policy and terms to proceed' }),
@@ -70,19 +115,19 @@ const businessSchema = z.object({
   selectAll: z.boolean().optional(),
 });
 
-// Zod validation schema for Professionals (Personal email allowed, company name & GST omitted)
+// Zod validation schema for Professionals
 const professionalSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   email: z
     .string()
     .min(1, { message: 'Email is required' })
     .email({ message: 'Please enter a valid email address' }),
-  countryCode: z.string().min(1, { message: 'Country code is required' }),
+  countryId: z.union([z.string(), z.number()]).optional(),
   phoneNumber: z
     .string()
     .min(1, { message: 'Phone number is required' })
-    .regex(/^\d{8,12}$/, { message: 'Phone number must be between 8 and 12 digits (numbers only)' }),
-  dropdownValue: z.string().min(1, { message: 'Please select an option' }),
+    .regex(/^\d{7,15}$/, { message: 'Phone number must be between 7 and 15 digits (numbers only)' }),
+  dropdownValue: z.string().min(1, { message: 'Please select an inquiry option' }),
   agreeToTerms: z
     .boolean()
     .refine((val) => val === true, { message: 'You must consent to the privacy policy and terms to proceed' }),
@@ -95,12 +140,19 @@ const professionalSchema = z.object({
 // ----------------------------------------------------
 // 1st Tab: Business Entity Form
 // ----------------------------------------------------
-function BusinessEntityForm({ onSuccess, onToast }) {
+function BusinessEntityForm({ countries, inquiryOptions, onSuccess, onToast }) {
+  const dispatch = useDispatch();
+  const [serverError, setServerError] = useState(null);
+
+  const defaultCountry =
+    countries.find((c) => c.is_default === 1 || c.iso_code_2 === 'IN') || countries[0];
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    setError,
     formState: { errors, isSubmitting, touchedFields, isValid },
   } = useForm({
     resolver: zodResolver(businessSchema),
@@ -109,7 +161,7 @@ function BusinessEntityForm({ onSuccess, onToast }) {
       name: '',
       email: '',
       companyName: '',
-      countryCode: '+91',
+      countryId: defaultCountry?.id ? String(defaultCountry.id) : '2',
       phoneNumber: '',
       gstNo: '',
       dropdownValue: '',
@@ -132,14 +184,93 @@ function BusinessEntityForm({ onSuccess, onToast }) {
   }, [agreeToTerms, agreeToMarketing, selectAll, setValue]);
 
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1400));
-    console.log('Business Entity Registered:', data);
-    onToast(`Verification email sent to ${data.email}`);
-    onSuccess(data.email);
+    setServerError(null);
+
+    const payload = {
+      type: 'business',
+      name: data.name.trim(),
+      business_email: data.email.trim(),
+      company_name: data.companyName.trim(),
+      mobile_number: data.phoneNumber.trim(),
+      country_id: Number(data.countryId) || (defaultCountry?.id ? Number(defaultCountry.id) : 2),
+      option_id: Number(data.dropdownValue) || (inquiryOptions[0]?.id ? Number(inquiryOptions[0].id) : 1),
+      consent: {
+        terms: Boolean(data.agreeToTerms),
+        marketing: Boolean(data.agreeToMarketing),
+      },
+    };
+
+    if (data.gstNo && data.gstNo.trim()) {
+      payload.gst_number = data.gstNo.trim();
+    }
+
+    try {
+      const response = await frontApiService.createInquiry(payload);
+      dispatch(submitInquirySuccess(response));
+
+      const returnedData = response.data || response;
+      onToast('Inquiry submitted successfully.');
+      onSuccess({
+        email: data.email,
+        id: returnedData?.id || 1,
+        status: returnedData?.status || 'pending',
+        inquiryData: returnedData,
+      });
+    } catch (err) {
+      dispatch(submitInquiryFailure(err));
+      console.warn('Inquiry submission API response:', err);
+
+      // Handle HTTP 422 Validation Error per PDF specification
+      if (err.status === 422 && (err.errors || err.validationErrors)) {
+        const errMap = err.errors || err.validationErrors;
+
+        if (errMap.name?.[0]) setError('name', { type: 'server', message: errMap.name[0] });
+        if (errMap.business_email?.[0]) setError('email', { type: 'server', message: errMap.business_email[0] });
+        if (errMap.mobile_number?.[0]) setError('phoneNumber', { type: 'server', message: errMap.mobile_number[0] });
+        if (errMap.company_name?.[0]) setError('companyName', { type: 'server', message: errMap.company_name[0] });
+        if (errMap.gst_number?.[0]) setError('gstNo', { type: 'server', message: errMap.gst_number[0] });
+        if (errMap.country_id?.[0]) setError('countryId', { type: 'server', message: errMap.country_id[0] });
+        if (errMap.option_id?.[0]) setError('dropdownValue', { type: 'server', message: errMap.option_id[0] });
+
+        const messages = Object.values(errMap).flat();
+        setServerError({
+          message: err.message || 'Validation error: Please correct the highlighted fields.',
+          list: messages,
+        });
+      } else if (err.status === 401) {
+        // Handle HTTP 401 Unauthenticated per PDF specification
+        setServerError({
+          message: 'Authentication error (401): Missing or invalid X-API-TOKEN.',
+          list: ['Please verify that your active X-API-TOKEN is set in your environment configuration (.env.local).'],
+        });
+      } else {
+        setServerError({
+          message: err.message || 'Unable to submit inquiry at this time. Please try again.',
+          list: [],
+        });
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
+      {/* Server Error Alert Banner */}
+      {serverError && (
+        <div className={styles.serverErrorBanner}>
+          <div className={styles.serverErrorHeader}>
+            <AlertTriangle size={16} />
+            <span>{serverError.message}</span>
+          </div>
+          {serverError.list?.length > 0 && (
+            <ul className={styles.serverErrorList}>
+              {serverError.list.map((msg, idx) => (
+                <li key={idx}>{msg}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       <div className={styles.formGrid}>
         {/* Name */}
         <div className={styles.formGroup}>
@@ -152,9 +283,8 @@ function BusinessEntityForm({ onSuccess, onToast }) {
               id="bus-name"
               placeholder="John Doe"
               {...register('name')}
-              className={`${styles.inputField} ${
-                errors.name ? styles.error : touchedFields.name ? styles.valid : ''
-              }`}
+              className={`${styles.inputField} ${errors.name ? styles.error : touchedFields.name ? styles.valid : ''
+                }`}
             />
             <User className={styles.leftIcon} />
             {touchedFields.name && !errors.name && (
@@ -183,9 +313,8 @@ function BusinessEntityForm({ onSuccess, onToast }) {
               id="bus-email"
               placeholder="alex@company.com"
               {...register('email')}
-              className={`${styles.inputField} ${
-                errors.email ? styles.error : touchedFields.email ? styles.valid : ''
-              }`}
+              className={`${styles.inputField} ${errors.email ? styles.error : touchedFields.email ? styles.valid : ''
+                }`}
             />
             <Mail className={styles.leftIcon} />
             {touchedFields.email && !errors.email && (
@@ -214,9 +343,8 @@ function BusinessEntityForm({ onSuccess, onToast }) {
               id="bus-companyName"
               placeholder="Acme Corp"
               {...register('companyName')}
-              className={`${styles.inputField} ${
-                errors.companyName ? styles.error : touchedFields.companyName ? styles.valid : ''
-              }`}
+              className={`${styles.inputField} ${errors.companyName ? styles.error : touchedFields.companyName ? styles.valid : ''
+                }`}
             />
             <Building2 className={styles.leftIcon} />
             {touchedFields.companyName && !errors.companyName && (
@@ -251,7 +379,7 @@ function BusinessEntityForm({ onSuccess, onToast }) {
           </div>
         </div>
 
-        {/* Mobile Number */}
+        {/* Mobile Number & Country Code Select */}
         <div className={styles.formGroup}>
           <label htmlFor="bus-phoneNumber" className={styles.formLabel}>
             Mobile Number*
@@ -259,14 +387,16 @@ function BusinessEntityForm({ onSuccess, onToast }) {
           <div className={styles.phoneGroup}>
             <div className={styles.countryCodeSelectWrapper}>
               <select
-                id="bus-countryCode"
-                {...register('countryCode')}
+                id="bus-countryId"
+                {...register('countryId')}
                 className={styles.countryCodeSelect}
+                aria-label="Select Country Code"
               >
-                <option value="+91">🇮🇳 (+91)</option>
-                <option value="+1">🇺🇸 (+1)</option>
-                <option value="+44">🇬🇧 (+44)</option>
-                <option value="+61">🇦🇺 (+61)</option>
+                {countries.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {getCountryFlag(country.iso_code_2)} (+{country.phone_code})
+                  </option>
+                ))}
               </select>
               <ChevronDown className={styles.selectArrow} />
             </div>
@@ -274,11 +404,10 @@ function BusinessEntityForm({ onSuccess, onToast }) {
               <input
                 type="tel"
                 id="bus-phoneNumber"
-                placeholder="98765 43210"
+                placeholder="9876543210"
                 {...register('phoneNumber')}
-                className={`${styles.inputField} ${
-                  errors.phoneNumber ? styles.error : touchedFields.phoneNumber ? styles.valid : ''
-                }`}
+                className={`${styles.inputField} ${errors.phoneNumber ? styles.error : touchedFields.phoneNumber ? styles.valid : ''
+                  }`}
               />
               <Phone className={styles.leftIcon} />
               {touchedFields.phoneNumber && !errors.phoneNumber && (
@@ -297,10 +426,10 @@ function BusinessEntityForm({ onSuccess, onToast }) {
           )}
         </div>
 
-        {/* Dropdown Field */}
+        {/* Inquiry Option Dropdown Field (Populated from GET /api/v1/front/inquiry-options) */}
         <div className={styles.formGroup}>
           <label htmlFor="bus-dropdownValue" className={styles.formLabel}>
-            Select Option*
+            Inquiry Option*
           </label>
           <div className={styles.selectWrapper}>
             <select
@@ -309,11 +438,13 @@ function BusinessEntityForm({ onSuccess, onToast }) {
               className={`${styles.selectField} ${errors.dropdownValue ? styles.error : ''}`}
             >
               <option value="" disabled hidden>
-                Choose an option
+                Choose an inquiry option
               </option>
-              <option value="value1">Option 1</option>
-              <option value="value2">Option 2</option>
-              <option value="value3">Option 3</option>
+              {inquiryOptions.map((opt) => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.name}
+                </option>
+              ))}
             </select>
             <ChevronDown className={styles.selectArrow} />
           </div>
@@ -402,16 +533,16 @@ function BusinessEntityForm({ onSuccess, onToast }) {
       <button
         type="submit"
         className={styles.submitBtn}
-        disabled={isSubmitting || !isValid}
+        disabled={isSubmitting}
       >
         {isSubmitting ? (
           <>
             <span className={styles.btnSpinner} />
-            Creating Business Account...
+            Submitting Inquiry...
           </>
         ) : (
           <>
-            Submit
+            Submit Inquiry
             <ArrowRight className={styles.submitArrow} />
           </>
         )}
@@ -423,12 +554,19 @@ function BusinessEntityForm({ onSuccess, onToast }) {
 // ----------------------------------------------------
 // 2nd Tab: Professional Form
 // ----------------------------------------------------
-function ProfessionalForm({ onSuccess, onToast }) {
+function ProfessionalForm({ countries, inquiryOptions, onSuccess, onToast }) {
+  const dispatch = useDispatch();
+  const [serverError, setServerError] = useState(null);
+
+  const defaultCountry =
+    countries.find((c) => c.is_default === 1 || c.iso_code_2 === 'IN') || countries[0];
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    setError,
     formState: { errors, isSubmitting, touchedFields, isValid },
   } = useForm({
     resolver: zodResolver(professionalSchema),
@@ -436,7 +574,7 @@ function ProfessionalForm({ onSuccess, onToast }) {
     defaultValues: {
       name: '',
       email: '',
-      countryCode: '+91',
+      countryId: defaultCountry?.id ? String(defaultCountry.id) : '2',
       phoneNumber: '',
       dropdownValue: '',
       agreeToTerms: false,
@@ -458,14 +596,84 @@ function ProfessionalForm({ onSuccess, onToast }) {
   }, [agreeToTerms, agreeToMarketing, selectAll, setValue]);
 
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1400));
-    console.log('Professional Registered:', data);
-    onToast(`Verification email sent to ${data.email}`);
-    onSuccess(data.email);
+    setServerError(null);
+
+    const payload = {
+      type: 'professional',
+      name: data.name.trim(),
+      business_email: data.email.trim(),
+      mobile_number: data.phoneNumber.trim(),
+      country_id: Number(data.countryId) || (defaultCountry?.id ? Number(defaultCountry.id) : 2),
+      option_id: Number(data.dropdownValue) || (inquiryOptions[0]?.id ? Number(inquiryOptions[0].id) : 1),
+      consent: {
+        terms: Boolean(data.agreeToTerms),
+        marketing: Boolean(data.agreeToMarketing),
+      },
+    };
+
+    try {
+      const response = await frontApiService.createInquiry(payload);
+      dispatch(submitInquirySuccess(response));
+
+      const returnedData = response.data || response;
+      onToast('Inquiry submitted successfully.');
+      onSuccess({
+        email: data.email,
+        id: returnedData?.id || 1,
+        status: returnedData?.status || 'pending',
+        inquiryData: returnedData,
+      });
+    } catch (err) {
+      dispatch(submitInquiryFailure(err));
+      console.warn('Professional inquiry submission API response:', err);
+
+      if (err.status === 422 && (err.errors || err.validationErrors)) {
+        const errMap = err.errors || err.validationErrors;
+
+        if (errMap.name?.[0]) setError('name', { type: 'server', message: errMap.name[0] });
+        if (errMap.business_email?.[0]) setError('email', { type: 'server', message: errMap.business_email[0] });
+        if (errMap.mobile_number?.[0]) setError('phoneNumber', { type: 'server', message: errMap.mobile_number[0] });
+        if (errMap.country_id?.[0]) setError('countryId', { type: 'server', message: errMap.country_id[0] });
+        if (errMap.option_id?.[0]) setError('dropdownValue', { type: 'server', message: errMap.option_id[0] });
+
+        const messages = Object.values(errMap).flat();
+        setServerError({
+          message: err.message || 'Validation error: Please correct the highlighted fields.',
+          list: messages,
+        });
+      } else if (err.status === 401) {
+        setServerError({
+          message: 'Authentication error (401): Missing or invalid X-API-TOKEN.',
+          list: ['Please verify that your active X-API-TOKEN is set in your environment configuration (.env.local).'],
+        });
+      } else {
+        setServerError({
+          message: err.message || 'Unable to submit inquiry at this time. Please try again.',
+          list: [],
+        });
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
+      {/* Server Error Alert Banner */}
+      {serverError && (
+        <div className={styles.serverErrorBanner}>
+          <div className={styles.serverErrorHeader}>
+            <AlertTriangle size={16} />
+            <span>{serverError.message}</span>
+          </div>
+          {serverError.list?.length > 0 && (
+            <ul className={styles.serverErrorList}>
+              {serverError.list.map((msg, idx) => (
+                <li key={idx}>{msg}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       <div className={styles.formGrid}>
         {/* Name */}
         <div className={styles.formGroup}>
@@ -478,9 +686,8 @@ function ProfessionalForm({ onSuccess, onToast }) {
               id="prof-name"
               placeholder="John Doe"
               {...register('name')}
-              className={`${styles.inputField} ${
-                errors.name ? styles.error : touchedFields.name ? styles.valid : ''
-              }`}
+              className={`${styles.inputField} ${errors.name ? styles.error : touchedFields.name ? styles.valid : ''
+                }`}
             />
             <User className={styles.leftIcon} />
             {touchedFields.name && !errors.name && (
@@ -498,7 +705,7 @@ function ProfessionalForm({ onSuccess, onToast }) {
           )}
         </div>
 
-        {/* Email (Without Business Email Restriction) */}
+        {/* Email */}
         <div className={styles.formGroup}>
           <label htmlFor="prof-email" className={styles.formLabel}>
             Email*
@@ -509,9 +716,8 @@ function ProfessionalForm({ onSuccess, onToast }) {
               id="prof-email"
               placeholder="you@example.com"
               {...register('email')}
-              className={`${styles.inputField} ${
-                errors.email ? styles.error : touchedFields.email ? styles.valid : ''
-              }`}
+              className={`${styles.inputField} ${errors.email ? styles.error : touchedFields.email ? styles.valid : ''
+                }`}
             />
             <Mail className={styles.leftIcon} />
             {touchedFields.email && !errors.email && (
@@ -529,7 +735,7 @@ function ProfessionalForm({ onSuccess, onToast }) {
           )}
         </div>
 
-        {/* Mobile Number */}
+        {/* Mobile Number & Country Code Select */}
         <div className={styles.formGroup}>
           <label htmlFor="prof-phoneNumber" className={styles.formLabel}>
             Mobile Number*
@@ -537,14 +743,16 @@ function ProfessionalForm({ onSuccess, onToast }) {
           <div className={styles.phoneGroup}>
             <div className={styles.countryCodeSelectWrapper}>
               <select
-                id="prof-countryCode"
-                {...register('countryCode')}
+                id="prof-countryId"
+                {...register('countryId')}
                 className={styles.countryCodeSelect}
+                aria-label="Select Country Code"
               >
-                <option value="+91">🇮🇳 (+91)</option>
-                <option value="+1">🇺🇸 (+1)</option>
-                <option value="+44">🇬🇧 (+44)</option>
-                <option value="+61">🇦🇺 (+61)</option>
+                {countries.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {getCountryFlag(country.iso_code_2)} (+{country.phone_code})
+                  </option>
+                ))}
               </select>
               <ChevronDown className={styles.selectArrow} />
             </div>
@@ -552,11 +760,10 @@ function ProfessionalForm({ onSuccess, onToast }) {
               <input
                 type="tel"
                 id="prof-phoneNumber"
-                placeholder="98765 43210"
+                placeholder="9876543210"
                 {...register('phoneNumber')}
-                className={`${styles.inputField} ${
-                  errors.phoneNumber ? styles.error : touchedFields.phoneNumber ? styles.valid : ''
-                }`}
+                className={`${styles.inputField} ${errors.phoneNumber ? styles.error : touchedFields.phoneNumber ? styles.valid : ''
+                  }`}
               />
               <Phone className={styles.leftIcon} />
               {touchedFields.phoneNumber && !errors.phoneNumber && (
@@ -575,10 +782,10 @@ function ProfessionalForm({ onSuccess, onToast }) {
           )}
         </div>
 
-        {/* Dropdown Field */}
+        {/* Inquiry Option Dropdown Field */}
         <div className={styles.formGroup}>
           <label htmlFor="prof-dropdownValue" className={styles.formLabel}>
-            Select Option*
+            Inquiry Option*
           </label>
           <div className={styles.selectWrapper}>
             <select
@@ -587,11 +794,13 @@ function ProfessionalForm({ onSuccess, onToast }) {
               className={`${styles.selectField} ${errors.dropdownValue ? styles.error : ''}`}
             >
               <option value="" disabled hidden>
-                Choose an option
+                Choose an inquiry option
               </option>
-              <option value="value1">Option 1</option>
-              <option value="value2">Option 2</option>
-              <option value="value3">Option 3</option>
+              {inquiryOptions.map((opt) => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.name}
+                </option>
+              ))}
             </select>
             <ChevronDown className={styles.selectArrow} />
           </div>
@@ -680,16 +889,16 @@ function ProfessionalForm({ onSuccess, onToast }) {
       <button
         type="submit"
         className={styles.submitBtn}
-        disabled={isSubmitting || !isValid}
+        disabled={isSubmitting}
       >
         {isSubmitting ? (
           <>
             <span className={styles.btnSpinner} />
-            Creating Professional Account...
+            Submitting Inquiry...
           </>
         ) : (
           <>
-            Submit
+            Submit Inquiry
             <ArrowRight className={styles.submitArrow} />
           </>
         )}
@@ -702,10 +911,48 @@ function ProfessionalForm({ onSuccess, onToast }) {
 // Main Register Modal Component
 // ----------------------------------------------------
 export default function RegisterModal({ isOpen, onClose }) {
+  const dispatch = useDispatch();
+  const reduxInquiryState = useSelector((state) => state.auth?.inquiry);
+
   const [isSubmittedSuccessfully, setIsSubmittedSuccessfully] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState('');
+  const [inquiryResult, setInquiryResult] = useState(null);
   const [accountType, setAccountType] = useState('business');
   const [toastMessage, setToastMessage] = useState(null);
+
+  const [countries, setCountries] = useState(DEFAULT_COUNTRIES);
+  const [inquiryOptions, setInquiryOptions] = useState(DEFAULT_INQUIRY_OPTIONS);
+
+  const hasFetchedRef = useRef(false);
+
+  // Fetch Countries & Inquiry Options only ONCE via Redux Saga
+  useEffect(() => {
+    if (!isOpen) {
+      hasFetchedRef.current = false;
+      return;
+    }
+
+    if (hasFetchedRef.current) return;
+    hasFetchedRef.current = true;
+
+    if (!reduxInquiryState?.countries?.length && !reduxInquiryState?.countriesLoading) {
+      dispatch(fetchCountriesRequest());
+    }
+
+    if (!reduxInquiryState?.inquiryOptions?.length && !reduxInquiryState?.inquiryOptionsLoading) {
+      dispatch(fetchInquiryOptionsRequest());
+    }
+  }, [isOpen, dispatch, reduxInquiryState?.countries?.length, reduxInquiryState?.countriesLoading, reduxInquiryState?.inquiryOptions?.length, reduxInquiryState?.inquiryOptionsLoading]);
+
+  // Sync from Redux if Saga updates countries or inquiryOptions
+  useEffect(() => {
+    if (reduxInquiryState?.countries && reduxInquiryState.countries.length > 0) {
+      setCountries(reduxInquiryState.countries);
+    }
+    if (reduxInquiryState?.inquiryOptions && reduxInquiryState.inquiryOptions.length > 0) {
+      setInquiryOptions(reduxInquiryState.inquiryOptions);
+    }
+  }, [reduxInquiryState?.countries, reduxInquiryState?.inquiryOptions]);
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -726,9 +973,9 @@ export default function RegisterModal({ isOpen, onClose }) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
-      // Reset form state on close
       setIsSubmittedSuccessfully(false);
       setRegisteredEmail('');
+      setInquiryResult(null);
       setAccountType('business');
       setToastMessage(null);
     }
@@ -737,8 +984,14 @@ export default function RegisterModal({ isOpen, onClose }) {
     };
   }, [isOpen]);
 
-  const handleSuccess = (email) => {
-    setRegisteredEmail(email);
+  const handleSuccess = (res) => {
+    if (typeof res === 'string') {
+      setRegisteredEmail(res);
+      setInquiryResult({ email: res, id: 1, status: 'pending' });
+    } else {
+      setRegisteredEmail(res.email || '');
+      setInquiryResult(res);
+    }
     setIsSubmittedSuccessfully(true);
   };
 
@@ -843,7 +1096,7 @@ export default function RegisterModal({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* Right Column: Registration Card */}
+            {/* Right Column: Registration / Inquiry Card */}
             <div className={styles.rightColumn}>
               <div className={styles.formCard}>
                 {!isSubmittedSuccessfully ? (
@@ -852,9 +1105,9 @@ export default function RegisterModal({ isOpen, onClose }) {
                       <div className={styles.trialBadge}>
                         <Sparkles size={14} /> Start Your Trial
                       </div>
-                      <h3 className={styles.cardTitle}>Create Account</h3>
+                      <h3 className={styles.cardTitle}>Submit Inquiry</h3>
                       <p className={styles.cardSubtitle}>
-                        Get access to your 7-day free trial setup.
+                        Register your business inquiry to access DigitalRakshak services.
                       </p>
                     </div>
 
@@ -862,16 +1115,14 @@ export default function RegisterModal({ isOpen, onClose }) {
                     <div className={styles.tabSliderWrapper}>
                       <div className={styles.tabSliderTrack}>
                         <div
-                          className={`${styles.tabSliderPill} ${
-                            accountType === 'business' ? styles.left : styles.right
-                          }`}
+                          className={`${styles.tabSliderPill} ${accountType === 'business' ? styles.left : styles.right
+                            }`}
                         />
                         <button
                           type="button"
                           onClick={() => setAccountType('business')}
-                          className={`${styles.tabBtn} ${
-                            accountType === 'business' ? styles.active : styles.inactive
-                          }`}
+                          className={`${styles.tabBtn} ${accountType === 'business' ? styles.active : styles.inactive
+                            }`}
                         >
                           <Building2 size={16} />
                           Business Entity
@@ -879,9 +1130,8 @@ export default function RegisterModal({ isOpen, onClose }) {
                         <button
                           type="button"
                           onClick={() => setAccountType('professional')}
-                          className={`${styles.tabBtn} ${
-                            accountType === 'professional' ? styles.active : styles.inactive
-                          }`}
+                          className={`${styles.tabBtn} ${accountType === 'professional' ? styles.active : styles.inactive
+                            }`}
                         >
                           <Briefcase size={16} />
                           Professionals
@@ -891,29 +1141,52 @@ export default function RegisterModal({ isOpen, onClose }) {
 
                     {/* Active Form */}
                     {accountType === 'business' ? (
-                      <BusinessEntityForm onSuccess={handleSuccess} onToast={showToast} />
+                      <BusinessEntityForm
+                        countries={countries}
+                        inquiryOptions={inquiryOptions}
+                        onSuccess={handleSuccess}
+                        onToast={showToast}
+                      />
                     ) : (
-                      <ProfessionalForm onSuccess={handleSuccess} onToast={showToast} />
+                      <ProfessionalForm
+                        countries={countries}
+                        inquiryOptions={inquiryOptions}
+                        onSuccess={handleSuccess}
+                        onToast={showToast}
+                      />
                     )}
                   </>
                 ) : (
-                  /* Success State View */
+                  /* Success State View (Section 5 Step 8: Displays ID and Status) */
                   <div className={styles.successContainer}>
                     <div className={styles.successIconWrapper}>
                       <CheckCircle size={44} />
                     </div>
 
-                    <h3 className={styles.successTitle}>Account Pending Verification</h3>
+                    <h3 className={styles.successTitle}>Inquiry Submitted Successfully</h3>
+
+                    <div className={styles.inquiryMetaRow}>
+                      <span className={styles.inquiryIdBadge}>
+                        Inquiry ID: #{inquiryResult?.id || 1}
+                      </span>
+                      <span className={styles.statusBadgePending}>
+                        <span className={styles.pulseDot} />
+                        Status: {inquiryResult?.status || 'pending'}
+                      </span>
+                    </div>
 
                     <p className={styles.successDesc}>
-                      Thank you for choosing DigitalRakshak. We&apos;ve sent a verification email to:
+                      Thank you for choosing DigitalRakshak. We&apos;ve registered your inquiry and
+                      sent a confirmation to:
                     </p>
 
-                    <div className={styles.emailBadge}>{registeredEmail}</div>
+                    <div className={styles.emailBadge}>
+                      {inquiryResult?.email || registeredEmail}
+                    </div>
 
                     <p className={styles.successInstructions}>
-                      Please click the link inside that email to verify your email address and start
-                      setting up your trials.
+                      Our compliance and onboarding team will review your inquiry details and get in
+                      touch shortly.
                     </p>
 
                     <div className={styles.successActions}>

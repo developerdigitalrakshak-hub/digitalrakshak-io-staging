@@ -5,6 +5,7 @@ import storage from './storage';
 import postsReducer from './modules/posts/reducers/postsReducer';
 import loginReducer from './modules/auth/submodules/userLogin/reducers/loginReducer';
 import tokenReducer from './modules/auth/submodules/token/reducers/tokenReducer';
+import inquiryReducer from './modules/auth/submodules/inquiry/reducers/inquiryReducer';
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +16,7 @@ const persistConfig = {
 const authReducer = combineReducers({
   userLogin: loginReducer,
   token: tokenReducer,
+  inquiry: inquiryReducer,
 });
 
 const rootReducer = combineReducers({

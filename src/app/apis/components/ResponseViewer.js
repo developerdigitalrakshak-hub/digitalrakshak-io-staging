@@ -64,6 +64,7 @@ export default function ResponseViewer({ statusCodes = [] }) {
 
   return (
     <div className={styles.responseContainer}>
+      <h2 className={styles.sectionHeading}>Status Code</h2>
       {statusCodes && statusCodes.length > 0 && (
         <div className={styles.statusTabsBar}>
           {statusCodes.map((sc) => {
