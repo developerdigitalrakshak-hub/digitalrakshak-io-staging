@@ -40,13 +40,21 @@ axiosClient.interceptors.request.use(
     }
 
     // Attach X-API-TOKEN for Front and general API endpoints if not already provided
-    const frontApiToken =
+    const existingToken =
       config.headers['X-API-TOKEN'] ||
+      (typeof config.headers.get === 'function' ? config.headers.get('X-API-TOKEN') : null);
+
+    const frontApiToken =
+      existingToken ||
       (typeof window !== 'undefined' ? localStorage.getItem('api_token') : null) ||
       apiConfig.apiToken;
 
-    if (!config.headers['X-API-TOKEN'] && frontApiToken) {
-      config.headers['X-API-TOKEN'] = frontApiToken;
+    if (frontApiToken) {
+      if (typeof config.headers.set === 'function') {
+        config.headers.set('X-API-TOKEN', frontApiToken);
+      } else {
+        config.headers['X-API-TOKEN'] = frontApiToken;
+      }
     }
 
     config.headers['X-Request-Timestamp'] = new Date().toISOString();

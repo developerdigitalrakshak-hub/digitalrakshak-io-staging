@@ -18,7 +18,12 @@ export const apiConfig = {
     return process.env.NEXT_PUBLIC_API_SECRET || '';
   },
   get apiToken() {
-    return process.env.NEXT_PUBLIC_API_TOKEN || '';
+    return (
+      process.env.NEXT_PUBLIC_X_API_TOKEN ||
+      process.env.NEXT_PUBLIC_API_TOKEN ||
+      process.env.NEXT_PUBLIC_FRONT_API_TOKEN ||
+      ''
+    );
   },
   get appId() {
     return process.env.NEXT_PUBLIC_APP_ID || '';
@@ -36,6 +41,13 @@ export const apiConfig = {
     }
     if (process.env.NEXT_PUBLIC_CLIENT_ID) {
       headers['X-Client-ID'] = process.env.NEXT_PUBLIC_CLIENT_ID;
+    }
+    const token =
+      process.env.NEXT_PUBLIC_X_API_TOKEN ||
+      process.env.NEXT_PUBLIC_API_TOKEN ||
+      process.env.NEXT_PUBLIC_FRONT_API_TOKEN;
+    if (token) {
+      headers['X-API-TOKEN'] = token;
     }
     return headers;
   },
