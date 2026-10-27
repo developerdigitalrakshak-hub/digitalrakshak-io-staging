@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { apiConfig } from '../../config/apiConfig';
-import { getConfig } from '../../config/yamlConfigAccessor';
 import { handleApiError } from './errorHandler';
 
 // Initialize axios instance safely without throwing at frontend import time
@@ -9,18 +8,17 @@ const axiosClient = axios.create();
 // Validate and apply configuration at the exact moment an API call is made
 axiosClient.interceptors.request.use(
   (config) => {
-    // When an API call is made, strictly validate that baseUrl exists in YAML
-    const targetBaseUrl = getConfig('api.baseUrl', true);
-    config.baseURL = targetBaseUrl;
-
-    const timeoutVal = getConfig('api.timeout', false);
-    if (timeoutVal && !config.timeout) {
-      config.timeout = parseInt(timeoutVal, 10);
+    // Set base URL from apiConfig
+    if (apiConfig.baseUrl) {
+      config.baseURL = apiConfig.baseUrl;
     }
 
-    const defaultHeaders = getConfig('api.headers', false);
-    if (defaultHeaders) {
-      config.headers = { ...defaultHeaders, ...config.headers };
+    if (apiConfig.timeout && !config.timeout) {
+      config.timeout = apiConfig.timeout;
+    }
+
+    if (apiConfig.headers) {
+      config.headers = { ...apiConfig.headers, ...config.headers };
     }
 
     const isTokenEndpoint = config.url && config.url.includes('/v1/oauth/token');
@@ -45,7 +43,7 @@ axiosClient.interceptors.request.use(
     const frontApiToken =
       config.headers['X-API-TOKEN'] ||
       (typeof window !== 'undefined' ? localStorage.getItem('api_token') : null) ||
-      getConfig('api.apiToken', false);
+      apiConfig.apiToken;
 
     if (!config.headers['X-API-TOKEN'] && frontApiToken) {
       config.headers['X-API-TOKEN'] = frontApiToken;

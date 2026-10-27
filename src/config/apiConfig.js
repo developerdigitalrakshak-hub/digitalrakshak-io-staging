@@ -1,34 +1,43 @@
-import { getApiBaseUrl, getApiTimeout, getApiHeaders, getApiToken, getConfig } from './yamlConfigAccessor';
-
 /**
  * Global API Configuration.
- * Strictly driven by api.config.yml and env variables.
- * No default values or fallback constants are provided.
+ * Directly driven by environment variables (.env).
  */
 export const apiConfig = {
   get baseUrl() {
-    return getApiBaseUrl();
+    return process.env.NEXT_PUBLIC_API_BASE_URL || '';
   },
   get timeout() {
-    return getApiTimeout();
+    return process.env.NEXT_PUBLIC_API_TIMEOUT
+      ? parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT, 10)
+      : 30000;
   },
   get apiKey() {
-    return getConfig('api.apiKey');
+    return process.env.NEXT_PUBLIC_API_KEY || '';
   },
   get apiSecret() {
-    return getConfig('api.apiSecret');
+    return process.env.NEXT_PUBLIC_API_SECRET || '';
   },
   get apiToken() {
-    return getApiToken();
+    return process.env.NEXT_PUBLIC_API_TOKEN || '';
   },
   get appId() {
-    return getConfig('api.appId');
+    return process.env.NEXT_PUBLIC_APP_ID || '';
   },
   get clientId() {
-    return getConfig('api.clientId');
+    return process.env.NEXT_PUBLIC_CLIENT_ID || '';
   },
   get headers() {
-    return getApiHeaders();
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
+    if (process.env.NEXT_PUBLIC_APP_ID) {
+      headers['X-App-ID'] = process.env.NEXT_PUBLIC_APP_ID;
+    }
+    if (process.env.NEXT_PUBLIC_CLIENT_ID) {
+      headers['X-Client-ID'] = process.env.NEXT_PUBLIC_CLIENT_ID;
+    }
+    return headers;
   },
 };
 
