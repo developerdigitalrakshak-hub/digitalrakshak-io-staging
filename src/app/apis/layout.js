@@ -68,7 +68,7 @@ export default function ApisLayout({ children }) {
 
           <Link href="/apis/oauth-token" className={styles.homeBadge}>
             <span className={styles.homeText}>
-              API Catelog <span style={{ color: '#22c55e' }}>(30)</span>
+              API Catalogue <span style={{ color: '#22c55e' }}>(30)</span>
             </span>
           </Link>
         </div>

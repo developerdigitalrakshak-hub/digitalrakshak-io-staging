@@ -49,10 +49,16 @@ function YouTubeIcon() {
 }
 
 const platformsData = [
-  { name: 'API Hub', href: '#' },
-  { name: 'e-Sign Solution', href: '/e-stamp-and-e-sign' },
-  { name: 'e-Stamping Solution', href: '/e-stamp-and-e-sign' },
-  { name: 'e-Onboarding Platform', href: '#' },
+  { name: 'API Hub', href: '/apis/oauth-token' },
+  {
+    name: 'Paperless Solution',
+    href: '#',
+    subitems: [
+      { name: 'e-Sign Solution', href: '/e-stamp-and-e-sign' },
+      { name: 'e-Stamping Solution', href: '/e-stamp-and-e-sign' },
+      { name: 'e-Onboarding Platform', href: '#' },
+    ],
+  },
 ];
 
 const servicesData = [
@@ -91,35 +97,28 @@ export default function Footer() {
       <div className={styles.footerContainer}>
         {/* Brand Column */}
         <div className={styles.brandCol}>
-          <div className={styles.brandHeader}>
-            <div className={styles.logoBox}>
-              <Image
-                alt="DigitalRakshak Logo"
-                className={styles.logoImage}
-                src="/assets/logo.png"
-                width={42}
-                height={42}
-                priority
-              />
-            </div>
-            <div className={styles.brandTitleGroup}>
+          <div className={styles.brandTitleGroup}>
+            <Link href="/" className={styles.brandTitleLink}>
               <p className={styles.brandTitle}>
                 DigitalRakshak<sup>TM</sup>
               </p>
-              <span className={styles.brandTagline}>
-                SECURE | SWIFT | COMPLIANT
-              </span>
-            </div>
+            </Link>
+            <span className={styles.brandTagline}>
+              SECURE | SWIFT | COMPLIANT
+            </span>
           </div>
 
-          <p className={styles.brandLegal}>DigitalRakshak InfoTech Pvt. Ltd</p>
-          <div className={styles.cinBadge}>
-            <span>CIN:</span>
-            <span>U78300GJ2025PTC171397</span>
+          {/* Large Logo Emblem */}
+          <div className={styles.bigLogoWrapper}>
+            <Image
+              alt="DigitalRakshak Logo"
+              className={styles.bigLogoImage}
+              src="/assets/logo.png"
+              width={190}
+              height={117}
+              priority
+            />
           </div>
-          <p className={styles.brandDesc}>
-            Your trusted partner for comprehensive API, BGV and compliance solutions. Secure, reliable, and compliant services for your business.
-          </p>
 
           {/* Social Icons with Glass Badges */}
           <div className={styles.socialRow}>
@@ -140,19 +139,39 @@ export default function Footer() {
 
         {/* Platforms & Software Column */}
         <div className={styles.navCol}>
-          <h4 className={styles.colHeading}>Platforms & Software</h4>
-          <div className={styles.linksList}>
+          <h4 className={styles.colHeading}>Platforms &amp; Software</h4>
+          <div className={styles.platformsList}>
             {platformsData.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={styles.colLink}
-                onClick={(e) => {
-                  if (item.href === '#') e.preventDefault();
-                }}
-              >
-                {item.name}
-              </Link>
+              <div key={item.name} className={styles.platformItem}>
+                <Link
+                  href={item.href}
+                  className={styles.bulletLink}
+                  onClick={(e) => {
+                    if (item.href === '#') e.preventDefault();
+                  }}
+                >
+                  <span className={styles.bulletDot}>•</span>
+                  <span>{item.name}</span>
+                </Link>
+
+                {item.subitems && item.subitems.length > 0 && (
+                  <div className={styles.subItemList}>
+                    {item.subitems.map((sub) => (
+                      <Link
+                        key={sub.name}
+                        href={sub.href}
+                        className={styles.subItemLink}
+                        onClick={(e) => {
+                          if (sub.href === '#') e.preventDefault();
+                        }}
+                      >
+                        <span className={styles.subItemDash}>-</span>
+                        <span>{sub.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

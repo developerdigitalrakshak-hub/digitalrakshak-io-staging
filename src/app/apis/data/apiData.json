@@ -136,9 +136,9 @@
       "id": "mobile-silent",
       "meta": {
         "title": "2. Mobile Silent Verification",
-        "category": "Verification",
+        "category": "Mobile Verification",
         "breadcrumbs": [
-          "Verification",
+          "Mobile Verification",
           "Mobile Silent Verification"
         ]
       },
@@ -308,9 +308,9 @@
       "id": "mobile-otp",
       "meta": {
         "title": "3. Mobile Verification with OTP — Generate OTP",
-        "category": "Verification",
+        "category": "Mobile Verification",
         "breadcrumbs": [
-          "Verification",
+          "Mobile Verification",
           "Generate OTP"
         ]
       },
@@ -441,9 +441,9 @@
       "id": "geo-fencing",
       "meta": {
         "title": "4. Geo Fencing",
-        "category": "Geo Fencing",
+        "category": "Area Tracking",
         "breadcrumbs": [
-          "Geo Fencing",
+          "Area Tracking",
           "Risk Scores"
         ]
       },
@@ -711,9 +711,9 @@
       "id": "reverse-geocode",
       "meta": {
         "title": "5. Reverse Geocode",
-        "category": "Geo Fencing",
+        "category": "Area Tracking",
         "breadcrumbs": [
-          "Geo Fencing",
+          "Area Tracking",
           "Reverse Geocode"
         ]
       },
@@ -1177,9 +1177,9 @@
       "id": "bank-penny-drop",
       "meta": {
         "title": "7. Bank Verification — Penny Drop",
-        "category": "Banking",
+        "category": "Banking in Finance",
         "breadcrumbs": [
-          "Banking",
+          "Banking in Finance",
           "Penny Drop"
         ]
       },
@@ -1408,9 +1408,9 @@
       "id": "bank-verify-amount",
       "meta": {
         "title": "8. Bank Verification — Verify Amount",
-        "category": "Banking",
+        "category": "Banking in Finance",
         "breadcrumbs": [
-          "Banking",
+          "Banking in Finance",
           "Verify Amount"
         ]
       },
@@ -1557,9 +1557,9 @@
       "id": "shop-establishment",
       "meta": {
         "title": "9. Shop & Establishment Verification",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate",
+          "Company Records",
           "Shop & Establishment"
         ]
       },
@@ -1843,9 +1843,9 @@
       "id": "epf-uan",
       "meta": {
         "title": "10. EPF UAN Validation",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate",
+          "Company Records",
           "EPF UAN Validation"
         ]
       },
@@ -2084,9 +2084,9 @@
       "id": "tan-verification",
       "meta": {
         "title": "11. TAN Verification",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate Verification",
+          "Company Records",
           "TAN Verification"
         ]
       },
@@ -2222,9 +2222,9 @@
       "id": "roc-director-search",
       "meta": {
         "title": "12. ROC Director Search by DIN",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate Verification",
+          "Company Records",
           "ROC Director Search by DIN"
         ]
       },
@@ -2896,9 +2896,9 @@
       "id": "experian-credit-report",
       "meta": {
         "title": "15. Experian Credit Bureau Report",
-        "category": "Banking",
+        "category": "Banking in Finance",
         "breadcrumbs": [
-          "Banking",
+          "Banking in Finance",
           "Experian Credit Bureau Report"
         ]
       },
@@ -3155,239 +3155,13 @@
         "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/protean/bureau/experian-report\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest[\"Content-Type\"] = 'application/json'\nrequest.body = JSON.dump({\"phoneNumber\":\"REDACTED_PHONE\",\"pan\":\"ABCDE4289A\",\"firstName\":\"John\",\"lastName\":\"Doe\",\"dateOfBirth\":\"1987-08-11\",\"pincode\":\"400004\",\"consent\":{\"consentFlag\":true,\"consentTimestamp\":1707685055,\"consentIpAddress\":\"127.0.0.1\",\"consentMessageId\":\"CM_1\"}})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
-    "advanced-forgery-detection": {
-      "id": "advanced-forgery-detection",
-      "meta": {
-        "title": "16. Advanced Forgery Detection",
-        "category": "KYC Verification",
-        "breadcrumbs": [
-          "KYC Verification",
-          "Advanced Forgery Detection"
-        ]
-      },
-      "endpoint": {
-        "method": "POST",
-        "url": "https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync",
-        "description": "Analyzes image URLs and supplied text for signals including web-image reuse, photocopy/screenshot detection, splice detection, metadata, and text matching."
-      },
-      "headerParameters": [
-        {
-          "name": "Authorization",
-          "type": "string",
-          "required": true,
-          "sample": "Bearer <access_token>"
-        },
-        {
-          "name": "apikey",
-          "type": "string",
-          "required": true,
-          "sample": "<API_KEY>"
-        },
-        {
-          "name": "Content-Type",
-          "type": "string",
-          "required": true,
-          "sample": "application/json"
-        }
-      ],
-      "requestBody": [
-        {
-          "name": "urls",
-          "type": "array",
-          "required": true,
-          "description": "List of document image URLs to inspect",
-          "sample": [
-            "https://example.com/document-image.jpg"
-          ]
-        },
-        {
-          "name": "textfields",
-          "type": "object",
-          "required": true,
-          "description": "Expected key-value text pairs",
-          "sample": {
-            "field1": "value"
-          }
-        },
-        {
-          "name": "threshold",
-          "type": "number",
-          "required": false,
-          "description": "Forgery risk sensitivity threshold",
-          "sample": 20
-        },
-        {
-          "name": "callBackUrl",
-          "type": "string",
-          "required": false,
-          "description": "Webhook callback URL",
-          "sample": "https://uat.digitalrakshak.io/api/v1/your/callback"
-        }
-      ],
-      "responseBody": [
-        {
-          "name": "result",
-          "type": "object",
-          "description": "Forgery analysis results",
-          "children": [
-            {
-              "name": "imageResults",
-              "type": "array",
-              "description": "Array of detailed scores for splice, photocopy, screenshot, metadata, textmatch, and summary"
-            }
-          ]
-        },
-        {
-          "name": "callBackUrl",
-          "type": "string",
-          "description": "Echoed callback URL"
-        },
-        {
-          "name": "trackingId",
-          "type": "string",
-          "description": "Unique analysis tracking ID"
-        },
-        {
-          "name": "urls",
-          "type": "array",
-          "description": "Input image URLs"
-        }
-      ],
-      "statusCodes": [
-        {
-          "code": 200,
-          "label": "200 OK",
-          "response": {
-            "result": {
-              "imageResults": [
-                {
-                  "copymoveDetection": {
-                    "info": "Deprecated; use spliceDetection where supported",
-                    "score": 0,
-                    "locations": [],
-                    "regionsOfConcern": []
-                  },
-                  "photocopyDetection": {
-                    "score": "7.52"
-                  },
-                  "webcheckDetection": {
-                    "score": "100"
-                  },
-                  "screenshotDetection": {
-                    "score": "0"
-                  },
-                  "metadataDetection": {
-                    "metadata": {
-                      "resolution": [
-                        550,
-                        368
-                      ]
-                    }
-                  },
-                  "spliceDetection": {
-                    "forged": "No",
-                    "score": "0",
-                    "Full_Card_Forgery_Confidence": "0"
-                  },
-                  "textmatch": {
-                    "fields": {
-                      "field1": "value"
-                    },
-                    "results": {
-                      "field1": {
-                        "score": 0,
-                        "verb": "NO MATCH",
-                        "bestMatch": ""
-                      }
-                    },
-                    "overallScore": 0
-                  },
-                  "summary": {
-                    "status": "Forged",
-                    "reason": "Example provider summary"
-                  },
-                  "imageUrl": "https://example.com/document-image.jpg"
-                }
-              ]
-            },
-            "callBackUrl": "https://uat.digitalrakshak.io/api/v1/your/callback",
-            "trackingId": "REDACTED_TRACKING_ID",
-            "urls": [
-              "https://example.com/document-image.jpg"
-            ]
-          }
-        },
-        {
-          "code": 400,
-          "label": "400 Bad Request",
-          "response": {
-            "status": false,
-            "error_code": 400,
-            "error_description": "Invalid image URL or unsupported document image"
-          }
-        }
-      ],
-      "codeLanguages": [
-        {
-          "id": "curl",
-          "name": "cURL",
-          "icon": "curl"
-        },
-        {
-          "id": "curl-translations",
-          "name": "cURL (with translations)",
-          "icon": "curl-translations"
-        },
-        {
-          "id": "python",
-          "name": "Python",
-          "icon": "python"
-        },
-        {
-          "id": "javascript",
-          "name": "JavaScript",
-          "icon": "javascript"
-        },
-        {
-          "id": "php",
-          "name": "PHP",
-          "icon": "php"
-        },
-        {
-          "id": "go",
-          "name": "Go",
-          "icon": "go"
-        },
-        {
-          "id": "java",
-          "name": "Java",
-          "icon": "java"
-        },
-        {
-          "id": "ruby",
-          "name": "Ruby",
-          "icon": "ruby"
-        }
-      ],
-      "codeSamples": {
-        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  }'",
-        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  }'",
-        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\",\n    \"Content-Type\": \"application/json\"\n}\npayload = {\n    \"urls\": [\n        \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n        \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
-        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\",\n    \"Content-Type\": \"application/json\"\n  },\n  body: JSON.stringify({\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
-        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\",\n    \"Content-Type\": \"application/json\"\n  },\n  body: JSON.stringify({\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
-        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode({\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  }),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\",\n    \"Content-Type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
-        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\"\n\tpayload := strings.NewReader(`{\n  \"urls\": [\n    \"https://example.com/document-image.jpg\"\n  ],\n  \"textfields\": {\n    \"field1\": \"value\"\n  },\n  \"threshold\": 20,\n  \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\treq.Header.Add(\"Content-Type\", \"application/json\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
-        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .header(\"Content-Type\", \"application/json\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"urls\\\": [\\n    \\\"https://example.com/document-image.jpg\\\"\\n  ],\\n  \\\"textfields\\\": {\\n    \\\"field1\\\": \\\"value\\\"\\n  },\\n  \\\"threshold\\\": 20,\\n  \\\"callBackUrl\\\": \\\"https://uat.digitalrakshak.io/api/v1/your/callback\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
-        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest[\"Content-Type\"] = 'application/json'\nrequest.body = JSON.dump({\"urls\":[\"https://example.com/document-image.jpg\"],\"textfields\":{\"field1\":\"value\"},\"threshold\":20,\"callBackUrl\":\"https://uat.digitalrakshak.io/api/v1/your/callback\"})\n\nresponse = http.request(request)\nputs response.read_body"
-      }
-    },
     "udyam-verification": {
       "id": "udyam-verification",
       "meta": {
         "title": "17. Udyam Verification (Without OTP)",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate Verification",
+          "Company Records",
           "Udyam Verification (Without OTP)"
         ]
       },
@@ -3937,13 +3711,239 @@
         "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/protean/amlcft/ndd\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest[\"Content-Type\"] = 'application/json'\nrequest.body = JSON.dump({\"name\":\"Example Entity\",\"type\":\"entity\",\"category\":[\"AML\",\"CFT\",\"NONCOMPLIANCE\",\"LENDING\"],\"databaseList\":[\"ALL\"],\"matchScoreThreshold\":\"0.50\",\"country\":\"INDIA\",\"searchText\":[\"\"],\"aliasArray\":[\"\"]})\n\nresponse = http.request(request)\nputs response.read_body"
       }
     },
+    "advanced-forgery-detection": {
+      "id": "advanced-forgery-detection",
+      "meta": {
+        "title": "16. Advanced Forgery Detection",
+        "category": "Due Diligence & Compliance",
+        "breadcrumbs": [
+          "Due Diligence & Compliance",
+          "Advanced Forgery Detection"
+        ]
+      },
+      "endpoint": {
+        "method": "POST",
+        "url": "https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync",
+        "description": "Analyzes image URLs and supplied text for signals including web-image reuse, photocopy/screenshot detection, splice detection, metadata, and text matching."
+      },
+      "headerParameters": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true,
+          "sample": "Bearer <access_token>"
+        },
+        {
+          "name": "apikey",
+          "type": "string",
+          "required": true,
+          "sample": "<API_KEY>"
+        },
+        {
+          "name": "Content-Type",
+          "type": "string",
+          "required": true,
+          "sample": "application/json"
+        }
+      ],
+      "requestBody": [
+        {
+          "name": "urls",
+          "type": "array",
+          "required": true,
+          "description": "List of document image URLs to inspect",
+          "sample": [
+            "https://example.com/document-image.jpg"
+          ]
+        },
+        {
+          "name": "textfields",
+          "type": "object",
+          "required": true,
+          "description": "Expected key-value text pairs",
+          "sample": {
+            "field1": "value"
+          }
+        },
+        {
+          "name": "threshold",
+          "type": "number",
+          "required": false,
+          "description": "Forgery risk sensitivity threshold",
+          "sample": 20
+        },
+        {
+          "name": "callBackUrl",
+          "type": "string",
+          "required": false,
+          "description": "Webhook callback URL",
+          "sample": "https://uat.digitalrakshak.io/api/v1/your/callback"
+        }
+      ],
+      "responseBody": [
+        {
+          "name": "result",
+          "type": "object",
+          "description": "Forgery analysis results",
+          "children": [
+            {
+              "name": "imageResults",
+              "type": "array",
+              "description": "Array of detailed scores for splice, photocopy, screenshot, metadata, textmatch, and summary"
+            }
+          ]
+        },
+        {
+          "name": "callBackUrl",
+          "type": "string",
+          "description": "Echoed callback URL"
+        },
+        {
+          "name": "trackingId",
+          "type": "string",
+          "description": "Unique analysis tracking ID"
+        },
+        {
+          "name": "urls",
+          "type": "array",
+          "description": "Input image URLs"
+        }
+      ],
+      "statusCodes": [
+        {
+          "code": 200,
+          "label": "200 OK",
+          "response": {
+            "result": {
+              "imageResults": [
+                {
+                  "copymoveDetection": {
+                    "info": "Deprecated; use spliceDetection where supported",
+                    "score": 0,
+                    "locations": [],
+                    "regionsOfConcern": []
+                  },
+                  "photocopyDetection": {
+                    "score": "7.52"
+                  },
+                  "webcheckDetection": {
+                    "score": "100"
+                  },
+                  "screenshotDetection": {
+                    "score": "0"
+                  },
+                  "metadataDetection": {
+                    "metadata": {
+                      "resolution": [
+                        550,
+                        368
+                      ]
+                    }
+                  },
+                  "spliceDetection": {
+                    "forged": "No",
+                    "score": "0",
+                    "Full_Card_Forgery_Confidence": "0"
+                  },
+                  "textmatch": {
+                    "fields": {
+                      "field1": "value"
+                    },
+                    "results": {
+                      "field1": {
+                        "score": 0,
+                        "verb": "NO MATCH",
+                        "bestMatch": ""
+                      }
+                    },
+                    "overallScore": 0
+                  },
+                  "summary": {
+                    "status": "Forged",
+                    "reason": "Example provider summary"
+                  },
+                  "imageUrl": "https://example.com/document-image.jpg"
+                }
+              ]
+            },
+            "callBackUrl": "https://uat.digitalrakshak.io/api/v1/your/callback",
+            "trackingId": "REDACTED_TRACKING_ID",
+            "urls": [
+              "https://example.com/document-image.jpg"
+            ]
+          }
+        },
+        {
+          "code": 400,
+          "label": "400 Bad Request",
+          "response": {
+            "status": false,
+            "error_code": 400,
+            "error_description": "Invalid image URL or unsupported document image"
+          }
+        }
+      ],
+      "codeLanguages": [
+        {
+          "id": "curl",
+          "name": "cURL",
+          "icon": "curl"
+        },
+        {
+          "id": "curl-translations",
+          "name": "cURL (with translations)",
+          "icon": "curl-translations"
+        },
+        {
+          "id": "python",
+          "name": "Python",
+          "icon": "python"
+        },
+        {
+          "id": "javascript",
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
+          "id": "php",
+          "name": "PHP",
+          "icon": "php"
+        },
+        {
+          "id": "go",
+          "name": "Go",
+          "icon": "go"
+        },
+        {
+          "id": "java",
+          "name": "Java",
+          "icon": "java"
+        },
+        {
+          "id": "ruby",
+          "name": "Ruby",
+          "icon": "ruby"
+        }
+      ],
+      "codeSamples": {
+        "curl": "curl --request POST \\\n  --url https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  }'",
+        "curl-translations": "curl --request POST \\\n  --url 'https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync?include_translations=true' \\\n  --header 'Authorization: Bearer <access_token>' \\\n  --header 'apikey: <API_KEY>' \\\n  --header 'Accept-Language: en,hi' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  }'",
+        "python": "import requests\n\nurl = \"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\"\nheaders = {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\",\n    \"Content-Type\": \"application/json\"\n}\npayload = {\n    \"urls\": [\n        \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n        \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n}\n\nresponse = requests.post(url, headers=headers, json=payload)\nprint(response.json())",
+        "javascript": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\",\n    \"Content-Type\": \"application/json\"\n  },\n  body: JSON.stringify({\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "node": "const options = {\n  method: 'POST',\n  headers: {\n    \"Authorization\": \"Bearer <access_token>\",\n    \"apikey\": \"<API_KEY>\",\n    \"Content-Type\": \"application/json\"\n  },\n  body: JSON.stringify({\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  })\n};\n\nfetch('https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync', options)\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
+        "php": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, [\n  CURLOPT_URL => \"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_CUSTOMREQUEST => \"POST\",\n  CURLOPT_POSTFIELDS => json_encode({\n    \"urls\": [\n      \"https://example.com/document-image.jpg\"\n    ],\n    \"textfields\": {\n      \"field1\": \"value\"\n    },\n    \"threshold\": 20,\n    \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n  }),\n  CURLOPT_HTTPHEADER => [\n    \"Authorization: Bearer <access_token>\",\n    \"apikey: <API_KEY>\",\n    \"Content-Type: application/json\"\n  ],\n]);\n\n$response = curl_exec($curl);\ncurl_close($curl);\n\necho $response;",
+        "go": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n\t\"net/http\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\turl := \"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\"\n\tpayload := strings.NewReader(`{\n  \"urls\": [\n    \"https://example.com/document-image.jpg\"\n  ],\n  \"textfields\": {\n    \"field1\": \"value\"\n  },\n  \"threshold\": 20,\n  \"callBackUrl\": \"https://uat.digitalrakshak.io/api/v1/your/callback\"\n}`)\n\n\treq, _ := http.NewRequest(\"POST\", url, payload)\n\treq.Header.Add(\"Authorization\", \"Bearer <access_token>\")\n\treq.Header.Add(\"apikey\", \"<API_KEY>\")\n\treq.Header.Add(\"Content-Type\", \"application/json\")\n\n\tres, err := http.DefaultClient.Do(req)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t\treturn\n\t}\n\tdefer res.Body.Close()\n\n\tbody, _ := ioutil.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}",
+        "java": "import java.net.URI;\nimport java.net.http.HttpClient;\nimport java.net.http.HttpRequest;\nimport java.net.http.HttpResponse;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        HttpRequest request = HttpRequest.newBuilder()\n            .uri(URI.create(\"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\"))\n            .header(\"Authorization\", \"Bearer <access_token>\")\n            .header(\"apikey\", \"<API_KEY>\")\n            .header(\"Content-Type\", \"application/json\")\n            .method(\"POST\", HttpRequest.BodyPublishers.ofString(\"{\\n  \\\"urls\\\": [\\n    \\\"https://example.com/document-image.jpg\\\"\\n  ],\\n  \\\"textfields\\\": {\\n    \\\"field1\\\": \\\"value\\\"\\n  },\\n  \\\"threshold\\\": 20,\\n  \\\"callBackUrl\\\": \\\"https://uat.digitalrakshak.io/api/v1/your/callback\\\"\\n}\"))\n            .build();\n\n        HttpResponse<String> response = HttpClient.newHttpClient()\n            .send(request, HttpResponse.BodyHandlers.ofString());\n\n        System.out.println(response.body());\n    }\n}",
+        "ruby": "require \"uri\"\nrequire \"net/http\"\nrequire \"json\"\n\nurl = URI(\"https://uat.digitalrakshak.io/api/v1/protean/advance-forgery/sync\")\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\n\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Authorization\"] = 'Bearer <access_token>'\nrequest[\"apikey\"] = '<API_KEY>'\nrequest[\"Content-Type\"] = 'application/json'\nrequest.body = JSON.dump({\"urls\":[\"https://example.com/document-image.jpg\"],\"textfields\":{\"field1\":\"value\"},\"threshold\":20,\"callBackUrl\":\"https://uat.digitalrakshak.io/api/v1/your/callback\"})\n\nresponse = http.request(request)\nputs response.read_body"
+      }
+    },
     "epfo-establishment-search": {
       "id": "epfo-establishment-search",
       "meta": {
         "title": "19. EPFO Basic Establishment Search",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate Verification",
+          "Company Records",
           "EPFO Basic Establishment Search"
         ]
       },
@@ -4115,9 +4115,9 @@
       "id": "mnrl-check",
       "meta": {
         "title": "20. MNRL Check",
-        "category": "Verification",
+        "category": "Mobile Verification",
         "breadcrumbs": [
-          "Verification",
+          "Mobile Verification",
           "MNRL Check"
         ]
       },
@@ -4250,9 +4250,9 @@
       "id": "epfo-employee-name-search",
       "meta": {
         "title": "21. EPFO Employee Name Search",
-        "category": "Corporate Verification",
+        "category": "Company Records",
         "breadcrumbs": [
-          "Corporate Verification",
+          "Company Records",
           "EPFO Employee Name Search"
         ]
       },
@@ -5416,9 +5416,9 @@
       "id": "vehicle-rc-authentication",
       "meta": {
         "title": "26. Vehicle RC Authentication",
-        "category": "Vehicle Verification",
+        "category": "Automobile Tracing",
         "breadcrumbs": [
-          "Vehicle Verification",
+          "Automobile Tracing",
           "Vehicle RC Authentication"
         ]
       },
@@ -5668,9 +5668,9 @@
       "id": "vehicle-reverse-rc-search",
       "meta": {
         "title": "27. Vehicle Reverse RC Search",
-        "category": "Vehicle Verification",
+        "category": "Automobile Tracing",
         "breadcrumbs": [
-          "Vehicle Verification",
+          "Automobile Tracing",
           "Vehicle Reverse RC Search"
         ]
       },
@@ -5897,9 +5897,9 @@
       "id": "fastag-verification",
       "meta": {
         "title": "28. FASTag Verification",
-        "category": "Vehicle Verification",
+        "category": "Automobile Tracing",
         "breadcrumbs": [
-          "Vehicle Verification",
+          "Automobile Tracing",
           "FASTag Verification"
         ]
       },
@@ -6059,9 +6059,9 @@
       "id": "ifsc-verification",
       "meta": {
         "title": "29. IFSC Verification",
-        "category": "Banking",
+        "category": "Banking in Finance",
         "breadcrumbs": [
-          "Banking",
+          "Banking in Finance",
           "IFSC Verification"
         ]
       },
@@ -6284,9 +6284,9 @@
       "id": "hybrid-bank-account-verification",
       "meta": {
         "title": "30. Hybrid Bank Account Verification",
-        "category": "Banking",
+        "category": "Banking in Finance",
         "breadcrumbs": [
-          "Banking",
+          "Banking in Finance",
           "Hybrid Bank Account Verification"
         ]
       },
