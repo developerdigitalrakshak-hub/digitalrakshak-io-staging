@@ -96,6 +96,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: 10px;
   flex: 0 0 auto;
   text-decoration: none;
   cursor: pointer;
@@ -120,15 +121,15 @@
 .brandLogoImg {
   position: relative;
   width: auto;
-  height: 44px;
-  max-height: 44px;
+  height: 42px;
+  max-height: 42px;
   object-fit: contain;
   filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));
   transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   &.scrolled {
-    height: 36px;
-    max-height: 36px;
+    height: 34px;
+    max-height: 34px;
 
     @media (max-width: 640px) {
       height: 28px;
@@ -137,8 +138,92 @@
   }
 
   @media (max-width: 640px) {
-    height: 34px;
-    max-height: 34px;
+    height: 32px;
+    max-height: 32px;
+  }
+}
+
+.brandTextGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.15;
+}
+
+.brandTitle {
+  font-family: inherit;
+  font-size: 17.5px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: flex-start;
+  white-space: nowrap;
+  transition: font-size 0.25s ease;
+
+  .brandLogoLink:hover & {
+    color: #ffffff;
+  }
+}
+
+.brandTm {
+  font-size: 9px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-left: 2px;
+  vertical-align: super;
+  line-height: 1;
+}
+
+.brandTagline {
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: font-size 0.25s ease;
+
+  .taglineSep {
+    color: #38bdf8;
+    opacity: 0.6;
+    font-weight: 400;
+    font-size: 8.5px;
+  }
+}
+
+.brandLogoLink.scrolled {
+  .brandTitle {
+    font-size: 15.5px;
+  }
+
+  .brandTagline {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .brandLogoLink {
+    gap: 7px;
+  }
+
+  .brandTitle {
+    font-size: 14.5px;
+  }
+
+  .brandTagline {
+    font-size: 7.5px;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 420px) {
+  .brandTagline {
+    display: none; // Keep brandTitle clean on tiny phone screens
   }
 }
 

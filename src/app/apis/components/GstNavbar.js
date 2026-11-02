@@ -52,14 +52,26 @@ export default function GstNavbar({ onToggleApiSidebar }) {
 
         {/* Floating Capsule / Main Nav Container */}
         <div className={`${styles.capsuleNav} ${isScrolled ? styles.scrolled : ''}`}>
-          {/* 1. Left: Brand Logo */}
-          <Link href="/" className={styles.brandLogoLink} aria-label="DigitalRakshak Home">
+          {/* 1. Left: Brand Logo & Text */}
+          <Link
+            href="/"
+            className={`${styles.brandLogoLink} ${isScrolled ? styles.scrolled : ''}`}
+            aria-label="DigitalRakshak Home"
+          >
             <div className={styles.logoGlow} aria-hidden="true" />
             <img
               src="/assets/logo.png"
               alt="DigitalRakshak Logo"
               className={`${styles.brandLogoImg} ${isScrolled ? styles.scrolled : ''}`}
             />
+            <div className={styles.brandTextGroup}>
+              <span className={styles.brandTitle}>
+                DigitalRakshak<span className={styles.brandTm}>™</span>
+              </span>
+              <span className={styles.brandTagline}>
+                SECURE <span className={styles.taglineSep}>|</span> SWIFT <span className={styles.taglineSep}>|</span> COMPLIANT
+              </span>
+            </div>
           </Link>
 
           {/* 2. Center: Navigation Links */}
