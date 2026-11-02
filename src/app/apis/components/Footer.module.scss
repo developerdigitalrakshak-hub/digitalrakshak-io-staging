@@ -67,37 +67,14 @@
   }
 }
 
-.brandHeader {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.logoBox {
-  position: relative;
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  // border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.15);
-  flex-shrink: 0;
-}
-
-.logoImage {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
-}
-
 .brandTitleGroup {
   display: flex;
   flex-direction: column;
+}
+
+.brandTitleLink {
+  text-decoration: none;
+  display: inline-block;
 }
 
 .brandTitle {
@@ -106,14 +83,12 @@
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0;
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
 
   sup {
     font-size: 12px;
     font-weight: 600;
-    -webkit-text-fill-color: #38bdf8;
+    color: #38bdf8;
     margin-left: 2px;
   }
 }
@@ -123,40 +98,39 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: #38bdf8;
+  color: #cbd5e1;
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
-.brandLegal {
-  color: #f1f5f9;
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0 0 4px;
-  letter-spacing: -0.01em;
-}
-
-.cinBadge {
-  display: inline-flex;
+// ── Large Emblem Logo ──
+.bigLogoWrapper {
+  margin: 26px 0 30px 0;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: rgba(148, 163, 184, 0.08);
-  border: 1px solid rgba(148, 163, 184, 0.15);
-  color: #94a3b8;
-  font-size: 12px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  margin-bottom: 14px;
-  letter-spacing: 0.03em;
+  justify-content: flex-start;
+
+  @media (max-width: 640px) {
+    margin: 20px 0 24px 0;
+  }
 }
 
-.brandDesc {
-  color: #94a3b8;
-  font-size: 14px;
-  line-height: 1.65;
-  margin: 0 0 20px;
-  max-width: 360px;
+.bigLogoImage {
+  width: 195px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.35)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s ease, filter 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.55));
+  }
+
+  @media (max-width: 480px) {
+    width: 165px;
+  }
 }
 
 // ── Social Icons ──
@@ -164,6 +138,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .socialBtn {
@@ -182,7 +157,7 @@
 
   &:hover {
     transform: translateY(-3px);
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(99, 102, 241, 0.2);
     border-color: rgba(56, 189, 248, 0.5);
     color: #38bdf8;
     box-shadow: 0 6px 20px rgba(56, 189, 248, 0.25);
@@ -196,22 +171,94 @@
 }
 
 .colHeading {
-  color: #ffffff;
+  color: #60a5fa;
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+}
 
-  &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), transparent);
+.platformsList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.platformItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.bulletLink {
+  color: #f1f5f9;
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.4;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #38bdf8;
+    transform: translateX(3px);
+
+    .bulletDot {
+      color: #38bdf8;
+    }
   }
+}
+
+.bulletDot {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.subItemList {
+  margin: 8px 0 4px 6px;
+  padding-left: 14px;
+  border-left: 1.5px solid rgba(56, 189, 248, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.subItemLink {
+  color: #94a3b8;
+  font-size: 13.5px;
+  font-weight: 400;
+  text-decoration: none;
+  line-height: 1.35;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+
+    .subItemDash {
+      color: #38bdf8;
+    }
+  }
+}
+
+.subItemDash {
+  color: #64748b;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .linksList {
@@ -221,7 +268,7 @@
 }
 
 .colLink {
-  color: #94a3b8;
+  color: #f1f5f9;
   font-size: 14.5px;
   font-weight: 500;
   text-decoration: none;
@@ -229,12 +276,12 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   transition: all 0.2s ease;
 
   &:hover {
-    color: #ffffff;
-    transform: translateX(4px);
+    color: #38bdf8;
+    transform: translateX(3px);
   }
 }
 
@@ -247,12 +294,12 @@
 .subserviceList {
   list-style: none;
   padding: 0;
-  margin: 8px 0 6px 12px;
+  margin: 8px 0 6px 6px;
   padding-left: 14px;
-  border-left: 1.5px solid rgba(99, 102, 241, 0.3);
+  border-left: 1.5px solid rgba(56, 189, 248, 0.3);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 9px;
 }
 
 .subserviceLink {
@@ -274,16 +321,17 @@
     border-radius: 50%;
     background: #64748b;
     flex-shrink: 0;
-    transition: background 0.2s, transform 0.2s;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   &:hover {
-    color: #38bdf8;
+    color: #ffffff;
     transform: translateX(3px);
 
     &::before {
       background: #38bdf8;
       transform: scale(1.4);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.7);
     }
   }
 }
@@ -298,6 +346,13 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: rgba(56, 189, 248, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.12);
+  }
 }
 
 .trustTitle {

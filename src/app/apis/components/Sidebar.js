@@ -65,7 +65,7 @@ export default function Sidebar({ data, activeEndpoint, onSelectEndpoint, isOpen
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
           </span> */}
-          <span className={styles.homeText}>API Catelog <span style={{color: '#22c55e'}} >(30)</span></span>
+          <span className={styles.homeText}>API Catalogue <span style={{ color: '#22c55e' }} >(30)</span></span>
         </Link>
 
         {/* Close Button - Visible on Tablet and Mobile */}
@@ -150,9 +150,8 @@ export default function Sidebar({ data, activeEndpoint, onSelectEndpoint, isOpen
                       <Link
                         key={ep.id}
                         href={href}
-                        className={`${styles.endpointItem} ${
-                          isActive ? styles.activeEndpoint : ''
-                        }`}
+                        className={`${styles.endpointItem} ${isActive ? styles.activeEndpoint : ''
+                          }`}
                         onClick={() => handleEndpointClick(ep.id)}
                       >
                         <span className={`${styles.methodBadge} ${styles[ep.method.toLowerCase()] || styles.post}`}>
