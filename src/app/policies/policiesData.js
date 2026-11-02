@@ -6,7 +6,7 @@ export const policiesMetadata = {
   version: '1.0',
   lastUpdated: '16th October 2026',
   jurisdiction: 'Gandhinagar, Gujarat, India',
-  grievanceEmail: 'grievance@DigitalRakshak.com',
+  grievanceEmail: 'dpo@DigitalRakshak.com',
 };
 
 export const policySections = [

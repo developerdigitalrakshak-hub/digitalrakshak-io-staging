@@ -1073,9 +1073,9 @@ export default function RegisterModal({ isOpen, onClose }) {
               {/* Customer Testimonial Card */}
               <div className={styles.testimonialCard}>
                 <div className={styles.testimonialContent}>
-                  <div className={styles.shieldIconWrapper}>
+                  {/* <div className={styles.shieldIconWrapper}>
                     <Shield size={22} />
-                  </div>
+                  </div> */}
                   <div className={styles.testimonialBody}>
                     <blockquote className={styles.quoteText}>
                       &ldquo;We take immense satisfaction in our ability to achieve a 5-minute end-to-end target

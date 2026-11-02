@@ -138,6 +138,38 @@ export default function PoliciesPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleContactOfficer = (e) => {
+    e.preventDefault();
+    const email = policiesMetadata?.grievanceEmail || 'dpo@DigitalRakshak.com';
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const renderParagraphContent = (text, isSecSchedule) => {
+    if (!isSecSchedule && typeof text === 'string' && text.includes('Schedule I')) {
+      const parts = text.split('Schedule I');
+      return (
+        <>
+          {parts[0]}
+          <button
+            type="button"
+            onClick={() => handleSelectPolicy(policyTitle.schedule1)}
+            className={styles.inlineScheduleLink}
+            title="Switch to Schedule I: Data Security Standards & Safeguards"
+            aria-label="Switch to Schedule I: Data Security Standards & Safeguards"
+          >
+            <span>Schedule I</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+          {parts.slice(1).join('Schedule I')}
+        </>
+      );
+    }
+    return text;
+  };
+
   const activeItem = MENU_ITEMS.find((item) => item.id === activePolicyId) || MENU_ITEMS[0];
 
   return (
@@ -310,11 +342,18 @@ export default function PoliciesPage() {
                   <span className="value">{policiesMetadata.jurisdiction}</span>
                 </div>
 
-                <div className={styles.metaItem}>
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${policiesMetadata.grievanceEmail}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleContactOfficer}
+                  className={`${styles.metaItem} ${styles.metaItemLink}`}
+                  title="Contact Grievance Officer"
+                >
                   <MailIcon />
                   <span className="label">Grievance:</span>
                   <span className="value">{policiesMetadata.grievanceEmail}</span>
-                </div>
+                </a>
               </div>
             </div>
           </header>
@@ -354,7 +393,7 @@ export default function PoliciesPage() {
                       if (isDefinition) {
                         return (
                           <div key={idx} className={styles.definitionItem}>
-                            {p}
+                            {renderParagraphContent(p, isScheduleCard)}
                           </div>
                         );
                       }
@@ -362,14 +401,14 @@ export default function PoliciesPage() {
                       if (isBullet) {
                         return (
                           <div key={idx} className={styles.bulletItem}>
-                            {p.replace(/^[•\-\*]\s*/, '')}
+                            {renderParagraphContent(p.replace(/^[•\-\*]\s*/, ''), isScheduleCard)}
                           </div>
                         );
                       }
 
                       return (
                         <p key={idx} className={styles.paragraph}>
-                          {p}
+                          {renderParagraphContent(p, isScheduleCard)}
                         </p>
                       );
                     })}
@@ -387,7 +426,13 @@ export default function PoliciesPage() {
                 </p>
               </div>
               <div className={styles.grievanceAction}>
-                <a href={`mailto:${policiesMetadata.grievanceEmail}`}>
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${policiesMetadata.grievanceEmail}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleContactOfficer}
+                  aria-label="Contact Grievance Officer"
+                >
                   <MailIcon />
                   <span>Contact Grievance Officer</span>
                 </a>

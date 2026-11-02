@@ -503,6 +503,22 @@
   }
 }
 
+.metaItemLink {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateY(-1px);
+
+    span.value {
+      color: #38bdf8;
+    }
+  }
+}
+
 // ════════════════════════════════════════
 // MAIN BODY CONTAINER (Original Layout)
 // ════════════════════════════════════════
@@ -602,6 +618,50 @@
   margin: 0;
 }
 
+// Interactive inline Schedule I link
+.inlineScheduleLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 10px 3px;
+  margin: 0 4px;
+  vertical-align: baseline;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.38);
+  color: #38bdf8;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.12);
+
+  svg {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    color: #38bdf8;
+  }
+
+  &:hover {
+    background: rgba(56, 189, 248, 0.22);
+    border-color: #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+    transform: translateY(-1px);
+
+    svg {
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 // Special highlighted clause / definition
 .definitionItem {
   padding: 14px 18px;
@@ -686,13 +746,23 @@
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
+    cursor: pointer;
+    user-select: none;
     transition: all 0.2s ease;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+
+    span, svg {
+      pointer-events: none;
+    }
 
     &:hover {
       background: #1d4ed8;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
