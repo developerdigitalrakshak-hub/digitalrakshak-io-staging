@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -1007,15 +1008,15 @@ export default function RegisterModal({ isOpen, onClose }) {
   const benefits = [
     {
       icon: CheckCircle,
-      text: 'Minimize security risks during business operations',
+      text: 'Test our APIs in a secure sandbox environment to ensure smooth functionality and integration.',
     },
     {
       icon: CheckCircle,
-      text: 'Improve compliance timelines with optimized frameworks',
+      text: 'Gain access to over 100+ verification APIs to streamline your KYC/KYB processes effortlessly.',
     },
     {
       icon: CheckCircle,
-      text: 'Seamless user experience with enhanced security protocols',
+      text: 'Enjoy seamless integration with developer-friendly documentation and 24/7 expert support.',
     },
   ];
 
@@ -1047,14 +1048,13 @@ export default function RegisterModal({ isOpen, onClose }) {
             <div className={styles.leftColumn}>
               <div className={styles.headingWrapper}>
                 <h2 className={styles.mainHeading}>
-                  Optimize your{' '}
-                  <span className={styles.gradientText}>Security Framework,</span>
-                  <br />
-                  boost your compliance!
+                  {/* Optimize your{' '} */}
+                  <span className={styles.gradientText}>Get API Key</span>
+                  {/* <br /> */}
+                  {/* boost your compliance! */}
                 </h2>
                 <p className={styles.subHeading}>
-                  Join leading enterprises optimizing their security postures and compliance
-                  timelines using DigitalRakshak.
+                  By creating a free account, you get
                 </p>
               </div>
 
@@ -1068,6 +1068,9 @@ export default function RegisterModal({ isOpen, onClose }) {
                     </div>
                   );
                 })}
+                <p className={styles.trustedText} >
+                  Trusted by over <span className={styles.gradientText} >1,000+</span> companies of all sizes
+                </p>
               </div>
 
               {/* Customer Testimonial Card */}
