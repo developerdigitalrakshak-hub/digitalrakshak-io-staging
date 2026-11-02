@@ -1,5 +1,6 @@
 // ========================================================
-// GstNavbar Stylesheet - Responsive Floating Capsule Navbar
+// GstNavbar Stylesheet - Floating Pill Header on Scroll
+// Exact capsule design matching card width and spacing
 // ========================================================
 
 .headerRoot {
@@ -10,183 +11,156 @@
   width: 100%;
   z-index: 950;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
+  transition: top 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.scrolled {
+    top: 14px;
+
+    @media (max-width: 640px) {
+      top: 8px;
+    }
+  }
 }
 
-// 1. Full-width top backdrop & bottom border (fades out on scroll)
+// 1. Full-width top backdrop for unscrolled state (fades out smoothly on scroll)
 .backdropBar {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 68px;
-  background: rgba(2, 5, 15, 0.85);
+  background: rgba(3, 7, 18, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   pointer-events: none;
   opacity: 1;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   &.scrolled {
     opacity: 0;
   }
-
-  @media (max-width: 640px) {
-    height: 60px;
-  }
 }
 
-// 2. Main Navigation Bar Wrapper
-.navWrapper {
-  width: 100%;
-  margin: 0 auto;
+// 2. The Main Capsule Navbar
+// Before scroll: spans across top matching card width
+// On scroll: stays same size as card, morphing into floating rounded capsule
+.capsuleNav {
   pointer-events: auto;
-  padding: 0 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 48px);
+  max-width: 1300px; // Same size as of card (statsGrid / blockSection)
+  height: 68px;
+  padding: 0 24px;
   box-sizing: border-box;
-  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  transition: all 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 
+  // ── Floating Rounded Capsule Pill on Scroll (Full Card Width) ──
   &.scrolled {
-    padding: 0 5%;
+    width: calc(100% - 48px);
+    max-width: 1300px; // Keeps card size, does not shrink to content
+    height: 56px;
+    padding: 0 24px;
+    background: rgba(20, 24, 38, 0.94);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 
-    @media (min-width: 1024px) {
-      padding: 0 6%;
+    @media (max-width: 768px) {
+      width: calc(100% - 24px);
+      height: 50px;
+      padding: 0 14px;
     }
   }
 
   @media (max-width: 768px) {
+    width: calc(100% - 24px);
     padding: 0 16px;
-  }
-}
-
-// Nav inner row
-.navRow {
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1600px;
-  height: 68px;
-  padding-top: 0;
-  box-sizing: border-box;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-
-  &.scrolled {
-    max-width: 1400px;
-    height: 58px;
-    padding-top: 6px;
-
-    @media (max-width: 640px) {
-      height: 54px;
-      padding-top: 4px;
-    }
-  }
-
-  @media (max-width: 640px) {
     height: 60px;
   }
 }
 
-// Brand Logo & Glow
-.logoContainer {
+// ── Left: Brand Logo & Glow ──
+.brandLogoLink {
   position: relative;
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   text-decoration: none;
-  padding: 2px 0;
   cursor: pointer;
 }
 
 .logoGlow {
   position: absolute;
   inset: -6px -12px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(99, 102, 241, 0.18) 50%, transparent 80%);
-  filter: blur(14px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(99, 102, 241, 0.12) 60%, transparent 80%);
+  filter: blur(12px);
   border-radius: 9999px;
   pointer-events: none;
   opacity: 0.7;
   transition: opacity 0.3s ease, transform 0.3s ease;
 
-  .logoContainer:hover & {
+  .brandLogoLink:hover & {
     opacity: 1;
     transform: scale(1.15);
   }
 }
 
-.logoImg {
+.brandLogoImg {
   position: relative;
   width: auto;
-  height: 52px;
-  max-height: 52px;
+  height: 44px;
+  max-height: 44px;
   object-fit: contain;
-  transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-  filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.4));
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.35));
+  transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   &.scrolled {
-    height: 42px;
-    max-height: 42px;
+    height: 36px;
+    max-height: 36px;
 
     @media (max-width: 640px) {
-      height: 34px;
-      max-height: 34px;
+      height: 28px;
+      max-height: 28px;
     }
   }
 
-  @media (max-width: 1024px) {
-    height: 46px;
-    max-height: 46px;
-  }
-
   @media (max-width: 640px) {
-    height: 40px;
-    max-height: 40px;
-  }
-
-  @media (max-width: 380px) {
     height: 34px;
     max-height: 34px;
   }
 }
 
-// Center: Rounded Dark Capsule Pill Navigation
-.capsuleNav {
+// ── Center: Desktop Navigation Links (Spaced out across available space) ──
+.desktopNavGroup {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  flex: 1 1 auto;
+  gap: 36px; // Generous balanced spacing for fewer menu items
   box-sizing: border-box;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 9999px;
-  padding: 0 16px;
-  height: 46px;
-  box-shadow: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
-  &.scrolled {
-    background: rgba(24, 26, 36, 0.9);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 9999px;
-    padding: 0 20px;
-    gap: 16px;
-    height: 46px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
-
-    @media (min-width: 1280px) {
-      padding: 0 24px;
-      gap: 22px;
-      height: 46px;
-    }
+  @media (min-width: 1280px) {
+    gap: 48px;
   }
 
-  @media (max-width: 1024px) {
-    display: none;
+  @media (max-width: 1023px) {
+    display: none; // Handled by mobile drawer
   }
 }
 
-.navLink {
+.navLinkButton {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -195,18 +169,17 @@
   color: #cbd5e1;
   text-decoration: none;
   white-space: nowrap;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 9999px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
   letter-spacing: -0.01em;
+  transition: color 0.2s ease, background-color 0.2s ease;
 
   &.scrolled {
-    font-size: 13.5px;
-    color: #e2e8f0;
-
-    @media (min-width: 1280px) {
-      font-size: 14px;
-    }
+    font-size: 14px;
   }
 
   &:hover {
@@ -215,20 +188,11 @@
   }
 }
 
-.navBtnLink {
-  background: none;
-  border: none;
-  font-family: inherit;
-  cursor: pointer;
-  line-height: inherit;
-  outline: none;
-}
-
 .navUnderline {
   position: absolute;
-  bottom: 0;
-  left: 10px;
-  right: 10px;
+  bottom: 2px;
+  left: 12px;
+  right: 12px;
   height: 2px;
   border-radius: 9999px;
   background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
@@ -236,200 +200,167 @@
   transform-origin: center;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
-  .navLink:hover & {
+  .navLinkButton:hover & {
     transform: scaleX(1);
   }
 }
 
-// Right Action Items
-.rightActions {
+// ── Right: CTA Button Group ──
+.rightActionsGroup {
   display: flex;
   align-items: center;
-  gap: 10px;
-  z-index: 999;
-
-  @media (max-width: 640px) {
-    display: none;
-  }
+  gap: 12px;
+  flex: 0 0 auto;
 }
 
-.bookDemoBtn {
+.contactPillBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 9999px;
-  padding: 0 24px;
-  height: 46px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 8px 22px;
   cursor: pointer;
   outline: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 
   &.scrolled {
-    font-size: 13.5px;
-    background: rgba(37, 40, 54, 0.92);
-    border-color: rgba(255, 255, 255, 0.18);
-    padding: 0 22px;
-    height: 46px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    padding: 7px 20px;
+    font-size: 13px;
   }
 
   &:hover {
-    transform: translateY(-1px) scale(1.02);
-    background: linear-gradient(135deg, #2563eb 0%, #6366f1 50%, #7c3aed 100%);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
-    color: #ffffff;
+    background: #2563eb;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.45);
+    transform: translateY(-1px);
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
+  }
+
+  @media (max-width: 640px) {
+    display: none; // Shown in mobile drawer
   }
 }
 
-// Mobile Hamburger Toggle Button
-.mobileToggleBtn {
+.apiSidebarToggleBtn {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: #e2e8f0;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
   cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 999;
 
-  &:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(56, 189, 248, 0.4);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  @media (max-width: 1024px) {
+  @media (max-width: 1023px) {
     display: inline-flex;
   }
 }
 
-// Mobile Dropdown Menu
-.mobileMenuDropdown {
-  width: 100%;
-  pointer-events: auto;
-  padding: 0 5%;
-  margin-top: 8px;
-  box-sizing: border-box;
-  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.mobileHamburgerBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
-  @media (min-width: 1025px) {
-    display: none;
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+
+  @media (max-width: 1023px) {
+    display: inline-flex;
   }
 }
 
-.mobileMenuCard {
-  max-width: 1400px;
-  margin: 0 auto;
-  background: rgba(16, 18, 26, 0.96);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+// ── Mobile Drawer Wrapper ──
+.mobileDrawerWrapper {
+  position: absolute;
+  top: 100%;
+  left: 12px;
+  right: 12px;
+  margin-top: 8px;
+  pointer-events: auto;
+  z-index: 1000;
+}
+
+.mobileDrawerCard {
+  background: rgba(16, 20, 34, 0.98);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.mobileNavLink {
-  display: block;
-  font-size: 14.5px;
+.mobileDrawerLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 500;
   color: #e2e8f0;
   text-decoration: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s ease;
 
   &:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
   }
 }
 
-.mobileNavBtnLink {
-  background: none;
-  border: none;
-  font-family: inherit;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  line-height: inherit;
-  outline: none;
+.mobileLinkArrow {
+  color: #64748b;
+  font-size: 14px;
 }
 
-.mobileMenuDivider {
+.mobileDrawerDivider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 8px 0;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 10px 0;
 }
 
-.mobileBookDemoBtn {
+.mobileContactActionBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 11px 20px;
-  font-family: inherit;
-  font-size: 14.5px;
-  font-weight: 600;
+  padding: 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb, #6366f1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  text-decoration: none;
-  border: none;
-  outline: none;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 9999px;
-  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
-  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
-  transition: all 0.2s ease;
-
-  &:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 6px 22px rgba(79, 70, 229, 0.55);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

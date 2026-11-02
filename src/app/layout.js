@@ -16,7 +16,12 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "DigitalRakshak APIs",
-  description: "",
+  description: "DigitalRakshak Verification Infrastructure and APIs",
+  icons: {
+    icon: "/images/logo.png",
+    shortcut: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({ children }) {

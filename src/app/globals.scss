@@ -32,6 +32,15 @@
   --code-bg: #e2e8f0;
 }
 
+html.acc-high-contrast {
+  --bg-color: #000000 !important;
+  --bg-secondary: #0a0a0a !important;
+  --card-bg: #111111 !important;
+  --card-border: #ffffff !important;
+  --text-main: #ffffff !important;
+  --text-muted: #e2e8f0 !important;
+}
+
 // CSS Reset & Global Styling
 * {
   box-sizing: border-box;

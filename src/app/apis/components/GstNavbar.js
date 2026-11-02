@@ -30,6 +30,7 @@ export default function GstNavbar({ onToggleApiSidebar }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Original menu items preserved exactly
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'API Products', href: '/apis/oauth-token' },
@@ -42,98 +43,108 @@ export default function GstNavbar({ onToggleApiSidebar }) {
 
   return (
     <>
-      <header className={styles.headerRoot}>
-        {/* 1. Full-width top backdrop: visible initially, smoothly fades out on scroll */}
+      <header className={`${styles.headerRoot} ${isScrolled ? styles.scrolled : ''}`}>
+        {/* Full-width top backdrop for unscrolled state */}
         <div
           className={`${styles.backdropBar} ${isScrolled ? styles.scrolled : ''}`}
           aria-hidden="true"
         />
 
-        {/* 2. Main Navigation Bar */}
-        <div className={`${styles.navWrapper} ${isScrolled ? styles.scrolled : ''}`}>
-          <div className={`${styles.navRow} ${isScrolled ? styles.scrolled : ''}`}>
-            {/* Left: DigitalRakshak Logo with subtle glowing aura */}
-            <Link href="/" className={styles.logoContainer} aria-label="DigitalRakshak Home">
-              <div className={styles.logoGlow} aria-hidden="true" />
-              <img
-                src="/assets/logo.png"
-                alt="DigitalRakshak Logo"
-                className={`${styles.logoImg} ${isScrolled ? styles.scrolled : ''}`}
-              />
-            </Link>
+        {/* Floating Capsule / Main Nav Container */}
+        <div className={`${styles.capsuleNav} ${isScrolled ? styles.scrolled : ''}`}>
+          {/* 1. Left: Brand Logo */}
+          <Link href="/" className={styles.brandLogoLink} aria-label="DigitalRakshak Home">
+            <div className={styles.logoGlow} aria-hidden="true" />
+            <img
+              src="/assets/logo.png"
+              alt="DigitalRakshak Logo"
+              className={`${styles.brandLogoImg} ${isScrolled ? styles.scrolled : ''}`}
+            />
+          </Link>
 
-            {/* Center: Rounded Dark Capsule Pill Navigation */}
-            <nav
-              className={`${styles.capsuleNav} ${isScrolled ? styles.scrolled : ''}`}
-              aria-label="Main Navigation"
+          {/* 2. Center: Navigation Links */}
+          <nav className={styles.desktopNavGroup} aria-label="Main Navigation">
+            {navLinks.map((item) =>
+              item.name.toLowerCase().includes('contact') ? (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={openRegisterModal}
+                  className={`${styles.navLinkButton} ${isScrolled ? styles.scrolled : ''}`}
+                  aria-label="Contact Us - Open Registration"
+                >
+                  <span>{item.name}</span>
+                  <span className={styles.navUnderline} aria-hidden="true" />
+                </button>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`${styles.navLinkButton} ${isScrolled ? styles.scrolled : ''}`}
+                >
+                  <span>{item.name}</span>
+                  <span className={styles.navUnderline} aria-hidden="true" />
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* 3. Right: "Get API Key" Pill CTA Button */}
+          <div className={styles.rightActionsGroup}>
+            <button
+              type="button"
+              onClick={openRegisterModal}
+              className={`${styles.contactPillBtn} ${isScrolled ? styles.scrolled : ''}`}
+              aria-label="Get API Key - Open Registration"
             >
-              {navLinks.map((item) =>
-                item.name === 'Contact' ? (
-                  <button
-                    key={item.name}
-                    type="button"
-                    onClick={openRegisterModal}
-                    className={`${styles.navLink} ${styles.navBtnLink} ${isScrolled ? styles.scrolled : ''}`}
-                    aria-label="Contact Us - Open Registration"
-                  >
-                    <span>{item.name}</span>
-                    <span className={styles.navUnderline} aria-hidden="true" />
-                  </button>
-                ) : (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={`${styles.navLink} ${isScrolled ? styles.scrolled : ''}`}
-                  >
-                    <span>{item.name}</span>
-                    <span className={styles.navUnderline} aria-hidden="true" />
-                  </a>
-                )
-              )}
-            </nav>
+              Get API Key
+            </button>
 
-            {/* Right: "Get API Key" Pill Button */}
-            <div className={styles.rightActions}>
+            {/* API Sidebar Toggle for API Docs */}
+            {onToggleApiSidebar && (
               <button
                 type="button"
-                onClick={openRegisterModal}
-                className={`${styles.bookDemoBtn} ${isScrolled ? styles.scrolled : ''}`}
-                aria-label="Get API Key - Open Registration"
+                onClick={onToggleApiSidebar}
+                className={styles.apiSidebarToggleBtn}
+                aria-label="Toggle API Endpoint List"
+                title="API Endpoints"
               >
-                Get API Key
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 6h16M4 12h10M4 18h7" />
+                </svg>
               </button>
-            </div>
+            )}
 
-            {/* Mobile Menu Toggle Button (SVG Icons - Zero External Packages) */}
+            {/* Mobile Menu Toggle Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={styles.mobileToggleBtn}
+              className={styles.mobileHamburgerBtn}
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
               aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               ) : (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
                 </svg>
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown matching content width */}
+        {/* Mobile Navigation Dropdown */}
         {mobileMenuOpen && (
-          <div className={styles.mobileMenuDropdown}>
-            <div className={styles.mobileMenuCard}>
+          <div className={styles.mobileDrawerWrapper}>
+            <div className={styles.mobileDrawerCard}>
               {navLinks.map((item) =>
-                item.name === 'Contact' ? (
+                item.name.toLowerCase().includes('contact') ? (
                   <button
                     key={item.name}
                     type="button"
@@ -141,30 +152,32 @@ export default function GstNavbar({ onToggleApiSidebar }) {
                       setMobileMenuOpen(false);
                       openRegisterModal();
                     }}
-                    className={`${styles.mobileNavLink} ${styles.mobileNavBtnLink}`}
+                    className={styles.mobileDrawerLink}
                     aria-label="Contact Us - Open Registration"
                   >
-                    {item.name}
+                    <span>{item.name}</span>
+                    <span className={styles.mobileLinkArrow}>→</span>
                   </button>
                 ) : (
-                  <a
+                  <Link
                     key={item.name}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={styles.mobileNavLink}
+                    className={styles.mobileDrawerLink}
                   >
-                    {item.name}
-                  </a>
+                    <span>{item.name}</span>
+                    <span className={styles.mobileLinkArrow}>→</span>
+                  </Link>
                 )
               )}
-              <div className={styles.mobileMenuDivider} />
+              <div className={styles.mobileDrawerDivider} />
               <button
                 type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   openRegisterModal();
                 }}
-                className={styles.mobileBookDemoBtn}
+                className={styles.mobileContactActionBtn}
                 aria-label="Get API Key - Open Registration"
               >
                 Get API Key
