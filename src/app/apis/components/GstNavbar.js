@@ -38,7 +38,7 @@ export default function GstNavbar({ onToggleApiSidebar }) {
     // { name: 'E-stamping', href: '/e-stamp-and-e-sign' },
     // { name: 'Pricing', href: '/pricing' },
     // { name: 'Resources', href: '/resources' },
-    { name: 'Contact US', href: '#contact' },
+    { name: 'Contact us', href: '#contact' },
   ];
 
   return (

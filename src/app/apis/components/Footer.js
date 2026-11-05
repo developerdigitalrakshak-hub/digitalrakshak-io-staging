@@ -63,7 +63,7 @@ const platformsData = [
 
 const servicesData = [
   { name: 'e-KYC', href: '/identity-ekyc' },
-  { name: 'CKYC 2.0 Verification', href: '#' },
+  // { name: 'CKYC 2.0 Verification', href: '#' },
   {
     name: 'Background Verification (BGV)',
     href: '#',
