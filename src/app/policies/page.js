@@ -303,7 +303,9 @@ export default function PoliciesPage() {
               <h1 className={styles.heroTitle}>
                 {isSchedule ? (
                   <>
-                    Schedule I &amp; <span className={styles.heroTitleHighlight}>Data Security</span>
+                    Schedule I
+                    <br />
+                    <span className={styles.heroTitleHighlight}>Data Security Standards &amp; Safeguards</span>
                   </>
                 ) : (
                   <>

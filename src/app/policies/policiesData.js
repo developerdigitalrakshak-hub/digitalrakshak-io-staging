@@ -319,9 +319,8 @@ export const policySections = [
   },
   {
     "id": "Schedule I: Data Security Standards & Safeguards",
-    "title": "Schedule I: DATA SECURITY",
+    "title": "DATA SECURITY Standards & Safeguards",
     "paragraphs": [
-      "DATA SECURITY",
       "User shall (and shall ensure that its employees, agents and subcontractors shall) be required to maintain such administrative, organizational, technical and physical safeguards, and such processes, procedures and checks including, to secure the User Information, DigitalRakshak Information and any data provided or shared by DigitalRakshak as may be required under applicable law and/or industry standards or regulations issued by any Authority, which safeguards must be at least equal to or better than: (a) the safeguards it currently has in place to protect its own data; and (b) generally accepted security standards in the financial services industry.",
       "The administrative, technical and physical safeguards, processes, procedures and checks as above shall be designed by User to:",
       "protect the security and confidentiality of the Confidential Information, DigitalRakshak Information and any data provided or shared by DigitalRakshak;",
